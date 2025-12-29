@@ -1,0 +1,48 @@
+{
+  "name": "dev",
+  "description": "Agent for FlowRAG - TypeScript RAG library with knowledge graph support",
+  "prompt": "file://../prompts/dev.md",
+  "resources": [
+    "file://README.md",
+    "file://.kiro/specs/v1/requirements.md"
+  ],
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "web_search",
+    "web_fetch",
+    "introspect",
+    "thinking",
+    "code"
+  ],
+  "toolAliases": {},
+  "allowedTools": [
+    "read",
+    "shell",
+    "grep",
+    "glob",
+    "web_search",
+    "web_fetch",
+    "introspect",
+    "thinking",
+    "code"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        ".kiro/**",
+        "packages/**",
+        "examples/**",
+        "test/**",
+        "README.md",
+        "package.json"
+      ]
+    },
+    "shell": {
+      "autoAllowReadonly": true
+    }
+  }
+}
