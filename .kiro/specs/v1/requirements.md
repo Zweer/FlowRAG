@@ -28,7 +28,7 @@ FlowRAG is a **TypeScript RAG (Retrieval-Augmented Generation) library** designe
 **Local Development** (e.g., echoes storytelling project):
 - Index content via CLI
 - DB files committed to Git repo
-- Query via MCP server or CLI
+- Query via CLI
 - Zero external services
 
 **Cloud/Enterprise** (e.g., company documentation bot):
@@ -45,7 +45,8 @@ FlowRAG is a **TypeScript RAG (Retrieval-Augmented Generation) library** designe
 2. **Batch-first**: Optimize for "index once, query many"
 3. **Stateless queries**: Load index → query → done
 4. **Storage-agnostic**: Pluggable backends via interfaces
-5. **Schema-flexible**: User defines entity/relation types
+5. **Schema-flexible**: User defines entity/relation types with fallback to `Other`
+6. **Knowledge Graph is core**: The KG differentiates FlowRAG from simple vector search
 
 ### 2.2 Storage Types
 
@@ -64,10 +65,11 @@ Inspired by LightRAG's clean separation:
 - Vector: LanceDB
 - Graph: SQLite
 
-**Cloud (optional)**:
-- KV: S3 / Redis
-- Vector: OpenSearch / LanceDB on S3
-- Graph: OpenSearch / Neo4j
+**Cloud (future)**:
+- KV: S3
+- Vector: OpenSearch
+- Graph: OpenSearch
+- LLM: AWS Bedrock
 
 ### 2.4 Monorepo Structure
 
@@ -86,8 +88,8 @@ flowrag/
 │   ├── storage-json/         # JSON file KV storage
 │   ├── storage-sqlite/       # SQLite for Graph
 │   ├── storage-lancedb/      # LanceDB for Vectors
-│   ├── storage-s3/           # S3 adapter
-│   ├── storage-opensearch/   # OpenSearch adapter
+│   ├── storage-s3/           # S3 adapter (future)
+│   ├── storage-opensearch/   # OpenSearch adapter (future)
 │   │
 │   ├── embedder-local/       # HuggingFace Transformers.js (ONNX)
 │   ├── embedder-gemini/      # Gemini embedding API
@@ -108,34 +110,44 @@ flowrag/
 
 ### 3.1 Schema Definition
 
-Users define their schema at initialization:
+Users define their schema at initialization. The schema is **flexible**: if the LLM extracts an entity type not in the list, it falls back to `Other`.
 
 ```typescript
 import { defineSchema } from '@flowrag/core';
 
 const schema = defineSchema({
-  // Entity types for this domain
+  // Entity types for this domain (suggestions, not strict)
   entityTypes: ['SERVICE', 'PROTOCOL', 'DATABASE', 'TEAM'] as const,
   
   // Relation types
   relationTypes: ['PRODUCES', 'CONSUMES', 'OWNS', 'DEPENDS_ON'] as const,
+});
+```
+
+**Future (v1.1+)**: Custom fields for richer metadata:
+
+```typescript
+// NOT IN V1 - Planned for future
+const schema = defineSchema({
+  entityTypes: ['SERVICE', 'PROTOCOL', 'DATABASE', 'TEAM'] as const,
+  relationTypes: ['PRODUCES', 'CONSUMES', 'OWNS', 'DEPENDS_ON'] as const,
   
-  // Custom fields for documents
+  // Custom fields for documents - enables filtering by domain/system
   documentFields: {
-    domain: { type: 'string', filterable: true },
-    system: { type: 'string', filterable: true },
+    domain: { type: 'string', filterable: true },   // "payments", "auth", "ocpp"
+    system: { type: 'string', filterable: true },   // "becky", "aldo"
     version: { type: 'string', filterable: false },
   },
   
-  // Custom fields for entities
+  // Custom fields for entities - track status and ownership
   entityFields: {
     status: { type: 'enum', values: ['active', 'deprecated'], default: 'active' },
-    owner: { type: 'string' },
+    owner: { type: 'string' },  // "team-payments"
   },
   
-  // Custom fields for relations
+  // Custom fields for relations - understand HOW services communicate
   relationFields: {
-    dataFormat: { type: 'string' },
+    dataFormat: { type: 'string' },                    // "JSON", "Protobuf"
     syncType: { type: 'enum', values: ['sync', 'async'] },
   },
 });
@@ -205,9 +217,8 @@ interface ExtractionResult {
 
 interface ExtractedEntity {
   name: string;
-  type: string;  // from schema.entityTypes
+  type: string;  // from schema.entityTypes, or "Other" if not matching
   description: string;
-  confidence: number;
 }
 
 interface ExtractedRelation {
@@ -215,7 +226,7 @@ interface ExtractedRelation {
   target: string;
   type: string;  // from schema.relationTypes
   description: string;
-  confidence: number;
+  keywords: string[];  // high-level keywords for the relation
 }
 ```
 
@@ -233,7 +244,7 @@ Input Documents
       │
       ▼
 ┌─────────────┐
-│   Chunker   │  Split into chunks (optional)
+│   Chunker   │  Split into chunks (token-based, ~1200 tokens, 100 overlap)
 └─────────────┘
       │
       ▼
@@ -251,6 +262,21 @@ Input Documents
 │   Storage   │  Save to KV + Vector + Graph
 └─────────────┘
 ```
+
+**Chunking Strategy** (inspired by LightRAG):
+- Token-based chunking with `chunkSize: 1200` tokens
+- Overlap of `100` tokens between chunks
+- Uses tiktoken for tokenization
+
+**LLM Caching**:
+- Entity extraction responses are cached in KV storage
+- Avoids re-processing identical chunks
+- Cache key: hash of chunk content
+
+**Concurrency Control**:
+- `maxParallelInsert`: max documents processed concurrently (default: 2)
+- `llmMaxAsync`: max concurrent LLM calls (default: 4)
+- `embeddingMaxAsync`: max concurrent embedding calls (default: 16)
 
 ### 4.2 Query Pipeline
 
@@ -277,13 +303,14 @@ User Query
 └─────────────┘
       │
       ▼
-┌─────────────┐
-│  Reranker   │  (optional) Rerank by relevance
-└─────────────┘
-      │
-      ▼
 Results (chunks + entities + relations)
 ```
+
+**Query Modes** (inspired by LightRAG):
+- `local`: Focus on specific entities found in query
+- `global`: Use high-level concepts and themes
+- `hybrid`: Combine local and global (default)
+- `naive`: Simple vector search only (no KG)
 
 ### 4.3 Graph Traversal for Data Flow
 
@@ -340,7 +367,7 @@ GEMINI_API_KEY=your-key
 # LLM Extractor
 FLOWRAG_EXTRACTOR_MODEL=gemini-2.5-flash
 
-# AWS (for cloud storage)
+# AWS (for cloud storage - future)
 AWS_REGION=eu-central-1
 ```
 
@@ -378,10 +405,10 @@ During indexing, new entities can be reviewed:
 
 🔍 New entities found:
 
-  1. [SERVICE] becky-ocpp16 (confidence: 0.95)
+  1. [SERVICE] becky-ocpp16
      "Backend OCPP 1.6 per comunicazione con colonnine"
 
-  2. [PROTOCOL] OCPP 1.6 (confidence: 0.92)
+  2. [PROTOCOL] OCPP 1.6
      "Open Charge Point Protocol versione 1.6"
 
 ? Accept all entities? (Y/n/edit)
@@ -410,33 +437,7 @@ await rag.index('./content');
 const results = await rag.search('how does authentication work');
 ```
 
-### 7.2 AWS Lambda (Index)
-
-```typescript
-// index-lambda.ts
-export const handler = async () => {
-  const rag = await createFlowRAG({
-    schema,
-    storage: {
-      kv: new S3KVStorage({ bucket: 'my-rag-bucket', prefix: 'kv/' }),
-      vector: new S3LanceDBStorage({ bucket: 'my-rag-bucket', prefix: 'vectors/' }),
-      graph: new S3SQLiteStorage({ bucket: 'my-rag-bucket', key: 'graph.db' }),
-    },
-    embedder: new GeminiEmbedder(),
-    extractor: new GeminiExtractor(),
-  });
-
-  // Download docs from source
-  const docs = await downloadFromGitHub();
-  
-  // Index
-  await rag.indexDocuments(docs);
-  
-  return { indexed: docs.length };
-};
-```
-
-### 7.3 AWS Lambda (Query)
+### 7.2 AWS Lambda (Future)
 
 ```typescript
 // query-lambda.ts
@@ -445,11 +446,10 @@ export const handler = async (event: { query: string }) => {
     schema,
     storage: {
       kv: new S3KVStorage({ bucket: 'my-rag-bucket', prefix: 'kv/' }),
-      vector: new S3LanceDBStorage({ bucket: 'my-rag-bucket', prefix: 'vectors/' }),
-      graph: new S3SQLiteStorage({ bucket: 'my-rag-bucket', key: 'graph.db' }),
+      vector: new OpenSearchVectorStorage({ endpoint: '...' }),
+      graph: new OpenSearchGraphStorage({ endpoint: '...' }),
     },
-    embedder: new GeminiEmbedder(),
-    // No extractor needed for query-only
+    embedder: new BedrockEmbedder(),
   });
 
   const results = await rag.search(event.query);
@@ -474,7 +474,7 @@ export const handler = async (event: { query: string }) => {
 
 ## 9. Development Phases
 
-### Phase 1: Core Foundation
+### Phase 1: Core Foundation ← **Current**
 - [ ] Monorepo setup (npm workspaces)
 - [ ] `@flowrag/core`: interfaces, schema definition
 - [ ] `@flowrag/storage-json`: JSON file KV storage
@@ -494,34 +494,35 @@ export const handler = async (event: { query: string }) => {
 - [ ] `@flowrag/cli`: Command-line interface
 - [ ] Human-in-the-loop for local indexing
 
-### Phase 4: Cloud Storage
+### Phase 4: Cloud Storage (Future)
 - [ ] `@flowrag/storage-s3`: S3 adapter
 - [ ] `@flowrag/storage-opensearch`: OpenSearch adapter
+- [ ] `@flowrag/llm-bedrock`: AWS Bedrock
 - [ ] Lambda examples
 
-### Phase 5: Advanced Features
+### Phase 5: Advanced Features (Future)
+- [ ] Custom fields (documentFields, entityFields, relationFields)
 - [ ] Reranker support
-- [ ] Incremental indexing
-- [ ] MCP server integration
-- [ ] `@flowrag/llm-bedrock`: AWS Bedrock
+- [ ] Incremental indexing with document status tracking
 
-## 10. Non-Goals (Out of Scope)
+## 10. Non-Goals (Out of Scope for v1)
 
 - **Real-time indexing**: We optimize for batch
 - **Built-in server**: Use as library, not service
 - **Python support**: TypeScript only
 - **Neo4j integration**: SQLite/OpenSearch sufficient for our scale
 - **Multi-tenancy**: Single workspace per instance
+- **MCP server**: Not in v1
+- **Custom fields**: Planned for v1.1+
 
 ## 11. Success Criteria
 
 1. **Local use case**: Index 500 docs, query in <100ms, DB <50MB
-2. **Cloud use case**: Index Lambda <5min, Query Lambda cold start <3s
-3. **Developer experience**: `npm install` + 10 lines of code to get started
-4. **Test coverage**: >90% on core packages
-5. **Documentation**: README + examples for each package
+2. **Developer experience**: `npm install` + 10 lines of code to get started
+3. **Test coverage**: >90% on core packages
+4. **Documentation**: README + examples for each package
 
 ---
 
-*Last updated: 2024-12-29*
-*Version: 1.0-draft*
+*Last updated: 2024-12-30*
+*Version: 1.0*
