@@ -1,11 +1,14 @@
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
-  workspace: { include: 'packages/*' },
-  entry: ['lib/index.ts'],
-  format: 'esm',
+  workspace: true,
+  entry: ['src/index.ts'],
   dts: true,
   sourcemap: true,
-  clean: false,
-  outDir: 'lib',
+  exports: true,
+  publint: 'ci-only',
+  attw: {
+    enabled: 'ci-only',
+    profile: 'esm-only',
+  },
 });

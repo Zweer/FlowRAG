@@ -24,18 +24,16 @@
   },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./lib/index.d.ts",
-      "import": "./lib/index.js"
-    }
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
   },
   "files": [
-    "lib/**/*.js",
-    "lib/**/*.js.map",
-    "lib/**/*.d.ts"
+    "dist"
   ],
-  "scripts": {
-    "attw": "attw --pack",
-    "publint": "publint"
-  }
+  "dependencies": {
+    "zod": "^4.3.2"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts"
 }

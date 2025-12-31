@@ -1,7 +1,5 @@
-# TypeScript
-*.js
-*.js.map
-*.d.ts
+# Build output
+dist/
 
 # Logs
 logs
