@@ -1,0 +1,56 @@
+{
+  "name": "flowrag",
+  "version": "0.0.0",
+  "private": true,
+  "description": "🏠 Monorepo root containing npm workspace configuration, shared build/test/lint scripts, and all development tooling (Biome, Vitest, Husky). Not published to npm.",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "clean": "rm -rf packages/*/lib/*.js packages/*/lib/*.d.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git"
+  },
+  "keywords": [
+    "monorepo",
+    "workspace",
+    "tooling"
+  ],
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zweer/FlowRAG/issues"
+  },
+  "homepage": "https://github.com/Zweer/FlowRAG#readme",
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@biomejs/biome": "^2.3.10",
+    "@semantic-release/changelog": "^6.0.3",
+    "@tsconfig/node22": "^22.0.5",
+    "@types/node": "^25.0.3",
+    "@vitest/coverage-v8": "^4.0.16",
+    "@zweer/coverage-badge-readme": "^1.2.2",
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "lockfile-lint": "^4.14.1",
+    "ls-engines": "^0.9.4",
+    "npm-package-json-lint": "^9.0.0",
+    "npm-package-json-lint-config-default": "^8.0.1",
+    "publint": "^0.3.16",
+    "semantic-release": "^25.0.2",
+    "tsdown": "^0.12.9",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
+  }
+}

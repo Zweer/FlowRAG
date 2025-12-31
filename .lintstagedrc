@@ -1,0 +1,11 @@
+"*.{ts,tsx}":
+  - "bash -c 'npm test'"
+  - "bash -c 'npm run build'"
+  - "bash -c 'npm run clean'"
+
+"package.json":
+  - "bash -c 'npm test'"
+  - "bash -c 'npm run lint'"
+
+"*.{ts,tsx,json,yaml,graphql,md,css,scss,html}":
+  - "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"

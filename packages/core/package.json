@@ -1,0 +1,41 @@
+{
+  "name": "@flowrag/core",
+  "version": "0.0.0",
+  "description": "📐 The heart of FlowRAG. Defines all TypeScript interfaces (Storage, Embedder, LLMExtractor), the Zod-based schema system for defining entity/relation types, and the orchestration pipeline that coordinates indexing and querying. This package contains only contracts and types, no concrete implementations.",
+  "keywords": [
+    "interfaces",
+    "schema",
+    "pipeline",
+    "types",
+    "zod"
+  ],
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/core"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.js.map",
+    "lib/**/*.d.ts"
+  ],
+  "scripts": {
+    "attw": "attw --pack",
+    "publint": "publint"
+  }
+}

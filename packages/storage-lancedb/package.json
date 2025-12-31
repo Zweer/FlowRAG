@@ -1,0 +1,44 @@
+{
+  "name": "@flowrag/storage-lancedb",
+  "version": "0.0.0",
+  "description": "🔍 Vector storage implementation based on LanceDB. Manages vector embeddings and provides fast semantic search via similarity search. LanceDB is embedded (no server required), supports millions of vectors, and can also work on S3.",
+  "keywords": [
+    "storage",
+    "vector",
+    "lancedb",
+    "embeddings",
+    "search"
+  ],
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/storage-lancedb"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.js.map",
+    "lib/**/*.d.ts"
+  ],
+  "scripts": {
+    "attw": "attw --pack",
+    "publint": "publint"
+  },
+  "peerDependencies": {
+    "@flowrag/core": "*"
+  }
+}
