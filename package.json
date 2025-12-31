@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "clean": "rimraf --glob packages/**/dist",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky"
   },
   "repository": {
     "type": "git",
