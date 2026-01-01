@@ -76,13 +76,18 @@ Inspired by LightRAG's clean separation:
 ```
 flowrag/
 ├── package.json              # npm workspaces root
+├── tsconfig.json             # Shared TypeScript config
+├── tsdown.config.ts          # Build config (workspace mode)
+├── biome.json                # Linting & formatting
+├── vitest.config.ts          # Test config
 ├── packages/
-│   ├── core/                 # Interfaces, schema, pipeline
+│   ├── core/                 # Interfaces, schema, types
 │   │   ├── src/
+│   │   │   ├── index.ts      # Public exports
+│   │   │   ├── types.ts      # Core types
 │   │   │   ├── schema.ts     # defineSchema(), Zod-based
-│   │   │   ├── interfaces/   # Storage, Embedder, LLM interfaces
-│   │   │   ├── pipeline.ts   # Ingestion + Query orchestration
-│   │   │   └── graph.ts      # Graph traversal algorithms
+│   │   │   └── interfaces/   # Storage, Embedder, LLM interfaces
+│   │   ├── test/
 │   │   └── package.json
 │   │
 │   ├── storage-json/         # JSON file KV storage
@@ -462,25 +467,29 @@ export const handler = async (event: { query: string }) => {
 
 | Purpose | Tool |
 |---------|------|
-| Runtime | Node.js 20+ |
-| Language | TypeScript (strict mode) |
+| Runtime | Node.js >=20 |
+| Language | TypeScript (strict mode, isolatedDeclarations) |
 | Package Manager | npm workspaces |
+| Build | tsdown (Rolldown-based) |
 | Vector DB | LanceDB |
 | Graph DB | SQLite |
 | Embeddings | @huggingface/transformers (ONNX) |
 | Entity Extraction | Gemini AI |
 | Testing | Vitest |
-| Linting | Biome |
+| Linting/Formatting | Biome |
+| Schema Validation | Zod |
 
 ## 9. Development Phases
 
-### Phase 1: Core Foundation ← **Current**
-- [ ] Monorepo setup (npm workspaces)
-- [ ] `@flowrag/core`: interfaces, schema definition
+### Phase 1: Core Foundation ✅ **In Progress**
+- [x] Monorepo setup (npm workspaces)
+- [x] Build tooling (tsdown, Biome, Vitest)
+- [x] `@flowrag/core`: types, interfaces, schema definition
+- [x] Basic tests for schema
 - [ ] `@flowrag/storage-json`: JSON file KV storage
 - [ ] `@flowrag/storage-lancedb`: LanceDB vector storage
 - [ ] `@flowrag/storage-sqlite`: SQLite graph storage
-- [ ] Basic tests for all packages
+- [ ] Tests for all storage packages
 
 ### Phase 2: Embedders & Extractors
 - [ ] `@flowrag/embedder-local`: HuggingFace ONNX
@@ -524,5 +533,5 @@ export const handler = async (event: { query: string }) => {
 
 ---
 
-*Last updated: 2024-12-30*
+*Last updated: 2026-01-01*
 *Version: 1.0*

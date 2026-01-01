@@ -87,29 +87,29 @@ const results = await rag.search('how does authentication work');
 
 | Package | Description | Status |
 |---------|-------------|--------|
-| `@flowrag/core` | Interfaces, schema, pipeline | 🚧 Planned |
-| `@flowrag/storage-json` | JSON file KV storage | 🚧 Planned |
-| `@flowrag/storage-lancedb` | LanceDB vector storage | 🚧 Planned |
-| `@flowrag/storage-sqlite` | SQLite graph storage | 🚧 Planned |
-| `@flowrag/embedder-local` | HuggingFace ONNX | 🚧 Planned |
-| `@flowrag/embedder-gemini` | Gemini embedding API | 🚧 Planned |
-| `@flowrag/llm-gemini` | Gemini entity extraction | 🚧 Planned |
-| `@flowrag/cli` | Command-line interface | 🚧 Planned |
+| `@flowrag/core` | Interfaces, schema, types | ✅ Done |
+| `@flowrag/storage-json` | JSON file KV storage | 🚧 Next |
+| `@flowrag/storage-lancedb` | LanceDB vector storage | 🚧 Next |
+| `@flowrag/storage-sqlite` | SQLite graph storage | 🚧 Next |
+| `@flowrag/embedder-local` | HuggingFace ONNX | 📋 Planned |
+| `@flowrag/embedder-gemini` | Gemini embedding API | 📋 Planned |
+| `@flowrag/llm-gemini` | Gemini entity extraction | 📋 Planned |
+| `@flowrag/cli` | Command-line interface | 📋 Planned |
 
 ## Key Features
 
 ### Schema-Flexible
 
-Define your own entity types, relation types, and custom fields:
+Define your own entity and relation types. Unknown types fallback to `Other`:
 
 ```typescript
 const schema = defineSchema({
   entityTypes: ['SERVICE', 'PROTOCOL', 'TEAM'],
   relationTypes: ['PRODUCES', 'CONSUMES', 'OWNS'],
-  documentFields: {
-    domain: { type: 'string', filterable: true },
-  },
 });
+
+// schema.isValidEntityType('SERVICE') → true
+// schema.normalizeEntityType('UNKNOWN') → 'Other'
 ```
 
 ### Graph-First
@@ -132,9 +132,16 @@ Combines vector search with graph traversal:
 2. **Graph expansion**: Follow entity relationships
 3. **Merge & dedupe**: Combine results
 
-## Documentation
+## Tech Stack
 
-- [Requirements](.kiro/specs/v1/requirements.md) - Full specification
+| Purpose | Tool |
+|---------|------|
+| Runtime | Node.js >=20 |
+| Language | TypeScript (strict, isolatedDeclarations) |
+| Build | tsdown (Rolldown-based) |
+| Test | Vitest |
+| Lint/Format | Biome |
+| Schema | Zod |
 
 ## Development
 
@@ -143,7 +150,12 @@ npm install        # Install dependencies
 npm run build      # Build all packages
 npm test           # Run tests
 npm run lint       # Lint code
+npm run typecheck  # Type check
 ```
+
+## Documentation
+
+- [Requirements](.kiro/specs/v1/requirements.md) - Full specification
 
 ## License
 
