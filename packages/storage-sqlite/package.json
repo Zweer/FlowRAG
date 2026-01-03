@@ -37,6 +37,12 @@
   "peerDependencies": {
     "@flowrag/core": "*"
   },
+  "dependencies": {
+    "better-sqlite3": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12"
+  },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts"
