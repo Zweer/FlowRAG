@@ -89,16 +89,21 @@ const results = await rag.search('how does authentication work');
 
 ## Packages
 
-| Package | Description | Status |
-|---------|-------------|--------|
-| `@flowrag/core` | Interfaces, schema, types | ✅ Done |
-| `@flowrag/storage-json` | JSON file KV storage | 🚧 Next |
-| `@flowrag/storage-lancedb` | LanceDB vector storage | 🚧 Next |
-| `@flowrag/storage-sqlite` | SQLite graph storage | 🚧 Next |
-| `@flowrag/embedder-local` | HuggingFace ONNX | 📋 Planned |
-| `@flowrag/embedder-gemini` | Gemini embedding API | 📋 Planned |
-| `@flowrag/llm-gemini` | Gemini entity extraction | 📋 Planned |
-| `@flowrag/cli` | Command-line interface | 📋 Planned |
+| Package | Version | Description | Status |
+|---------|---------|-------------|--------|
+| [`@flowrag/core`](./packages/core) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | Interfaces, schema, types | ✅ Complete |
+| [`@flowrag/storage-json`](./packages/storage-json) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | JSON file KV storage | ✅ Complete |
+| [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | SQLite graph storage | ✅ Complete |
+| [`@flowrag/storage-lancedb`](./packages/storage-lancedb) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | LanceDB vector storage | 🚧 In Progress |
+| `@flowrag/embedder-local` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | HuggingFace ONNX | 📋 Planned |
+| `@flowrag/embedder-gemini` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Gemini embedding API | 📋 Planned |
+| `@flowrag/llm-gemini` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Gemini entity extraction | 📋 Planned |
+| `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | 📋 Planned |
+
+### Development Status
+- **✅ Complete**: Fully implemented with 100% test coverage
+- **🚧 In Progress**: Currently being developed  
+- **📋 Planned**: Scheduled for future development
 
 ## Key Features
 
