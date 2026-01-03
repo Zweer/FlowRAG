@@ -481,23 +481,25 @@ export const handler = async (event: { query: string }) => {
 
 ## 9. Development Phases
 
-### Phase 1: Core Foundation ✅ **In Progress**
+### Phase 1: Core Foundation ✅ **Complete**
 - [x] Monorepo setup (npm workspaces)
 - [x] Build tooling (tsdown, Biome, Vitest)
 - [x] `@flowrag/core`: types, interfaces, schema definition
 - [x] Basic tests for schema
-- [ ] `@flowrag/storage-json`: JSON file KV storage
-- [ ] `@flowrag/storage-lancedb`: LanceDB vector storage
-- [ ] `@flowrag/storage-sqlite`: SQLite graph storage
-- [ ] Tests for all storage packages
+- [x] `@flowrag/storage-json`: JSON file KV storage
+- [x] `@flowrag/storage-lancedb`: LanceDB vector storage
+- [x] `@flowrag/storage-sqlite`: SQLite graph storage
+- [x] Tests for all storage packages
 
-### Phase 2: Embedders & Extractors
-- [ ] `@flowrag/embedder-local`: HuggingFace ONNX
-- [ ] `@flowrag/embedder-gemini`: Gemini API
-- [ ] `@flowrag/llm-gemini`: Entity extraction
-- [ ] Integration tests
+### Phase 2: Embedders & Extractors ✅ **Complete**
+- [x] `@flowrag/embedder-local`: HuggingFace ONNX
+- [x] `@flowrag/embedder-gemini`: Gemini API
+- [x] `@flowrag/llm-gemini`: Entity extraction
+- [x] Integration tests
+- [x] 100% test coverage (89 tests)
+- [x] Updated to 2026 tech stack (@google/genai v1.34.0, @huggingface/transformers v3.8.1)
 
-### Phase 3: Pipeline & CLI
+### Phase 3: Pipeline & CLI 📋 **Next**
 - [ ] Indexing pipeline
 - [ ] Query pipeline with dual retrieval
 - [ ] `@flowrag/cli`: Command-line interface
