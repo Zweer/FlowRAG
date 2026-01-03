@@ -1,0 +1,89 @@
+import type { ExtractionResult, LLMExtractor, Schema } from '@flowrag/core';
+import { GoogleGenAI } from '@google/genai';
+
+export interface GeminiExtractorOptions {
+  apiKey?: string;
+  model?: string;
+  temperature?: number;
+}
+
+export class GeminiExtractor implements LLMExtractor {
+  readonly modelName: string;
+  private readonly client: GoogleGenAI;
+  private readonly temperature: number;
+
+  constructor(options: GeminiExtractorOptions = {}) {
+    const apiKey = options.apiKey || process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error(
+        'Gemini API key is required. Set GEMINI_API_KEY environment variable or pass apiKey option.',
+      );
+    }
+
+    this.modelName = options.model || 'gemini-2.0-flash-exp';
+    this.temperature = options.temperature ?? 0.1;
+    this.client = new GoogleGenAI({ apiKey });
+  }
+
+  async extractEntities(
+    content: string,
+    knownEntities: string[],
+    schema: Schema,
+  ): Promise<ExtractionResult> {
+    const prompt = this.buildPrompt(content, knownEntities, schema);
+
+    const response = await this.client.models.generateContent({
+      model: this.modelName,
+      contents: [{ parts: [{ text: prompt }] }],
+      config: {
+        temperature: this.temperature,
+        responseMimeType: 'application/json',
+      },
+    });
+
+    try {
+      return JSON.parse(response.text ?? '');
+    } catch (error) {
+      throw new Error(`Failed to parse LLM response: ${error}`);
+    }
+  }
+
+  private buildPrompt(content: string, knownEntities: string[], schema: Schema): string {
+    const entityTypes = schema.entityTypes.join(', ');
+    const relationTypes = schema.relationTypes.join(', ');
+    const knownEntitiesList =
+      knownEntities.length > 0
+        ? `\n\nKnown entities to reference: ${knownEntities.join(', ')}`
+        : '';
+
+    return `Extract entities and relations from the following content.
+
+Entity types: ${entityTypes}
+Relation types: ${relationTypes}${knownEntitiesList}
+
+Content:
+${content}
+
+Return a JSON object with this structure:
+{
+  "entities": [
+    {
+      "name": "entity name",
+      "type": "entity type from the list above, or 'Other' if not matching",
+      "description": "brief description of the entity"
+    }
+  ],
+  "relations": [
+    {
+      "source": "source entity name",
+      "target": "target entity name", 
+      "type": "relation type from the list above",
+      "description": "description of the relationship",
+      "keywords": ["keyword1", "keyword2"]
+    }
+  ]
+}
+
+Focus on technical entities and their relationships. Be precise and avoid duplicates.`;
+  }
+}

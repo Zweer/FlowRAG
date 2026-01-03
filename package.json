@@ -18,9 +18,12 @@
     "lint:typecheck": "tsc --noEmit",
     "postlint": "npm run clean",
     "clean": "rimraf --glob packages/**/dist",
+    "pretest": "npm run build",
     "test": "vitest run",
+    "posttest": "npm run clean",
+    "pretest:coverage": "npm run build",
     "test:coverage": "vitest run --coverage",
-    "posttest:coverage": "coverage-badge-readme",
+    "posttest:coverage": "npm run clean && coverage-badge-readme",
     "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky"
   },
   "repository": {
@@ -33,7 +36,7 @@
     "tooling"
   ],
   "engines": {
-    "node": ">= 20"
+    "node": ">= 20.3"
   },
   "author": {
     "name": "Zweer",

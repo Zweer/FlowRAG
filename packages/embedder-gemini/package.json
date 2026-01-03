@@ -1,0 +1,50 @@
+{
+  "name": "@flowrag/embedder-gemini",
+  "version": "0.0.0",
+  "description": "Gemini API embedder for FlowRAG",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@flowrag/core": "*",
+    "@google/genai": "^1.34.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "author": "Nic Raboy <nic@raboy.dev>",
+  "license": "MIT",
+  "keywords": [
+    "flowrag",
+    "embedder",
+    "gemini",
+    "ai",
+    "rag"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/embedder-gemini"
+  },
+  "bugs": "https://github.com/Zweer/FlowRAG/issues",
+  "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/embedder-gemini",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts"
+}
