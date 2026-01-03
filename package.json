@@ -20,6 +20,7 @@
     "clean": "rimraf --glob packages/**/dist",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "posttest:coverage": "coverage-badge-readme",
     "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky"
   },
   "repository": {
