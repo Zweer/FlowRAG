@@ -2,10 +2,7 @@
   "name": "dev",
   "description": "Agent for FlowRAG - TypeScript RAG library with knowledge graph support",
   "prompt": "file://../prompts/dev.md",
-  "resources": [
-    "file://README.md",
-    "file://.kiro/specs/v1/requirements.md"
-  ],
+  "resources": ["file://README.md", "file://.kiro/specs/v1/requirements.md"],
   "tools": [
     "read",
     "write",

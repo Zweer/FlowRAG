@@ -35,10 +35,9 @@ const schemaConfigSchema = z.object({
  * Define a schema for entity and relation types.
  * Types are suggestions - if LLM extracts a type not in the list, it falls back to 'Other'.
  */
-export function defineSchema<
-  const E extends readonly string[],
-  const R extends readonly string[],
->(config: SchemaConfig<E, R>): Schema<E, R> {
+export function defineSchema<const E extends readonly string[], const R extends readonly string[]>(
+  config: SchemaConfig<E, R>,
+): Schema<E, R> {
   schemaConfigSchema.parse(config);
 
   const entitySet = new Set<string>(config.entityTypes);
@@ -49,8 +48,7 @@ export function defineSchema<
     relationTypes: config.relationTypes,
     isValidEntityType: (type: string) => entitySet.has(type),
     isValidRelationType: (type: string) => relationSet.has(type),
-    normalizeEntityType: (type: string) =>
-      entitySet.has(type) ? (type as E[number]) : 'Other',
+    normalizeEntityType: (type: string) => (entitySet.has(type) ? (type as E[number]) : 'Other'),
     normalizeRelationType: (type: string) =>
       relationSet.has(type) ? (type as R[number]) : 'Other',
   };
