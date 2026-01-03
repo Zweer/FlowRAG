@@ -9,9 +9,14 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "typecheck": "tsc --noEmit",
-    "lint": "biome check",
-    "lint:fix": "biome check --write",
+    "prelint": "npm run build",
+    "lint": "concurrently npm:lint:* --prefixColors auto",
+    "lint:format": "biome check --write",
+    "lint:package": "npmPkgJsonLint .",
+    "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --validate-integrity",
+    "lint:engines": "ls-engines",
+    "lint:typecheck": "tsc --noEmit",
+    "postlint": "npm run clean",
     "clean": "rimraf --glob packages/**/dist",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -26,6 +31,9 @@
     "workspace",
     "tooling"
   ],
+  "engines": {
+    "node": ">= 20"
+  },
   "author": {
     "name": "Zweer",
     "email": "n.olivieriachille@gmail.com"
