@@ -9,38 +9,42 @@
     "embeddings",
     "search"
   ],
-  "author": {
-    "name": "Zweer",
-    "email": "n.olivieriachille@gmail.com"
-  },
-  "license": "MIT",
+  "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {
     "url": "https://github.com/Zweer/FlowRAG/issues"
-  },
-  "homepage": "https://github.com/Zweer/FlowRAG#readme",
-  "engines": {
-    "node": ">=20"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Zweer/FlowRAG.git",
     "directory": "packages/storage-lancedb"
   },
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist"
   ],
-  "peerDependencies": {
-    "@flowrag/core": "*"
-  },
   "dependencies": {
     "@lancedb/lancedb": "^0.15.0"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts"
+  "peerDependencies": {
+    "@flowrag/core": "*"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }

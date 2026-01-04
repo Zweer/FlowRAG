@@ -3,50 +3,48 @@
   "version": "0.0.0",
   "private": true,
   "description": "🏠 Monorepo root containing npm workspace configuration, shared build/test/lint scripts, and all development tooling (Biome, Vitest, Husky). Not published to npm.",
+  "keywords": [
+    "monorepo",
+    "workspace",
+    "tooling"
+  ],
+  "homepage": "https://github.com/Zweer/FlowRAG#readme",
+  "bugs": {
+    "url": "https://github.com/Zweer/FlowRAG/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "build": "tsdown",
+    "clean": "rimraf --glob packages/**/dist",
     "prelint": "npm run build",
     "lint": "concurrently npm:lint:* --prefixColors auto",
-    "lint:format": "biome check --write",
-    "lint:package": "npmPkgJsonLint .",
-    "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --validate-integrity",
-    "lint:engines": "ls-engines",
-    "lint:typecheck": "tsc --noEmit",
     "postlint": "npm run clean",
-    "clean": "rimraf --glob packages/**/dist",
+    "lint:engines": "ls-engines",
+    "lint:format": "biome check --write",
+    "lint:lockfile": "lockfile-lint",
+    "lint:package": "npmPkgJsonLint .",
+    "lint:sort_package": "sort-package-json \"package.json\" \"packages/*/package.json\"",
+    "lint:typecheck": "tsc --noEmit",
+    "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky",
     "pretest": "npm run build",
     "test": "vitest run",
     "posttest": "npm run clean",
     "pretest:coverage": "npm run build",
     "test:coverage": "vitest run --coverage",
-    "posttest:coverage": "npm run clean && coverage-badge-readme",
-    "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky"
+    "posttest:coverage": "npm run clean && coverage-badge-readme"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Zweer/FlowRAG.git"
-  },
-  "keywords": [
-    "monorepo",
-    "workspace",
-    "tooling"
-  ],
-  "engines": {
-    "node": ">= 20.3"
-  },
-  "author": {
-    "name": "Zweer",
-    "email": "n.olivieriachille@gmail.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Zweer/FlowRAG/issues"
-  },
-  "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
     "@biomejs/biome": "^2.3.11",
@@ -66,9 +64,21 @@
     "publint": "^0.3.16",
     "rimraf": "^6.1.2",
     "semantic-release": "^25.0.2",
+    "sort-package-json": "^3.6.0",
     "tsdown": "^0.18.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
+  },
+  "engines": {
+    "node": ">= 20.3"
+  },
+  "lockfile-lint": {
+    "path": "package-lock.json",
+    "type": "npm",
+    "validate-https": true,
+    "allowed-hosts": [
+      "npm"
+    ]
   }
 }

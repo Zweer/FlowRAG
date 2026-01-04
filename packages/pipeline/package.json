@@ -2,26 +2,40 @@
   "name": "@flowrag/pipeline",
   "version": "0.0.0",
   "description": "Core pipeline for FlowRAG - indexing and querying with dual retrieval (vector + graph)",
-  "type": "module",
-  "exports": {
-    ".": "./dist/index.mjs",
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "dist"
+  "keywords": [
+    "rag",
+    "pipeline",
+    "indexing",
+    "querying",
+    "knowledge-graph",
+    "vector-search",
+    "dual-retrieval"
   ],
-  "engines": {
-    "node": ">= 20.3"
+  "homepage": "https://github.com/Zweer/FlowRAG#readme",
+  "bugs": {
+    "url": "https://github.com/Zweer/FlowRAG/issues"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Zweer/FlowRAG.git",
     "directory": "packages/pipeline"
   },
-  "bugs": {
-    "url": "https://github.com/Zweer/FlowRAG/issues"
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
   },
-  "homepage": "https://github.com/Zweer/FlowRAG#readme",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsdown",
     "test": "vitest run",
@@ -36,27 +50,13 @@
     "@flowrag/llm-gemini": "*",
     "@flowrag/storage-json": "*",
     "@flowrag/storage-lancedb": "*",
-    "@flowrag/storage-sqlite": "*",
-    "@types/node": "^22.10.2",
-    "tsdown": "^0.18.4",
-    "typescript": "^5.7.3",
-    "vitest": "^4.0.16"
+    "@flowrag/storage-sqlite": "*"
   },
-  "author": {
-    "name": "Zweer",
-    "email": "n.olivieriachille@gmail.com"
+  "engines": {
+    "node": ">= 20.3"
   },
-  "license": "MIT",
-  "keywords": [
-    "rag",
-    "pipeline",
-    "indexing",
-    "querying",
-    "knowledge-graph",
-    "vector-search",
-    "dual-retrieval"
-  ],
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts"
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }
