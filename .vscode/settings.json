@@ -1,3 +1,9 @@
 {
-  "conventionalCommits.scopes": ["core", "storage-json", "storage-lancedb", "storage-sqlite"]
+  "conventionalCommits.scopes": [
+    "core",
+    "pipeline",
+    "storage-json",
+    "storage-lancedb",
+    "storage-sqlite"
+  ]
 }
