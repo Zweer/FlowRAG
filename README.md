@@ -1,6 +1,7 @@
 # FlowRAG 🌊
 
 [![CI](https://github.com/Zweer/FlowRAG/actions/workflows/ci.yml/badge.svg)](https://github.com/Zweer/FlowRAG/actions/workflows/ci.yml)
+[![Security](https://github.com/Zweer/FlowRAG/actions/workflows/security.yml/badge.svg)](https://github.com/Zweer/FlowRAG/actions/workflows/security.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Coverage Badge](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat)
 
