@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/llm-gemini",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Gemini LLM extractor for FlowRAG entity and relation extraction",
   "keywords": [
     "flowrag",

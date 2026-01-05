@@ -1,10 +1,10 @@
 {
-  "packages/core": "1.0.0",
-  "packages/embedder-gemini": "1.0.0",
-  "packages/embedder-local": "1.0.0",
-  "packages/llm-gemini": "1.0.0",
-  "packages/pipeline": "1.0.0",
-  "packages/storage-json": "1.0.0",
-  "packages/storage-lancedb": "1.0.0",
-  "packages/storage-sqlite": "1.0.0"
+  "packages/core": "0.0.1",
+  "packages/embedder-gemini": "0.0.1",
+  "packages/embedder-local": "0.0.1",
+  "packages/llm-gemini": "0.0.1",
+  "packages/pipeline": "0.0.1",
+  "packages/storage-json": "0.0.1",
+  "packages/storage-lancedb": "0.0.1",
+  "packages/storage-sqlite": "0.0.1"
 }
