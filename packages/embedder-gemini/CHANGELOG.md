@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.2](https://github.com/Zweer/FlowRAG/compare/embedder-gemini-v1.0.1...embedder-gemini-v1.0.2) (2026-01-05)
+
+
+### Miscellaneous Chores
+
+* release 1.0.2 ([7a46b88](https://github.com/Zweer/FlowRAG/commit/7a46b881ffbad7999c3dda2a3a9ca0081e64a76e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @flowrag/core bumped from 1.0.1 to 1.0.2
+
 ## [1.0.1](https://github.com/Zweer/FlowRAG/compare/embedder-gemini-v1.0.0...embedder-gemini-v1.0.1) (2026-01-05)
 
 

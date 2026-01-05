@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/Zweer/FlowRAG/compare/core-v1.0.1...core-v1.0.2) (2026-01-05)
+
+
+### Miscellaneous Chores
+
+* release 1.0.2 ([7a46b88](https://github.com/Zweer/FlowRAG/commit/7a46b881ffbad7999c3dda2a3a9ca0081e64a76e))
+
 ## [1.0.1](https://github.com/Zweer/FlowRAG/compare/core-v1.0.0...core-v1.0.1) (2026-01-05)
 
 
