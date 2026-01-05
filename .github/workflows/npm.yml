@@ -73,6 +73,20 @@ jobs:
         id: release
         uses: googleapis/release-please-action@v4
 
+      - name: Debug outputs
+        run: |
+          echo "releases_created: '${{ steps.release.outputs.releases_created }}'"
+          echo "Boolean check (true): ${{ steps.release.outputs.releases_created == true }}"
+          echo "Boolean check (false): ${{ steps.release.outputs.releases_created == false }}"
+          echo "String check (true): ${{ steps.release.outputs.releases_created == 'true' }}"
+          echo "String check (false): ${{ steps.release.outputs.releases_created == 'false' }}"
+
+          echo "prs_created: '${{ steps.release.outputs.prs_created }}'"
+          echo "Boolean check (true): ${{ steps.release.outputs.prs_created == true }}"
+          echo "Boolean check (false): ${{ steps.release.outputs.prs_created == false }}"
+          echo "String check (true): ${{ steps.release.outputs.prs_created == 'true' }}"
+          echo "String check (false): ${{ steps.release.outputs.prs_created == 'false' }}"
+
       - name: Git Checkout
         if: ${{ steps.release.outputs.releases_created }}
         uses: actions/checkout@v6
@@ -108,8 +122,13 @@ jobs:
       - name: Debug outputs
         run: |
           echo "releases_created: '${{ needs.release.outputs.releases_created }}'"
-          echo "Type check: ${{ needs.release.outputs.releases_created == true }}"
-          echo "String check: ${{ needs.release.outputs.releases_created == 'true' }}"
+          echo "Boolean check (true): ${{ needs.release.outputs.releases_created == true }}"
+          echo "Boolean check (false): ${{ needs.release.outputs.releases_created == false }}"
+          echo "String check (true): ${{ needs.release.outputs.releases_created == 'true' }}"
+          echo "String check (false): ${{ needs.release.outputs.releases_created == 'false' }}"
+
           echo "prs_created: '${{ needs.release.outputs.prs_created }}'"
-          echo "Type check: ${{ needs.release.outputs.prs_created == true }}"
-          echo "String check: ${{ needs.release.outputs.prs_created == 'true' }}"
+          echo "Boolean check (true): ${{ needs.release.outputs.prs_created == true }}"
+          echo "Boolean check (false): ${{ needs.release.outputs.prs_created == false }}"
+          echo "String check (true): ${{ needs.release.outputs.prs_created == 'true' }}"
+          echo "String check (false): ${{ needs.release.outputs.prs_created == 'false' }}"
