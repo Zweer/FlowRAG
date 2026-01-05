@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.0](https://github.com/Zweer/FlowRAG/compare/core-v1.0.0...core-v1.0.0) (2026-01-05)
+
+
+### Features
+
+* :tada: initialize monorepo with core packages and tooling ([edc9984](https://github.com/Zweer/FlowRAG/commit/edc9984aaa23363d1cb98c8a7367f2ca492ddd7a))
+* **core:** :sparkles: add types, interfaces and schema definition ([e96c575](https://github.com/Zweer/FlowRAG/commit/e96c57514832a266c2419fdb94a48a7ae558f470))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([185c454](https://github.com/Zweer/FlowRAG/commit/185c4541616bf083f6151a468fa5fc3ea535d03a))
+
 ## [1.0.0](https://github.com/Zweer/FlowRAG/compare/core-v0.0.1...core-v1.0.0) (2026-01-05)
 
 
