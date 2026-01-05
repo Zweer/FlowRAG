@@ -54,7 +54,7 @@ jobs:
         with:
           fail-if-changed: true
 
-  release:
+  release-please:
     needs:
       - test
       - lint
@@ -64,35 +64,25 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      id-token: write
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
-      prs_created: ${{ steps.release.outputs.prs_created }}
     steps:
       - name: Release Please
         id: release
         uses: googleapis/release-please-action@v4
 
-      - name: Debug outputs
-        run: |
-          echo "releases_created: '${{ steps.release.outputs.releases_created }}'"
-          echo "Boolean check (true): ${{ steps.release.outputs.releases_created == true }}"
-          echo "Boolean check (false): ${{ steps.release.outputs.releases_created == false }}"
-          echo "String check (true): ${{ steps.release.outputs.releases_created == 'true' }}"
-          echo "String check (false): ${{ steps.release.outputs.releases_created == 'false' }}"
-
-          echo "prs_created: '${{ steps.release.outputs.prs_created }}'"
-          echo "Boolean check (true): ${{ steps.release.outputs.prs_created == true }}"
-          echo "Boolean check (false): ${{ steps.release.outputs.prs_created == false }}"
-          echo "String check (true): ${{ steps.release.outputs.prs_created == 'true' }}"
-          echo "String check (false): ${{ steps.release.outputs.prs_created == 'false' }}"
-
+  publish:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
       - name: Git Checkout
-        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/checkout@v6
 
       - name: Setup Node.js
-        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -100,35 +90,14 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
-        if: ${{ steps.release.outputs.releases_created }}
         run: npm ci
 
       - name: Build
-        if: ${{ steps.release.outputs.releases_created }}
         run: npm run build
 
       - name: Publish packages
-        if: ${{ steps.release.outputs.releases_created }}
         run: |
           for pkg in packages/*/; do
             echo "Publishing $pkg"
             npm publish "$pkg" || true
           done
-
-  publish:
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug outputs
-        run: |
-          echo "releases_created: '${{ needs.release.outputs.releases_created }}'"
-          echo "Boolean check (true): ${{ needs.release.outputs.releases_created == true }}"
-          echo "Boolean check (false): ${{ needs.release.outputs.releases_created == false }}"
-          echo "String check (true): ${{ needs.release.outputs.releases_created == 'true' }}"
-          echo "String check (false): ${{ needs.release.outputs.releases_created == 'false' }}"
-
-          echo "prs_created: '${{ needs.release.outputs.prs_created }}'"
-          echo "Boolean check (true): ${{ needs.release.outputs.prs_created == true }}"
-          echo "Boolean check (false): ${{ needs.release.outputs.prs_created == false }}"
-          echo "String check (true): ${{ needs.release.outputs.prs_created == 'true' }}"
-          echo "String check (false): ${{ needs.release.outputs.prs_created == 'false' }}"
