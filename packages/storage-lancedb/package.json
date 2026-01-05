@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-lancedb",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "🔍 Vector storage implementation based on LanceDB. Manages vector embeddings and provides fast semantic search via similarity search. LanceDB is embedded (no server required), supports millions of vectors, and can also work on S3.",
   "keywords": [
     "storage",
@@ -38,7 +38,7 @@
     "@lancedb/lancedb": "^0.23.0"
   },
   "peerDependencies": {
-    "@flowrag/core": "*"
+    "@flowrag/core": "1.0.0"
   },
   "engines": {
     "node": ">=20"
