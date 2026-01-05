@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.1](https://github.com/Zweer/FlowRAG/compare/llm-gemini-v1.0.0...llm-gemini-v1.0.1) (2026-01-05)
+
+
+### Miscellaneous Chores
+
+* release 1.0.1 ([41deba6](https://github.com/Zweer/FlowRAG/commit/41deba637b4609b32b658f8dfd59c19aaff7420c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @flowrag/core bumped from 1.0.0 to 1.0.1
+
 ## [1.0.0](https://github.com/Zweer/FlowRAG/compare/llm-gemini-v1.0.0...llm-gemini-v1.0.0) (2026-01-05)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/embedder-local",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Local ONNX embedder for FlowRAG using HuggingFace Transformers.js",
   "keywords": [
     "flowrag",
@@ -41,7 +41,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@flowrag/core": "1.0.0",
+    "@flowrag/core": "1.0.1",
     "@huggingface/transformers": "^3.8.1"
   },
   "engines": {
