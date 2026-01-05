@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/pipeline",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Core pipeline for FlowRAG - indexing and querying with dual retrieval (vector + graph)",
   "keywords": [
     "rag",
@@ -42,15 +42,15 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@flowrag/core": "*",
+    "@flowrag/core": "1.0.0",
     "tiktoken": "^1.0.17"
   },
   "devDependencies": {
-    "@flowrag/embedder-local": "*",
-    "@flowrag/llm-gemini": "*",
-    "@flowrag/storage-json": "*",
-    "@flowrag/storage-lancedb": "*",
-    "@flowrag/storage-sqlite": "*"
+    "@flowrag/embedder-local": "1.0.0",
+    "@flowrag/llm-gemini": "1.0.0",
+    "@flowrag/storage-json": "1.0.0",
+    "@flowrag/storage-lancedb": "1.0.0",
+    "@flowrag/storage-sqlite": "1.0.0"
   },
   "engines": {
     "node": ">= 20.3"
