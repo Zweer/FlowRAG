@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/embedder-gemini",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gemini API embedder for FlowRAG",
   "keywords": [
     "flowrag",
@@ -39,7 +39,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@flowrag/core": "1.0.1",
+    "@flowrag/core": "1.0.2",
     "@google/genai": "^1.34.0"
   },
   "engines": {
