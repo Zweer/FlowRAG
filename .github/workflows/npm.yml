@@ -54,7 +54,7 @@ jobs:
         with:
           fail-if-changed: true
 
-  release-please:
+  release:
     needs:
       - test
       - lint
@@ -64,25 +64,18 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    outputs:
-      releases_created: ${{ steps.release.outputs.releases_created }}
+      id-token: write
     steps:
       - name: Release Please
         id: release
         uses: googleapis/release-please-action@v4
 
-  publish:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
       - name: Git Checkout
+        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/checkout@v6
 
       - name: Setup Node.js
+        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -90,12 +83,15 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
+        if: ${{ steps.release.outputs.releases_created }}
         run: npm ci
 
       - name: Build
+        if: ${{ steps.release.outputs.releases_created }}
         run: npm run build
 
       - name: Publish packages
+        if: ${{ steps.release.outputs.releases_created }}
         run: |
           for pkg in packages/*/; do
             echo "Publishing $pkg"
