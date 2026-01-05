@@ -65,6 +65,9 @@ jobs:
       contents: write
       pull-requests: write
       id-token: write
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      prs_created: ${{ steps.release.outputs.prs_created }}
     steps:
       - name: Release Please
         id: release
@@ -97,3 +100,16 @@ jobs:
             echo "Publishing $pkg"
             npm publish "$pkg" || true
           done
+
+  publish:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug outputs
+        run: |
+          echo "releases_created: '${{ needs.release.outputs.releases_created }}'"
+          echo "Type check: ${{ needs.release.outputs.releases_created == true }}"
+          echo "String check: ${{ needs.release.outputs.releases_created == 'true' }}"
+          echo "prs_created: '${{ needs.release.outputs.prs_created }}'"
+          echo "Type check: ${{ needs.release.outputs.prs_created == true }}"
+          echo "String check: ${{ needs.release.outputs.prs_created == 'true' }}"
