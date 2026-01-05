@@ -1,22 +1,86 @@
-name: Publish to npm
+name: Release
 
 on:
-  release:
-    types: [published]
-
-permissions:
-  contents: read
-  id-token: write
+  push:
+    branches:
+      - main
 
 jobs:
-  publish:
+  test:
+    # Skip if commit is from release-please (version bump / changelog only)
+    if: "!startsWith(github.event.head_commit.message, 'chore: release main')"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20, 22, 24]
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit testing
+        run: npm test
+
+  lint:
+    # Skip if commit is from release-please (version bump / changelog only)
+    if: "!startsWith(github.event.head_commit.message, 'chore: release main')"
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
         uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
-          fetch-depth: 0
-          persist-credentials: false
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Linting
+        run: npm run lint
+
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v20
+        with:
+          fail-if-changed: true
+
+  release-please:
+    needs:
+      - test
+      - lint
+    # Always run, even if test/lint were skipped
+    if: ${{ always() && !failure() && !cancelled() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+    steps:
+      - name: Release Please
+        id: release
+        uses: googleapis/release-please-action@v4
+
+  publish:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -28,7 +92,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build sources
+      - name: Build
         run: npm run build
 
       - name: Publish packages
