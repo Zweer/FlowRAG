@@ -134,12 +134,14 @@ Combines vector search with graph traversal:
 | Package | Version | Description | Status |
 |---------|---------|-------------|--------|
 | [`@flowrag/core`](./packages/core) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fcore.svg)](https://www.npmjs.com/package/@flowrag/core) | Interfaces, schema, types | ✅ Complete |
+| [`@flowrag/pipeline`](./packages/pipeline) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpipeline.svg)](https://www.npmjs.com/package/@flowrag/pipeline) | Indexing & querying pipelines | ✅ Complete |
 | [`@flowrag/storage-json`](./packages/storage-json) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-json.svg)](https://www.npmjs.com/package/@flowrag/storage-json) | JSON file KV storage | ✅ Complete |
 | [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-sqlite.svg)](https://www.npmjs.com/package/@flowrag/storage-sqlite) | SQLite graph storage | ✅ Complete |
 | [`@flowrag/storage-lancedb`](./packages/storage-lancedb) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-lancedb.svg)](https://www.npmjs.com/package/@flowrag/storage-lancedb) | LanceDB vector storage | ✅ Complete |
 | [`@flowrag/embedder-local`](./packages/embedder-local) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fembedder-local.svg)](https://www.npmjs.com/package/@flowrag/embedder-local) | HuggingFace ONNX | ✅ Complete |
 | [`@flowrag/embedder-gemini`](./packages/embedder-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fembedder-gemini.svg)](https://www.npmjs.com/package/@flowrag/embedder-gemini) | Gemini embedding API | ✅ Complete |
 | [`@flowrag/llm-gemini`](./packages/llm-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fllm-gemini.svg)](https://www.npmjs.com/package/@flowrag/llm-gemini) | Gemini entity extraction | ✅ Complete |
+| [`@flowrag/presets`](./packages/presets) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpresets.svg)](https://www.npmjs.com/package/@flowrag/presets) | Opinionated presets | ✅ Complete |
 | `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | 📋 Planned |
 
 ### Development Status

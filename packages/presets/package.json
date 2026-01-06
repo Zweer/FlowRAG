@@ -1,0 +1,61 @@
+{
+  "name": "@flowrag/presets",
+  "version": "0.1.0",
+  "description": "Opinionated presets for FlowRAG",
+  "keywords": [
+    "rag",
+    "typescript",
+    "knowledge-graph",
+    "presets"
+  ],
+  "homepage": "https://github.com/Zweer/FlowRAG#readme",
+  "bugs": {
+    "url": "https://github.com/Zweer/FlowRAG/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/presets"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@flowrag/core": "workspace:*",
+    "@flowrag/embedder-local": "workspace:*",
+    "@flowrag/llm-gemini": "workspace:*",
+    "@flowrag/storage-json": "workspace:*",
+    "@flowrag/storage-lancedb": "workspace:*",
+    "@flowrag/storage-sqlite": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
