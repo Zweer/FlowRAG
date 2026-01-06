@@ -39,12 +39,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@flowrag/core": "workspace:*",
-    "@flowrag/embedder-local": "workspace:*",
-    "@flowrag/llm-gemini": "workspace:*",
-    "@flowrag/storage-json": "workspace:*",
-    "@flowrag/storage-lancedb": "workspace:*",
-    "@flowrag/storage-sqlite": "workspace:*"
+    "@flowrag/core": "*",
+    "@flowrag/embedder-local": "*",
+    "@flowrag/llm-gemini": "*",
+    "@flowrag/storage-json": "*",
+    "@flowrag/storage-lancedb": "*",
+    "@flowrag/storage-sqlite": "*"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
