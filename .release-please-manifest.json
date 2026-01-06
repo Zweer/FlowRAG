@@ -4,6 +4,7 @@
   "packages/embedder-local": "1.0.2",
   "packages/llm-gemini": "1.0.2",
   "packages/pipeline": "1.0.2",
+  "packages/presets": "0.1.0",
   "packages/storage-json": "1.0.2",
   "packages/storage-lancedb": "1.0.2",
   "packages/storage-sqlite": "1.0.2"
