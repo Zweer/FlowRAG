@@ -42,9 +42,8 @@ flowrag/
 │   ├── storage-lancedb/   # LanceDB for vectors
 │   ├── storage-s3/        # S3 adapter (cloud)
 │   ├── storage-opensearch/# OpenSearch adapter (cloud)
-│   ├── embedder-local/    # HuggingFace ONNX
-│   ├── embedder-gemini/   # Gemini API
-│   ├── llm-gemini/        # Gemini for extraction
+│   ├── provider-local/    # Local AI provider (ONNX embeddings)
+│   ├── provider-gemini/   # Gemini AI provider (embeddings + extraction)
 │   ├── llm-bedrock/       # AWS Bedrock (future)
 │   └── cli/               # CLI for testing
 └── examples/

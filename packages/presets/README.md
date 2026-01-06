@@ -39,7 +39,7 @@ const rag = await createFlowRAG({
 ### Override Components
 
 ```typescript
-import { GeminiEmbedder } from '@flowrag/embedder-gemini';
+import { GeminiEmbedder } from '@flowrag/provider-gemini';
 
 const rag = await createFlowRAG({
   schema,

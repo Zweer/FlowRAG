@@ -40,7 +40,7 @@ FlowRAG solves common problems with existing RAG solutions:
 
 ```bash
 npm install @flowrag/core @flowrag/storage-json @flowrag/storage-sqlite @flowrag/storage-lancedb
-npm install @flowrag/embedder-local @flowrag/llm-gemini
+npm install @flowrag/provider-local @flowrag/provider-gemini
 ```
 
 Or for a complete local setup:
@@ -138,9 +138,8 @@ Combines vector search with graph traversal:
 | [`@flowrag/storage-json`](./packages/storage-json) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-json.svg)](https://www.npmjs.com/package/@flowrag/storage-json) | JSON file KV storage | ✅ Complete |
 | [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-sqlite.svg)](https://www.npmjs.com/package/@flowrag/storage-sqlite) | SQLite graph storage | ✅ Complete |
 | [`@flowrag/storage-lancedb`](./packages/storage-lancedb) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-lancedb.svg)](https://www.npmjs.com/package/@flowrag/storage-lancedb) | LanceDB vector storage | ✅ Complete |
-| [`@flowrag/embedder-local`](./packages/embedder-local) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fembedder-local.svg)](https://www.npmjs.com/package/@flowrag/embedder-local) | HuggingFace ONNX | ✅ Complete |
-| [`@flowrag/embedder-gemini`](./packages/embedder-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fembedder-gemini.svg)](https://www.npmjs.com/package/@flowrag/embedder-gemini) | Gemini embedding API | ✅ Complete |
-| [`@flowrag/llm-gemini`](./packages/llm-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fllm-gemini.svg)](https://www.npmjs.com/package/@flowrag/llm-gemini) | Gemini entity extraction | ✅ Complete |
+| [`@flowrag/provider-local`](./packages/provider-local) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-local.svg)](https://www.npmjs.com/package/@flowrag/provider-local) | Local AI provider (ONNX embeddings) | ✅ Complete |
+| [`@flowrag/provider-gemini`](./packages/provider-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-gemini.svg)](https://www.npmjs.com/package/@flowrag/provider-gemini) | Gemini AI provider (embeddings + extraction) | ✅ Complete |
 | [`@flowrag/presets`](./packages/presets) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpresets.svg)](https://www.npmjs.com/package/@flowrag/presets) | Opinionated presets | ✅ Complete |
 | `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | 📋 Planned |
 
