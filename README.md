@@ -7,40 +7,45 @@
 
 TypeScript RAG library with knowledge graph support.
 
-## What is FlowRAG?
+## Table of Contents
 
-A **lightweight, modular RAG library** for TypeScript/Node.js that:
-
-- Works as a **library** (not a server) - import and use
-- Optimized for **batch indexing** + query-only mode
-- **Lambda-friendly** - stateless, fast cold start
-- **Git-friendly storage** - files committable to repo
-- **Pluggable** storage, embedders, and LLMs
+- [Why FlowRAG?](#why-flowrag)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Packages](#packages)
+- [Use Cases](#use-cases)
+- [Development](#development)
+- [Comparison](#comparison)
+- [License](#license)
 
 ## Why FlowRAG?
 
-| | LightRAG | FlowRAG |
-|---|----------|---------|
-| Language | Python | TypeScript |
-| Model | Server (always running) | Library (import and use) |
-| Indexing | Continuous | Batch |
-| Deploy | Container | Lambda-friendly |
-| Storage | External DBs | File-based |
+FlowRAG solves common problems with existing RAG solutions:
 
-## Use Cases
+**🐍 Python Complexity**: No Python environments, virtual envs, or dependency conflicts. Pure TypeScript.
 
-**Local Development**:
+**🖥️ Always-On Servers**: Works as a library, not a service. Import, use, done.
+
+**☁️ Serverless Unfriendly**: Optimized for Lambda with fast cold starts and stateless queries.
+
+**📁 Storage Lock-in**: File-based storage that's Git-friendly. Commit your knowledge base.
+
+**🔗 Missing Knowledge Graphs**: Combines vector search with entity relationships for richer context.
+
+**🔧 Complex Setup**: `npm install` and 10 lines of code to get started.
+
+## Installation
+
 ```bash
-flowrag index ./content    # Index your docs
-flowrag search "query"     # Search locally
-# DB files committed to Git ✓
+npm install @flowrag/core @flowrag/storage-json @flowrag/storage-sqlite @flowrag/storage-lancedb
+npm install @flowrag/embedder-local @flowrag/llm-gemini
 ```
 
-**AWS Lambda**:
-```typescript
-// Query Lambda - stateless, fast
-const rag = await createFlowRAG({ storage: s3Storage });
-const results = await rag.search(query);
+Or for a complete local setup:
+```bash
+npm install @flowrag/core @flowrag/presets
 ```
 
 ## Quick Start
@@ -68,45 +73,7 @@ await rag.index('./content');
 const results = await rag.search('how does authentication work');
 ```
 
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         FlowRAG                             │
-├─────────────────────────────────────────────────────────────┤
-│  Schema Definition  │  Pipeline  │  Graph Traversal         │
-├─────────────────────┴────────────┴──────────────────────────┤
-│                      STORAGE LAYER                          │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
-│  │    KV    │  │  Vector  │  │  Graph   │                   │
-│  │  (JSON)  │  │ (LanceDB)│  │ (SQLite) │                   │
-│  └──────────┘  └──────────┘  └──────────┘                   │
-├─────────────────────────────────────────────────────────────┤
-│                      PROVIDERS                              │
-│  Embedder: Local ONNX │ Gemini                              │
-│  Extractor: Gemini │ Bedrock                                │
-└─────────────────────────────────────────────────────────────┘
-```
-
-## Packages
-
-| Package | Version | Description | Status |
-|---------|---------|-------------|--------|
-| [`@flowrag/core`](./packages/core) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | Interfaces, schema, types | ✅ Complete |
-| [`@flowrag/storage-json`](./packages/storage-json) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | JSON file KV storage | ✅ Complete |
-| [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | SQLite graph storage | ✅ Complete |
-| [`@flowrag/storage-lancedb`](./packages/storage-lancedb) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | LanceDB vector storage | ✅ Complete |
-| [`@flowrag/embedder-local`](./packages/embedder-local) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | HuggingFace ONNX | ✅ Complete |
-| [`@flowrag/embedder-gemini`](./packages/embedder-gemini) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | Gemini embedding API | ✅ Complete |
-| [`@flowrag/llm-gemini`](./packages/llm-gemini) | ![npm](https://img.shields.io/badge/v0.0.0-blue) | Gemini entity extraction | ✅ Complete |
-| `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | 📋 Planned |
-
-### Development Status
-- **✅ Complete**: Fully implemented with 100% test coverage
-- **🚧 In Progress**: Currently being developed  
-- **📋 Planned**: Scheduled for future development
-
-## Key Features
+## Features
 
 ### Schema-Flexible
 
@@ -142,6 +109,62 @@ Combines vector search with graph traversal:
 2. **Graph expansion**: Follow entity relationships
 3. **Merge & dedupe**: Combine results
 
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                         FlowRAG                             │
+├─────────────────────────────────────────────────────────────┤
+│  Schema Definition  │  Pipeline  │  Graph Traversal         │
+├─────────────────────┴────────────┴──────────────────────────┤
+│                      STORAGE LAYER                          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│  │    KV    │  │  Vector  │  │  Graph   │                   │
+│  │  (JSON)  │  │ (LanceDB)│  │ (SQLite) │                   │
+│  └──────────┘  └──────────┘  └──────────┘                   │
+├─────────────────────────────────────────────────────────────┤
+│                      PROVIDERS                              │
+│  Embedder: Local ONNX │ Gemini                              │
+│  Extractor: Gemini │ Bedrock                                │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Packages
+
+| Package | Version | Description | Status |
+|---------|---------|-------------|--------|
+| [`@flowrag/core`](./packages/core) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fcore.svg)](https://www.npmjs.com/package/@flowrag/core) | Interfaces, schema, types | ✅ Complete |
+| [`@flowrag/storage-json`](./packages/storage-json) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-json.svg)](https://www.npmjs.com/package/@flowrag/storage-json) | JSON file KV storage | ✅ Complete |
+| [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-sqlite.svg)](https://www.npmjs.com/package/@flowrag/storage-sqlite) | SQLite graph storage | ✅ Complete |
+| [`@flowrag/storage-lancedb`](./packages/storage-lancedb) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-lancedb.svg)](https://www.npmjs.com/package/@flowrag/storage-lancedb) | LanceDB vector storage | ✅ Complete |
+| [`@flowrag/embedder-local`](./packages/embedder-local) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fembedder-local.svg)](https://www.npmjs.com/package/@flowrag/embedder-local) | HuggingFace ONNX | ✅ Complete |
+| [`@flowrag/embedder-gemini`](./packages/embedder-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fembedder-gemini.svg)](https://www.npmjs.com/package/@flowrag/embedder-gemini) | Gemini embedding API | ✅ Complete |
+| [`@flowrag/llm-gemini`](./packages/llm-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fllm-gemini.svg)](https://www.npmjs.com/package/@flowrag/llm-gemini) | Gemini entity extraction | ✅ Complete |
+| `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | 📋 Planned |
+
+### Development Status
+- **✅ Complete**: Fully implemented with 100% test coverage
+- **🚧 In Progress**: Currently being developed  
+- **📋 Planned**: Scheduled for future development
+
+## Use Cases
+
+### Local Development
+
+```bash
+flowrag index ./content    # Index your docs
+flowrag search "query"     # Search locally
+# DB files committed to Git ✓
+```
+
+### AWS Lambda
+
+```typescript
+// Query Lambda - stateless, fast
+const rag = await createFlowRAG({ storage: s3Storage });
+const results = await rag.search(query);
+```
+
 ## Tech Stack
 
 | Purpose | Tool |
@@ -163,9 +186,18 @@ npm run lint       # Lint code
 npm run typecheck  # Type check
 ```
 
-## Documentation
+## Comparison
 
-- [Requirements](.kiro/specs/v1/requirements.md) - Full specification
+### FlowRAG vs LightRAG
+
+| Aspect | LightRAG | FlowRAG |
+|--------|----------|---------|
+| Language | Python | TypeScript |
+| Model | Server (always running) | Library (import and use) |
+| Indexing | Continuous, real-time | Batch, scheduled |
+| Deploy | Container/server | Lambda-friendly |
+| Storage | External DBs (Neo4j, Postgres) | File-based (Git-friendly) |
+| Complexity | Feature-rich, many deps | Minimal, focused |
 
 ## License
 
