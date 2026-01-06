@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.0](https://github.com/Zweer/FlowRAG/compare/pipeline-v1.0.2...pipeline-v1.1.0) (2026-01-06)
+
+
+### Miscellaneous Chores
+
+* release 1.1.0 ([b7c8e27](https://github.com/Zweer/FlowRAG/commit/b7c8e274c8b18c5bc41f919a9570bb0439348581))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @flowrag/core bumped from 1.0.2 to 1.1.0
+  * devDependencies
+    * @flowrag/storage-json bumped from 1.0.2 to 1.1.0
+    * @flowrag/storage-lancedb bumped from 1.0.2 to 1.1.0
+    * @flowrag/storage-sqlite bumped from 1.0.2 to 1.1.0
+
 ## [1.0.2](https://github.com/Zweer/FlowRAG/compare/pipeline-v1.0.1...pipeline-v1.0.2) (2026-01-05)
 
 

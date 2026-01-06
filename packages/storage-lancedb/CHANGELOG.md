@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/Zweer/FlowRAG/compare/storage-lancedb-v1.0.2...storage-lancedb-v1.1.0) (2026-01-06)
+
+
+### Miscellaneous Chores
+
+* release 1.1.0 ([b7c8e27](https://github.com/Zweer/FlowRAG/commit/b7c8e274c8b18c5bc41f919a9570bb0439348581))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * peerDependencies
+    * @flowrag/core bumped from 1.0.2 to 1.1.0
+
 ## [1.0.2](https://github.com/Zweer/FlowRAG/compare/storage-lancedb-v1.0.1...storage-lancedb-v1.0.2) (2026-01-05)
 
 
