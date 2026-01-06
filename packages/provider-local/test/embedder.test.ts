@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { LocalEmbedder } from '../src/index.js';
+import { LocalEmbedder } from '../src/embedder.js';
 
 // Mock @huggingface/transformers
 vi.mock('@huggingface/transformers', () => ({

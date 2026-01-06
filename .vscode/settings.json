@@ -1,12 +1,10 @@
 {
   "conventionalCommits.scopes": [
-    "cli",
     "core",
-    "embedder-gemini",
-    "embedder-local",
-    "llm-gemini",
     "pipeline",
     "presets",
+    "provider-gemini",
+    "provider-local",
     "storage-json",
     "storage-lancedb",
     "storage-sqlite"

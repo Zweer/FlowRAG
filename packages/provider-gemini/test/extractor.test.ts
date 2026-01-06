@@ -1,7 +1,7 @@
 import { defineSchema } from '@flowrag/core';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { GeminiExtractor } from '../src/index.js';
+import { GeminiExtractor } from '../src/extractor.js';
 
 // Mock @google/genai
 vi.mock('@google/genai', () => ({

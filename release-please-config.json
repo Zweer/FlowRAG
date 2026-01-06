@@ -5,10 +5,10 @@
   "include-v-in-tag": true,
   "packages": {
     "packages/core": {},
-    "packages/embedder-gemini": {},
-    "packages/embedder-local": {},
-    "packages/llm-gemini": {},
     "packages/pipeline": {},
+    "packages/presets": {},
+    "packages/provider-gemini": {},
+    "packages/provider-local": {},
     "packages/storage-json": {},
     "packages/storage-lancedb": {},
     "packages/storage-sqlite": {}

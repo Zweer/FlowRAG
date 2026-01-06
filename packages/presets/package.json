@@ -35,8 +35,8 @@
   ],
   "dependencies": {
     "@flowrag/core": "*",
-    "@flowrag/embedder-local": "*",
-    "@flowrag/llm-gemini": "*",
+    "@flowrag/provider-gemini": "*",
+    "@flowrag/provider-local": "*",
     "@flowrag/storage-json": "*",
     "@flowrag/storage-lancedb": "*",
     "@flowrag/storage-sqlite": "*"

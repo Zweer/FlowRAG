@@ -2,8 +2,8 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { LocalEmbedder } from '@flowrag/embedder-local';
-import { GeminiExtractor } from '@flowrag/llm-gemini';
+import { GeminiExtractor } from '@flowrag/provider-gemini';
+import { LocalEmbedder } from '@flowrag/provider-local';
 import { JsonKVStorage } from '@flowrag/storage-json';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 

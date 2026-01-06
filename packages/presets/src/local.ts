@@ -1,8 +1,8 @@
 import { join } from 'node:path';
 
 import type { Embedder, GraphStorage, KVStorage, LLMExtractor, VectorStorage } from '@flowrag/core';
-import { LocalEmbedder } from '@flowrag/embedder-local';
-import { GeminiExtractor } from '@flowrag/llm-gemini';
+import { GeminiExtractor } from '@flowrag/provider-gemini';
+import { LocalEmbedder } from '@flowrag/provider-local';
 import { JsonKVStorage } from '@flowrag/storage-json';
 import { LanceDBVectorStorage } from '@flowrag/storage-lancedb';
 import { SQLiteGraphStorage } from '@flowrag/storage-sqlite';

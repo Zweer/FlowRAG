@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { GeminiEmbedder } from '../src/index.js';
+import { GeminiEmbedder } from '../src/embedder.js';
 
 // Mock @google/genai
 vi.mock('@google/genai', () => ({
