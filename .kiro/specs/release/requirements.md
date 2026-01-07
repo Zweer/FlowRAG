@@ -1,166 +1,230 @@
 # FlowRAG Release Management Requirements
 
-> Migration from release-please to Changesets for better monorepo release management.
+> Custom release tool requirements after evaluating existing solutions (Changesets, Beachball, Release-It, Bumpp).
 
-## Current Problems with Release-Please
+## Current Problems with Existing Tools
 
-- **Unreliable**: Frequent configuration issues and failures
-- **Complex setup**: Difficult to configure for monorepo with 8 packages
-- **Poor debugging**: Hard to understand why releases fail
-- **Inflexible**: Limited control over release timing and content
+- **Changesets**: Complex PR workflow, unpredictable version bumps (storage-* → 2.0.0)
+- **Beachball**: Too complex, poor GitHub Actions integration
+- **Release-It**: No native monorepo support (marked as wontfix)
+- **Bumpp**: Too simple, no changelog/GitHub releases
+- **npm native**: Missing changelog, GitHub releases, too basic
 
-## Requirements for New Release System
+## Requirements for Custom Release Tool
 
-### Must Have
-- ✅ **Monorepo support**: Handle 8 independent npm packages
-- ✅ **Semantic versioning**: Automatic version bumping (patch/minor/major)
-- ✅ **Changelog generation**: Beautiful, automatic changelogs
-- ✅ **GitHub integration**: Automated via GitHub Actions
-- ✅ **NPM publishing**: Direct publish to npm registry
-- ✅ **Simple setup**: Maximum 15 minutes configuration
-- ✅ **Reliable**: No random failures or configuration drift
+### Must Have ✅
 
-### Nice to Have
-- 🎯 **Selective releases**: Choose which packages to release
-- 📝 **Manual control**: Decide when to release (not fully automatic)
-- 🔄 **Dependency bumping**: Auto-update internal dependencies
-- 📋 **Release notes**: Rich markdown release notes
-- 🚀 **Preview**: See what will be released before publishing
+#### Functional Requirements
+- ✅ **Version bumping**: All packages to same version (e.g., all to 1.2.0)
+- ✅ **Changelog generation**: Automatic from conventional commits
+- ✅ **GitHub Releases**: Auto-creation with changelog content
+- ✅ **npm publishing**: Publish all packages with OIDC
+- ✅ **Git operations**: Commit, tag, push automatically
+- ✅ **Monorepo native**: npm workspaces support
+- ✅ **Manual control**: Developer decides when to release
 
-## Evaluated Solutions
+#### Workflow Requirements
+- ✅ **Direct flow**: No intermediate PRs (unlike Changesets)
+- ✅ **One command**: `npm run release minor` does everything
+- ✅ **Version control**: Force specific version or semantic bump
+- ✅ **Synchronized packages**: All packages always same version
+- ✅ **Build integration**: Automatic `npm run build` before publish
 
-### 🏆 **CHOSEN: Changesets**
-- **Status**: ✅ Actively maintained (2026)
-- **Pros**: 
-  - Designed specifically for monorepos
-  - Simple workflow: `npx @changesets/cli add`
-  - Stable GitHub Action
-  - Used by: Remix, Radix UI, tRPC, Stitches
-  - Manual control over releases
-  - Beautiful changelogs
-- **Cons**: 
-  - Requires manual changeset creation (actually a pro for control)
-- **Setup time**: ~15 minutes
-- **Learning curve**: Minimal
+#### Technical Requirements
+- ✅ **OIDC authentication**: No NPM_TOKEN needed
+- ✅ **GitHub Action friendly**: Single command in workflow
+- ✅ **Custom commit messages**: `chore: release v1.2.0` format
+- ✅ **Internal dependencies**: Auto-update cross-package references
+- ✅ **Conventional commits**: Parse feat, fix, breaking changes
 
-### ❌ **Rejected: Semantic Release**
-- **Reason**: Too complex for monorepo, requires plugins
-- **Issues**: Less control, rigid conventional commits requirement
+### Must NOT Have ❌
 
-### ❌ **Rejected: Nx**
-- **Reason**: Overkill, we already have build/test setup
-- **Issues**: High learning curve, requires migration
+- ❌ **Change files**: No .changeset or similar tracking files
+- ❌ **Release PRs**: No intermediate PR workflow
+- ❌ **Complex configuration**: Minimal setup required
+- ❌ **Heavy dependencies**: Keep tool lightweight
+- ❌ **Automatic releases**: Manual trigger only
 
-### ❌ **Rejected: Lerna**
-- **Reason**: Slower, less flexible than Changesets
-- **Issues**: Declining popularity
+## Target Workflow
 
-### ❌ **Rejected: Rush**
-- **Reason**: Enterprise overkill for 8 packages
-- **Issues**: Very high complexity
-
-## Implementation Plan
-
-### Phase 1: Setup Changesets (15 minutes)
-1. **Install**: `npm install @changesets/cli -D`
-2. **Initialize**: `npx @changesets/cli init`
-3. **Configure GitHub Action**: Create `.github/workflows/release.yml`
-4. **Remove release-please**: Delete old config and workflow
-
-### Phase 2: First Release
-1. **Create changeset**: `npx @changesets/cli add`
-2. **Test workflow**: Verify GitHub Action works
-3. **Publish**: Merge release PR
-
-### Phase 3: Documentation
-1. **Update README**: Document new release process
-2. **Team training**: Share new workflow with contributors
-
-## Changesets Workflow
-
-### Developer Workflow
+### Developer Experience
 ```bash
-# 1. Make changes to packages
-# 2. Before commit, add changeset:
-npx @changesets/cli add
-# 3. Select packages and bump type (patch/minor/major)
-# 4. Write change description
-# 5. Commit everything (including .changeset files)
+# 1. Normal development
+git commit -m "feat: add new storage adapter"
+git commit -m "fix: resolve connection timeout"
+
+# 2. When ready to release
+npm run release minor    # Bumps all packages 1.1.0 → 1.2.0
+# OR
+npm run release 2.0.0    # Forces all packages to 2.0.0
+# OR  
+npm run release patch    # Bumps all packages 1.1.0 → 1.1.1
+
+# 3. Tool automatically:
+# - Generates changelog from commits
+# - Updates all package.json versions
+# - Runs npm run build
+# - Creates commit: "chore: release v1.2.0"
+# - Creates git tag: "v1.2.0"
+# - Pushes to GitHub
+# - Publishes to npm (all packages)
+# - Creates GitHub Release with changelog
 ```
 
-### Release Workflow
-1. **GitHub Action** detects changesets in main branch
-2. **Creates Release PR** with version bumps and changelogs
-3. **Review and merge** Release PR
-4. **Automatic publishing** to npm
-5. **GitHub releases** created with changelogs
-
-## Configuration
-
-### `.changeset/config.json`
-```json
-{
-  "changelog": "@changesets/cli/changelog",
-  "commit": false,
-  "fixed": [],
-  "linked": [],
-  "access": "public",
-  "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": []
-}
-```
-
-### GitHub Action
+### GitHub Action Integration
 ```yaml
 name: Release
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version bump (patch/minor/major) or specific version'
+        required: true
+        default: 'patch'
+
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - name: Create Release Pull Request or Publish
-        uses: changesets/action@v1
-        with:
-          publish: npm run release
+      - run: npm run build
+      - run: npm test
+      - run: npm run release ${{ github.event.inputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
 
-## Benefits Over Release-Please
+## Tool Specification
 
-- ✅ **Reliability**: Stable, well-tested GitHub Action
-- ✅ **Simplicity**: Clear, intuitive workflow
-- ✅ **Control**: Manual decision on what/when to release
-- ✅ **Flexibility**: Easy to customize changelogs and versioning
-- ✅ **Community**: Large, active community and ecosystem
-- ✅ **Documentation**: Excellent docs and examples
-- ✅ **Debugging**: Clear error messages and troubleshooting
+### Package Name
+`@flowrag/release-tool`
 
-## Migration Checklist
+### Installation
+```bash
+npm install @flowrag/release-tool -D
+```
 
-- [ ] Remove `release-please-config.json`
-- [ ] Remove `.github/workflows/release-please.yml`
-- [ ] Install `@changesets/cli`
-- [ ] Run `npx @changesets/cli init`
-- [ ] Create new GitHub Action workflow
-- [ ] Configure npm token in GitHub secrets
-- [ ] Test with first changeset
-- [ ] Update documentation
-- [ ] Train team on new workflow
+### Basic Usage
+```json
+// package.json
+{
+  "scripts": {
+    "release": "flowrag-release"
+  }
+}
+```
+
+### Configuration (Optional)
+```json
+// flowrag-release.config.js
+{
+  "commitMessage": "chore: release v{version}",
+  "tagFormat": "v{version}",
+  "changelogSections": {
+    "feat": "✨ Features",
+    "fix": "🐛 Bug Fixes", 
+    "perf": "⚡ Performance",
+    "docs": "📚 Documentation",
+    "breaking": "💥 Breaking Changes"
+  },
+  "buildCommand": "npm run build",
+  "testCommand": "npm test"
+}
+```
+
+### CLI Options
+```bash
+flowrag-release patch           # Semantic patch bump
+flowrag-release minor           # Semantic minor bump  
+flowrag-release major           # Semantic major bump
+flowrag-release 2.0.0           # Force specific version
+flowrag-release --dry-run       # Show what would happen
+flowrag-release --skip-build    # Skip build step
+flowrag-release --skip-test     # Skip test step
+```
+
+## Implementation Requirements
+
+### Core Features
+- **Monorepo detection**: Auto-discover npm workspaces
+- **Version synchronization**: Keep all packages at same version
+- **Changelog generation**: Parse conventional commits since last tag
+- **GitHub integration**: Create releases via GitHub API
+- **npm publishing**: Publish all packages with proper auth
+- **Git operations**: Commit, tag, push with proper messages
+
+### Error Handling
+- **Validation**: Check git status, npm auth, build success
+- **Rollback**: Ability to undo failed releases
+- **Clear errors**: Helpful error messages with solutions
+- **Dry-run mode**: Preview changes before execution
+
+### Dependencies (Minimal)
+- **@octokit/rest**: GitHub API integration
+- **conventional-commits-parser**: Parse commit messages
+- **semver**: Version manipulation
+- **execa**: Command execution
+- **chalk**: Colored output
+
+### Code Structure
+```
+@flowrag/release-tool/
+├── src/
+│   ├── index.ts              # CLI entry point
+│   ├── core/
+│   │   ├── version.ts        # Version bumping logic
+│   │   ├── changelog.ts      # Changelog generation
+│   │   ├── git.ts           # Git operations
+│   │   ├── npm.ts           # npm operations
+│   │   └── github.ts        # GitHub API
+│   ├── utils/
+│   │   ├── config.ts        # Configuration loading
+│   │   ├── workspace.ts     # Monorepo detection
+│   │   └── validation.ts    # Pre-flight checks
+│   └── types.ts             # TypeScript types
+├── package.json
+└── README.md
+```
+
+## Success Criteria
+
+1. **Setup time**: < 2 minutes from install to first release
+2. **Command simplicity**: Single command releases everything
+3. **Error rate**: < 1% failed releases due to tool issues
+4. **Performance**: Complete release in < 60 seconds
+5. **Maintenance**: Zero configuration drift over time
+
+## Migration Plan
+
+### Phase 1: Tool Development (1-2 days)
+- [ ] Core version bumping logic
+- [ ] Changelog generation from commits
+- [ ] Git operations (commit, tag, push)
+- [ ] npm publishing with OIDC
+- [ ] GitHub release creation
+
+### Phase 2: Integration (1 day)
+- [ ] Remove Changesets configuration
+- [ ] Install @flowrag/release-tool
+- [ ] Update GitHub Action workflow
+- [ ] Test with dry-run mode
+
+### Phase 3: Production (1 day)
+- [ ] First real release using new tool
+- [ ] Verify all packages published correctly
+- [ ] Confirm GitHub release created
+- [ ] Document new workflow for team
 
 ---
 
-*Decision made: 2026-01-06*
+*Decision made: 2026-01-07*
 *Status: Ready for implementation*
+*Estimated effort: 3-4 days*
