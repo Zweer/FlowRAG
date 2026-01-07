@@ -1,78 +1,78 @@
 # Changelog
 
-## [1.1.0](https://github.com/Zweer/FlowRAG/compare/storage-json-v1.0.2...storage-json-v1.1.0) (2026-01-06)
+## 2.0.0
 
+### Minor Changes
+
+- b8ee801: Moving to `changeset` as building tool
+
+### Patch Changes
+
+- Updated dependencies [b8ee801]
+  - @flowrag/core@1.2.0
+
+## [1.1.0](https://github.com/Zweer/FlowRAG/compare/storage-json-v1.0.2...storage-json-v1.1.0) (2026-01-06)
 
 ### Miscellaneous Chores
 
-* release 1.1.0 ([b7c8e27](https://github.com/Zweer/FlowRAG/commit/b7c8e274c8b18c5bc41f919a9570bb0439348581))
-
+- release 1.1.0 ([b7c8e27](https://github.com/Zweer/FlowRAG/commit/b7c8e274c8b18c5bc41f919a9570bb0439348581))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * peerDependencies
-    * @flowrag/core bumped from 1.0.2 to 1.1.0
+- The following workspace dependencies were updated
+  - peerDependencies
+    - @flowrag/core bumped from 1.0.2 to 1.1.0
 
 ## [1.0.2](https://github.com/Zweer/FlowRAG/compare/storage-json-v1.0.1...storage-json-v1.0.2) (2026-01-05)
 
-
 ### Miscellaneous Chores
 
-* release 1.0.2 ([7a46b88](https://github.com/Zweer/FlowRAG/commit/7a46b881ffbad7999c3dda2a3a9ca0081e64a76e))
-
+- release 1.0.2 ([7a46b88](https://github.com/Zweer/FlowRAG/commit/7a46b881ffbad7999c3dda2a3a9ca0081e64a76e))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * peerDependencies
-    * @flowrag/core bumped from 1.0.1 to 1.0.2
+- The following workspace dependencies were updated
+  - peerDependencies
+    - @flowrag/core bumped from 1.0.1 to 1.0.2
 
 ## [1.0.1](https://github.com/Zweer/FlowRAG/compare/storage-json-v1.0.0...storage-json-v1.0.1) (2026-01-05)
 
-
 ### Miscellaneous Chores
 
-* release 1.0.1 ([41deba6](https://github.com/Zweer/FlowRAG/commit/41deba637b4609b32b658f8dfd59c19aaff7420c))
-
+- release 1.0.1 ([41deba6](https://github.com/Zweer/FlowRAG/commit/41deba637b4609b32b658f8dfd59c19aaff7420c))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * peerDependencies
-    * @flowrag/core bumped from 1.0.0 to 1.0.1
+- The following workspace dependencies were updated
+  - peerDependencies
+    - @flowrag/core bumped from 1.0.0 to 1.0.1
 
 ## [1.0.0](https://github.com/Zweer/FlowRAG/compare/storage-json-v1.0.0...storage-json-v1.0.0) (2026-01-05)
 
-
 ### Features
 
-* :tada: initialize monorepo with core packages and tooling ([edc9984](https://github.com/Zweer/FlowRAG/commit/edc9984aaa23363d1cb98c8a7367f2ca492ddd7a))
-* **core:** :sparkles: add types, interfaces and schema definition ([e96c575](https://github.com/Zweer/FlowRAG/commit/e96c57514832a266c2419fdb94a48a7ae558f470))
-* **storage-json:** :sparkles: implement JsonKVStorage with fs/promises ([429895b](https://github.com/Zweer/FlowRAG/commit/429895b8657b9ad48bb87361eeb7e90d635a89d6))
-
+- :tada: initialize monorepo with core packages and tooling ([edc9984](https://github.com/Zweer/FlowRAG/commit/edc9984aaa23363d1cb98c8a7367f2ca492ddd7a))
+- **core:** :sparkles: add types, interfaces and schema definition ([e96c575](https://github.com/Zweer/FlowRAG/commit/e96c57514832a266c2419fdb94a48a7ae558f470))
+- **storage-json:** :sparkles: implement JsonKVStorage with fs/promises ([429895b](https://github.com/Zweer/FlowRAG/commit/429895b8657b9ad48bb87361eeb7e90d635a89d6))
 
 ### Miscellaneous Chores
 
-* release 1.0.0 ([185c454](https://github.com/Zweer/FlowRAG/commit/185c4541616bf083f6151a468fa5fc3ea535d03a))
+- release 1.0.0 ([185c454](https://github.com/Zweer/FlowRAG/commit/185c4541616bf083f6151a468fa5fc3ea535d03a))
 
 ## [1.0.0](https://github.com/Zweer/FlowRAG/compare/storage-json-v0.0.1...storage-json-v1.0.0) (2026-01-05)
 
-
 ### Features
 
-* :tada: initialize monorepo with core packages and tooling ([edc9984](https://github.com/Zweer/FlowRAG/commit/edc9984aaa23363d1cb98c8a7367f2ca492ddd7a))
-* **core:** :sparkles: add types, interfaces and schema definition ([e96c575](https://github.com/Zweer/FlowRAG/commit/e96c57514832a266c2419fdb94a48a7ae558f470))
-* **storage-json:** :sparkles: implement JsonKVStorage with fs/promises ([429895b](https://github.com/Zweer/FlowRAG/commit/429895b8657b9ad48bb87361eeb7e90d635a89d6))
-
+- :tada: initialize monorepo with core packages and tooling ([edc9984](https://github.com/Zweer/FlowRAG/commit/edc9984aaa23363d1cb98c8a7367f2ca492ddd7a))
+- **core:** :sparkles: add types, interfaces and schema definition ([e96c575](https://github.com/Zweer/FlowRAG/commit/e96c57514832a266c2419fdb94a48a7ae558f470))
+- **storage-json:** :sparkles: implement JsonKVStorage with fs/promises ([429895b](https://github.com/Zweer/FlowRAG/commit/429895b8657b9ad48bb87361eeb7e90d635a89d6))
 
 ### Miscellaneous Chores
 
-* release 1.0.0 ([185c454](https://github.com/Zweer/FlowRAG/commit/185c4541616bf083f6151a468fa5fc3ea535d03a))
-
+- release 1.0.0 ([185c454](https://github.com/Zweer/FlowRAG/commit/185c4541616bf083f6151a468fa5fc3ea535d03a))
 
 ### Dependencies
 
-* The following workspace dependencies were updated
-  * peerDependencies
-    * @flowrag/core bumped from * to 1.0.0
+- The following workspace dependencies were updated
+  - peerDependencies
+    - @flowrag/core bumped from \* to 1.0.0

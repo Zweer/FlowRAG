@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-json",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "📄 KV storage implementation that saves data as JSON files on disk. Used to store original documents, text chunks, and LLM response cache. Simple, human-readable, git-friendly - perfect for local development and small datasets.",
   "keywords": [
     "storage",
@@ -35,7 +35,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "@flowrag/core": "1.1.0"
+    "@flowrag/core": "1.2.0"
   },
   "engines": {
     "node": ">=20"
