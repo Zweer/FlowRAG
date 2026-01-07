@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "build": "tsdown",
+    "changeset": "changeset",
     "clean": "rimraf --glob packages/**/dist",
     "prelint": "npm run build",
     "lint": "concurrently npm:lint:* --prefixColors auto",
@@ -38,12 +39,14 @@
     "lint:sort_package": "sort-package-json \"package.json\" \"packages/*/package.json\"",
     "lint:typecheck": "tsc --noEmit",
     "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky",
+    "release": "changeset publish",
     "pretest": "npm run build",
     "test": "vitest run",
     "posttest": "npm run clean",
     "pretest:coverage": "npm run build",
     "test:coverage": "vitest run --coverage",
-    "posttest:coverage": "npm run clean && coverage-badge-readme"
+    "posttest:coverage": "npm run clean && coverage-badge-readme",
+    "version": "changeset version"
   },
   "commitlint": {
     "extends": [
@@ -53,6 +56,7 @@
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
     "@biomejs/biome": "^2.3.11",
+    "@changesets/cli": "^2.29.8",
     "@commitlint/cli": "^20.3.0",
     "@commitlint/config-conventional": "^20.3.0",
     "@tsconfig/node22": "^22.0.5",

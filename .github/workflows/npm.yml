@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     # Skip if commit is from release-please (version bump / changelog only)
-    if: "!startsWith(github.event.head_commit.message, 'chore: release main')"
+    if: "!startsWith(github.event.head_commit.message, 'chore: release packages')"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -31,7 +31,7 @@ jobs:
 
   lint:
     # Skip if commit is from release-please (version bump / changelog only)
-    if: "!startsWith(github.event.head_commit.message, 'chore: release main')"
+    if: "!startsWith(github.event.head_commit.message, 'chore: release packages')"
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -54,30 +54,15 @@ jobs:
         with:
           fail-if-changed: true
 
-  release-please:
+  release:
     needs:
       - test
       - lint
-    # Always run, even if test/lint were skipped
-    if: ${{ always() && !failure() && !cancelled() }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    outputs:
-      releases_created: ${{ steps.release.outputs.releases_created }}
-    steps:
-      - name: Release Please
-        id: release
-        uses: googleapis/release-please-action@v4
-
-  publish:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
+      pull-requests: write
     steps:
       - name: Git Checkout
         uses: actions/checkout@v6
@@ -87,7 +72,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          registry-url: https://registry.npmjs.org
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: npm ci
@@ -96,8 +81,14 @@ jobs:
         run: npm run build
 
       - name: Publish packages
-        run: |
-          for pkg in packages/*/; do
-            echo "Publishing $pkg"
-            npm publish "$pkg" || true
-          done
+        uses: changesets/action@v1
+        with:
+          # Single-step flow (direct publish without PR):
+          # version: npm run version
+          publish: npm run release
+          # createGithubReleases: true
+          title: "chore: release packages"
+          commit: "chore: release packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
