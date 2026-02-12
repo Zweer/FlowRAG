@@ -39,19 +39,20 @@ FlowRAG solves common problems with existing RAG solutions:
 ## Installation
 
 ```bash
-npm install @flowrag/core @flowrag/storage-json @flowrag/storage-sqlite @flowrag/storage-lancedb
+npm install @flowrag/core @flowrag/pipeline @flowrag/storage-json @flowrag/storage-sqlite @flowrag/storage-lancedb
 npm install @flowrag/provider-local @flowrag/provider-gemini
 ```
 
 Or for a complete local setup:
 ```bash
-npm install @flowrag/core @flowrag/presets
+npm install @flowrag/pipeline @flowrag/presets
 ```
 
 ## Quick Start
 
 ```typescript
-import { createFlowRAG, defineSchema } from '@flowrag/core';
+import { defineSchema } from '@flowrag/core';
+import { createFlowRAG } from '@flowrag/pipeline';
 import { createLocalStorage } from '@flowrag/presets';
 
 // Define your schema
@@ -61,7 +62,7 @@ const schema = defineSchema({
 });
 
 // Create RAG instance
-const rag = await createFlowRAG({
+const rag = createFlowRAG({
   schema,
   ...createLocalStorage('./data'),
 });

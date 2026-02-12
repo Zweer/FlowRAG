@@ -30,8 +30,6 @@
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "files": [
     "dist"
@@ -41,8 +39,8 @@
     "tiktoken": "^1.0.17"
   },
   "devDependencies": {
-    "@flowrag/embedder-local": "1.0.2",
-    "@flowrag/llm-gemini": "1.0.2",
+    "@flowrag/provider-gemini": "1.1.0",
+    "@flowrag/provider-local": "1.1.0",
     "@flowrag/storage-json": "1.1.0",
     "@flowrag/storage-lancedb": "1.1.0",
     "@flowrag/storage-sqlite": "1.1.0"

@@ -37,15 +37,18 @@ Build a **lightweight, modular RAG library** in TypeScript that:
 ```
 flowrag/
 ├── packages/
-│   ├── core/              # Interfaces, schema, pipeline
-│   ├── storage-sqlite/    # SQLite for KV + Graph
-│   ├── storage-lancedb/   # LanceDB for vectors
-│   ├── storage-s3/        # S3 adapter (cloud)
-│   ├── storage-opensearch/# OpenSearch adapter (cloud)
+│   ├── core/              # Interfaces, schema, types
+│   ├── pipeline/          # Indexing & querying pipelines
+│   ├── presets/           # Opinionated presets (createLocalStorage)
+│   ├── storage-json/      # JSON file KV storage
+│   ├── storage-sqlite/    # SQLite for Graph
+│   ├── storage-lancedb/   # LanceDB for Vectors
+│   ├── storage-s3/        # S3 adapter (future)
+│   ├── storage-opensearch/# OpenSearch adapter (future)
 │   ├── provider-local/    # Local AI provider (ONNX embeddings)
 │   ├── provider-gemini/   # Gemini AI provider (embeddings + extraction)
-│   ├── llm-bedrock/       # AWS Bedrock (future)
-│   └── cli/               # CLI for testing
+│   ├── provider-bedrock/  # AWS Bedrock provider (future)
+│   └── cli/               # CLI for local usage (planned)
 └── examples/
     ├── local-docs/        # Local documentation RAG
     └── lambda-query/      # AWS Lambda query example
@@ -95,5 +98,13 @@ flowrag/
 - **Tone**: Direct and concise
 - **Focus**: Practical solutions
 - **Priority**: Simplicity, testability, modularity
+
+## 🔀 Git & Commits
+
+- **Conventional Commits**: `type(scope): :emoji: description`
+- **Types**: `feat`, `fix`, `refactor`, `docs`, `chore`, `ci`, `build`, `perf`, `test`
+- **Scope**: package name when applicable (e.g., `feat(pipeline):`, `fix(presets):`)
+- **Gitmoji**: Use gitmoji after the colon (e.g., `:sparkles:`, `:bug:`, `:recycle:`)
+- **NEVER commit or push**: The agent prepares changes and suggests a commit message, but the user always runs `git commit` and `git push` manually
 
 Remember: FlowRAG is a **library** for developers who want RAG without the complexity of running servers or managing Python environments.

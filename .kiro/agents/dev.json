@@ -32,7 +32,8 @@
       "allowedPaths": [".kiro/**", "packages/**", "README.md", "package.json"]
     },
     "shell": {
-      "autoAllowReadonly": true
+      "autoAllowReadonly": true,
+      "excludeCommands": ["*git commit*", "*git push*"]
     }
   }
 }

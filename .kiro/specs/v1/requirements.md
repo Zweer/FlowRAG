@@ -90,19 +90,20 @@ flowrag/
 │   │   ├── test/
 │   │   └── package.json
 │   │
+│   ├── pipeline/             # Indexing & querying pipelines
+│   ├── presets/              # Opinionated presets (createLocalStorage)
+│   │
 │   ├── storage-json/         # JSON file KV storage
 │   ├── storage-sqlite/       # SQLite for Graph
 │   ├── storage-lancedb/      # LanceDB for Vectors
 │   ├── storage-s3/           # S3 adapter (future)
 │   ├── storage-opensearch/   # OpenSearch adapter (future)
 │   │
-│   ├── embedder-local/       # HuggingFace Transformers.js (ONNX)
-│   ├── embedder-gemini/      # Gemini embedding API
+│   ├── provider-local/       # Local AI provider (ONNX embeddings)
+│   ├── provider-gemini/      # Gemini AI provider (embeddings + extraction)
+│   ├── provider-bedrock/     # AWS Bedrock provider (future)
 │   │
-│   ├── llm-gemini/           # Gemini for entity extraction
-│   ├── llm-bedrock/          # AWS Bedrock (future)
-│   │
-│   └── cli/                  # CLI for local usage
+│   └── cli/                  # CLI for local usage (planned)
 │
 ├── examples/
 │   ├── local-docs/           # Local documentation example
@@ -340,14 +341,15 @@ const path = await rag.findPath('ServiceA', 'ServiceB');
 ### 5.1 FlowRAG Instance
 
 ```typescript
-import { createFlowRAG } from '@flowrag/core';
+import { defineSchema } from '@flowrag/core';
+import { createFlowRAG } from '@flowrag/pipeline';
 import { JsonKVStorage } from '@flowrag/storage-json';
 import { LanceDBVectorStorage } from '@flowrag/storage-lancedb';
 import { SQLiteGraphStorage } from '@flowrag/storage-sqlite';
-import { LocalEmbedder } from '@flowrag/embedder-local';
-import { GeminiExtractor } from '@flowrag/llm-gemini';
+import { LocalEmbedder } from '@flowrag/provider-local';
+import { GeminiExtractor } from '@flowrag/provider-gemini';
 
-const rag = await createFlowRAG({
+const rag = createFlowRAG({
   schema,
   storage: {
     kv: new JsonKVStorage({ path: './data/kv' }),
@@ -425,14 +427,12 @@ During indexing, new entities can be reviewed:
 
 ```typescript
 // index.ts
-import { createFlowRAG } from '@flowrag/core';
+import { createFlowRAG } from '@flowrag/pipeline';
 import { createLocalStorage } from '@flowrag/presets';
 
-const rag = await createFlowRAG({
+const rag = createFlowRAG({
   schema,
   ...createLocalStorage('./data'),
-  embedder: new LocalEmbedder(),
-  extractor: new GeminiExtractor(),
 });
 
 // Index
@@ -491,27 +491,29 @@ export const handler = async (event: { query: string }) => {
 - [x] `@flowrag/storage-sqlite`: SQLite graph storage
 - [x] Tests for all storage packages
 
-### Phase 2: Embedders & Extractors ✅ **Complete**
-- [x] `@flowrag/embedder-local`: HuggingFace ONNX
-- [x] `@flowrag/embedder-gemini`: Gemini API
-- [x] `@flowrag/llm-gemini`: Entity extraction
+### Phase 2: Providers ✅ **Complete**
+- [x] `@flowrag/provider-local`: HuggingFace ONNX embeddings
+- [x] `@flowrag/provider-gemini`: Gemini embeddings + entity extraction
 - [x] Integration tests
-- [x] 100% test coverage (89 tests)
-- [x] Updated to 2026 tech stack (@google/genai v1.34.0, @huggingface/transformers v3.8.1)
+- [x] Package restructuring (embedder-*/llm-* → provider-*)
 
-### Phase 3: Pipeline & CLI 📋 **Next**
-- [ ] Indexing pipeline
-- [ ] Query pipeline with dual retrieval
+### Phase 3: Pipeline ✅ **Complete**
+- [x] `@flowrag/pipeline`: Indexing pipeline (scanner, chunker, extractor, embedder, storage)
+- [x] `@flowrag/pipeline`: Query pipeline with dual retrieval (vector + graph)
+- [x] `@flowrag/presets`: Opinionated local storage preset
+- [x] 100% test coverage (160 tests)
+
+### Phase 4: CLI 📋 **Next**
 - [ ] `@flowrag/cli`: Command-line interface
 - [ ] Human-in-the-loop for local indexing
 
-### Phase 4: Cloud Storage (Future)
+### Phase 5: Cloud Storage (Future)
 - [ ] `@flowrag/storage-s3`: S3 adapter
 - [ ] `@flowrag/storage-opensearch`: OpenSearch adapter
-- [ ] `@flowrag/llm-bedrock`: AWS Bedrock
+- [ ] `@flowrag/provider-bedrock`: AWS Bedrock
 - [ ] Lambda examples
 
-### Phase 5: Advanced Features (Future)
+### Phase 6: Advanced Features (Future)
 - [ ] Custom fields (documentFields, entityFields, relationFields)
 - [ ] Reranker support
 - [ ] Incremental indexing with document status tracking
@@ -535,5 +537,5 @@ export const handler = async (event: { query: string }) => {
 
 ---
 
-*Last updated: 2026-01-01*
+*Last updated: 2026-02-12*
 *Version: 1.0*
