@@ -36,7 +36,7 @@
     "better-sqlite3": "^12.6.2"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.12"
+    "@types/better-sqlite3": "^7.6.13"
   },
   "peerDependencies": {
     "@flowrag/core": "1.1.0"

@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@flowrag/core": "1.1.0",
-    "tiktoken": "^1.0.17"
+    "tiktoken": "^1.0.22"
   },
   "devDependencies": {
     "@flowrag/provider-gemini": "1.1.0",
