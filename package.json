@@ -27,7 +27,6 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "changeset": "changeset",
     "clean": "rimraf --glob packages/**/dist",
     "prelint": "npm run build",
     "lint": "concurrently npm:lint:* --prefixColors auto",
@@ -39,14 +38,13 @@
     "lint:sort_package": "sort-package-json \"package.json\" \"packages/*/package.json\"",
     "lint:typecheck": "tsc --noEmit",
     "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky",
-    "release": "changeset publish",
+    "release": "bonvoy shipit",
     "pretest": "npm run build",
     "test": "vitest run",
     "posttest": "npm run clean",
     "pretest:coverage": "npm run build",
     "test:coverage": "vitest run --coverage",
-    "posttest:coverage": "npm run clean && coverage-badge-readme",
-    "version": "changeset version"
+    "posttest:coverage": "npm run clean && coverage-badge-readme"
   },
   "commitlint": {
     "extends": [
@@ -56,13 +54,13 @@
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
     "@biomejs/biome": "^2.3.14",
-    "@changesets/cli": "^2.29.8",
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",
     "@tsconfig/node22": "^22.0.5",
     "@types/node": "^25.2.2",
     "@vitest/coverage-v8": "^4.0.18",
     "@zweer/coverage-badge-readme": "^1.2.2",
+    "bonvoy": "^0.12.1",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",

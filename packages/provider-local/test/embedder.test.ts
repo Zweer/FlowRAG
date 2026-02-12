@@ -6,11 +6,9 @@ import { LocalEmbedder } from '../src/embedder.js';
 vi.mock('@huggingface/transformers', () => ({
   pipeline: vi.fn().mockResolvedValue(
     // Mock pipeline function that returns embeddings
-    vi
-      .fn()
-      .mockResolvedValue({
-        data: new Float32Array([0.1, 0.2, 0.3, 0.4]),
-      }),
+    vi.fn().mockResolvedValue({
+      data: new Float32Array([0.1, 0.2, 0.3, 0.4]),
+    }),
   ),
 }));
 

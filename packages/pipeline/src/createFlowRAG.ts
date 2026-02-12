@@ -49,14 +49,12 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
         config.storage.kv.list('chunk:').then((keys) => keys.length),
         config.storage.graph.getEntities().then((entities) => entities.length),
         // Count relations by getting all entities and their relations
-        config.storage.graph
-          .getEntities()
-          .then(async (entities) => {
-            const relationCounts = await Promise.all(
-              entities.map((e) => config.storage.graph.getRelations(e.id)),
-            );
-            return relationCounts.flat().length;
-          }),
+        config.storage.graph.getEntities().then(async (entities) => {
+          const relationCounts = await Promise.all(
+            entities.map((e) => config.storage.graph.getRelations(e.id)),
+          );
+          return relationCounts.flat().length;
+        }),
         config.storage.vector.count(),
       ]);
 
