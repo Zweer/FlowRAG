@@ -44,7 +44,10 @@
     "posttest": "npm run clean",
     "pretest:coverage": "npm run build",
     "test:coverage": "vitest run --coverage",
-    "posttest:coverage": "npm run clean && coverage-badge-readme"
+    "posttest:coverage": "npm run clean && coverage-badge-readme",
+    "pretest:e2e": "npm run build",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "posttest:e2e": "npm run clean"
   },
   "commitlint": {
     "extends": [

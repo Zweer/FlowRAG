@@ -52,6 +52,8 @@ export class LanceDBVectorStorage implements VectorStorage {
     return this.table;
   }
 
+  private tableInitPromise: Promise<Table> | null = null;
+
   async upsert(records: VectorRecord[]): Promise<void> {
     if (records.length === 0) return;
 
@@ -61,22 +63,32 @@ export class LanceDBVectorStorage implements VectorStorage {
       metadata: JSON.stringify(record.metadata),
     }));
 
-    const table = await this.getTable();
-
-    if (!table) {
-      // Create table with first batch
-      const connection = await this.getConnection();
-
-      this.table = await connection.createTable(this.tableName, lanceRecords);
-
-      return;
-    }
+    const table = await this.ensureTable(lanceRecords);
 
     // Delete existing records with same IDs first
     const existingIds = records.map((r) => r.id);
     await this.delete(existingIds);
 
     await table.add(lanceRecords);
+  }
+
+  /**
+   * Ensures the table exists, creating it if needed.
+   * Uses a shared promise to prevent concurrent createTable race conditions.
+   */
+  private async ensureTable(seedRecords: LanceDBRecord[]): Promise<Table> {
+    const existing = await this.getTable();
+    if (existing) return existing;
+
+    if (!this.tableInitPromise) {
+      this.tableInitPromise = (async () => {
+        const connection = await this.getConnection();
+        this.table = await connection.createTable(this.tableName, seedRecords);
+        return this.table;
+      })();
+    }
+
+    return this.tableInitPromise;
   }
 
   async search(vector: number[], limit: number, filter?: VectorFilter): Promise<SearchResult[]> {
@@ -131,6 +143,7 @@ export class LanceDBVectorStorage implements VectorStorage {
 
       this.connection = null;
       this.table = null;
+      this.tableInitPromise = null;
     }
   }
 }

@@ -23,7 +23,7 @@ export class JsonKVStorage implements KVStorage {
 
   private keyToPath(key: string): string {
     // Replace path separators to avoid directory traversal
-    const safeKey = key.replace(/[/\\:]/g, '_');
+    const safeKey = key.replace(/[/\\]/g, '_');
     return join(this.basePath, `${safeKey}.json`);
   }
 

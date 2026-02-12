@@ -25,7 +25,7 @@ export class Chunker {
         chunkContent instanceof Uint8Array ? new TextDecoder().decode(chunkContent) : chunkContent;
 
       const chunk: Chunk = {
-        id: `${document.id}:chunk:${chunkIndex}`,
+        id: `chunk:${document.id}:${chunkIndex}`,
         content: contentStr.trim(),
         documentId: document.id,
         startToken,

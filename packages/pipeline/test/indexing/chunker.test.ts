@@ -45,14 +45,14 @@ describe('Chunker', () => {
 
     expect(chunks.length).toBeGreaterThan(1);
     expect(chunks[0]).toEqual({
-      id: 'doc:test:chunk:0',
+      id: 'chunk:doc:test:0',
       content: 'chunk-10-tokens',
       documentId: 'doc:test',
       startToken: 0,
       endToken: 10,
     });
     expect(chunks[1]).toEqual({
-      id: 'doc:test:chunk:1',
+      id: 'chunk:doc:test:1',
       content: 'chunk-10-tokens',
       documentId: 'doc:test',
       startToken: 8, // 10 - 2 overlap
