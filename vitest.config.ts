@@ -6,6 +6,11 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'json-summary'],
       include: ['packages/**/src/**/*.ts'],
+      exclude: [
+        '**/src/index.ts', // Barrel re-exports only
+        '**/src/types.ts', // Type/interface declarations only
+        '**/src/interfaces/**', // Interface declarations only
+      ],
     },
   },
 });
