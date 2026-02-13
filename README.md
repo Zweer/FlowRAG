@@ -254,7 +254,7 @@ export const handler = async (event: { query: string }) => {
 ```bash
 npm install        # Install dependencies
 npm run build      # Build all 12 packages
-npm test           # Run 284 tests across 29 test files
+npm test           # Run 290 tests across 30 test files
 npm run lint       # Lint code
 npm run typecheck  # Type check
 ```

@@ -519,7 +519,7 @@ export const handler = async (event: { query: string }) => {
 - [x] `@flowrag/storage-s3`: S3 adapter
 - [x] `@flowrag/storage-opensearch`: OpenSearch adapter
 - [x] `@flowrag/provider-bedrock`: AWS Bedrock
-- [ ] Lambda examples
+- [x] Lambda examples
 
 ### Phase 6: Advanced Features (Future)
 - [ ] Custom fields (documentFields, entityFields, relationFields)
