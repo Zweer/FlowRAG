@@ -17,6 +17,7 @@ export interface DocumentMetadata {
   title?: string;
   createdAt: Date;
   updatedAt: Date;
+  fields?: Record<string, unknown>;
   [key: string]: unknown;
 }
 
@@ -36,6 +37,7 @@ export interface Entity {
   type: string;
   description: string;
   sourceChunkIds: Id[];
+  fields?: Record<string, unknown>;
 }
 
 /** Relation - an edge in the knowledge graph */
@@ -47,6 +49,7 @@ export interface Relation {
   description: string;
   keywords: string[];
   sourceChunkIds: Id[];
+  fields?: Record<string, unknown>;
 }
 
 /** Vector record for storage */
@@ -82,6 +85,7 @@ export interface ExtractedEntity {
   name: string;
   type: string;
   description: string;
+  fields?: Record<string, unknown>;
 }
 
 /** Extracted relation from LLM */
@@ -91,6 +95,7 @@ export interface ExtractedRelation {
   type: string;
   description: string;
   keywords: string[];
+  fields?: Record<string, unknown>;
 }
 
 /** Result of entity extraction */

@@ -36,6 +36,19 @@ describe('SQLiteGraphStorage', () => {
       expect(result).toEqual(testEntity);
     });
 
+    it('should store and retrieve entity with custom fields', async () => {
+      const entity = { ...testEntity, fields: { status: 'active', owner: 'team-a' } };
+      await storage.addEntity(entity);
+      const result = await storage.getEntity('entity-1');
+      expect(result?.fields).toEqual({ status: 'active', owner: 'team-a' });
+    });
+
+    it('should omit fields when not provided', async () => {
+      await storage.addEntity(testEntity);
+      const result = await storage.getEntity('entity-1');
+      expect(result?.fields).toBeUndefined();
+    });
+
     it('should return null for non-existent entity', async () => {
       const result = await storage.getEntity('missing');
       expect(result).toBeNull();
@@ -56,6 +69,7 @@ describe('SQLiteGraphStorage', () => {
         type: 'DATABASE',
         description: 'Another test entity',
         sourceChunkIds: ['chunk-3'],
+        fields: { owner: 'team-b' },
       };
 
       await storage.addEntity(testEntity);
@@ -63,7 +77,7 @@ describe('SQLiteGraphStorage', () => {
 
       const entities = await storage.getEntities();
       expect(entities).toHaveLength(2);
-      expect(entities.map((e) => e.id).sort()).toEqual(['entity-1', 'entity-2']);
+      expect(entities.find((e) => e.id === 'entity-2')?.fields).toEqual({ owner: 'team-b' });
     });
 
     it('should filter entities by type', async () => {
@@ -205,6 +219,13 @@ describe('SQLiteGraphStorage', () => {
       const relations = await storage.getRelations('entity-1', 'out');
       expect(relations).toHaveLength(1);
       expect(relations[0]).toEqual(testRelation);
+    });
+
+    it('should store and retrieve relation with custom fields', async () => {
+      const relation = { ...testRelation, fields: { syncType: 'async', dataFormat: 'JSON' } };
+      await storage.addRelation(relation);
+      const relations = await storage.getRelations('entity-1', 'out');
+      expect(relations[0].fields).toEqual({ syncType: 'async', dataFormat: 'JSON' });
     });
 
     it('should get outgoing relations', async () => {

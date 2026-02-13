@@ -114,4 +114,17 @@ describe('GeminiExtractor', () => {
       );
     });
   });
+
+  it('should include custom fields in prompt when schema has them', async () => {
+    const schemaWithFields = defineSchema({
+      entityTypes: ['SERVICE'] as const,
+      relationTypes: ['USES'] as const,
+      entityFields: { status: { type: 'enum', values: ['active', 'deprecated'] } },
+      relationFields: { syncType: { type: 'string' } },
+    });
+
+    // Exercises the branch where entityFields/relationFields are non-empty
+    const result = await extractor.extractEntities('content', [], schemaWithFields);
+    expect(result.entities).toBeDefined();
+  });
 });

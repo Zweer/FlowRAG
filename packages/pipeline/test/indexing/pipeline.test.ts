@@ -19,6 +19,9 @@ describe('IndexingPipeline', () => {
       schema: {
         entityTypes: ['SERVICE'],
         relationTypes: ['USES'],
+        documentFields: {},
+        entityFields: {},
+        relationFields: {},
         isValidEntityType: vi.fn(() => true),
         isValidRelationType: vi.fn(() => true),
         normalizeEntityType: vi.fn((type) => type),
@@ -283,5 +286,49 @@ describe('IndexingPipeline', () => {
     const batches = (pipeline as any).createBatches(items, 2);
 
     expect(batches).toEqual([[1, 2], [3, 4], [5]]);
+  });
+
+  it('should pass custom fields from extraction to storage', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+    mockScanner.scanFiles = vi
+      .fn()
+      .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+    mockChunker.chunkDocument = vi.fn(() => [
+      {
+        id: 'doc:test:chunk:0',
+        content: 'test',
+        documentId: 'doc:test',
+        startToken: 0,
+        endToken: 5,
+      },
+    ]);
+    mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+    mockConfig.extractor.extractEntities = vi.fn().mockResolvedValue({
+      entities: [
+        { name: 'Svc', type: 'SERVICE', description: 'svc', fields: { status: 'active' } },
+      ],
+      relations: [
+        {
+          source: 'Svc',
+          target: 'DB',
+          type: 'USES',
+          description: 'uses',
+          keywords: ['db'],
+          fields: { syncType: 'async' },
+        },
+      ],
+    });
+
+    await pipeline.process(['/test.txt']);
+
+    expect(mockConfig.storage.graph.addEntity).toHaveBeenCalledWith(
+      expect.objectContaining({ fields: { status: 'active' } }),
+    );
+    expect(mockConfig.storage.graph.addRelation).toHaveBeenCalledWith(
+      expect.objectContaining({ fields: { syncType: 'async' } }),
+    );
   });
 });

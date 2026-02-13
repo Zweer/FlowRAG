@@ -19,6 +19,7 @@ interface EntityRow {
   type: string;
   description: string;
   source_chunk_ids: string;
+  fields: string | null;
 }
 
 interface RelationRow {
@@ -29,6 +30,7 @@ interface RelationRow {
   description: string;
   keywords: string;
   source_chunk_ids: string;
+  fields: string | null;
 }
 
 export class SQLiteGraphStorage implements GraphStorage {
@@ -47,7 +49,8 @@ export class SQLiteGraphStorage implements GraphStorage {
         name TEXT NOT NULL,
         type TEXT NOT NULL,
         description TEXT NOT NULL,
-        source_chunk_ids TEXT NOT NULL
+        source_chunk_ids TEXT NOT NULL,
+        fields TEXT
       )
     `);
 
@@ -61,6 +64,7 @@ export class SQLiteGraphStorage implements GraphStorage {
         description TEXT NOT NULL,
         keywords TEXT NOT NULL,
         source_chunk_ids TEXT NOT NULL,
+        fields TEXT,
         FOREIGN KEY (source_id) REFERENCES entities (id),
         FOREIGN KEY (target_id) REFERENCES entities (id)
       )
@@ -78,8 +82,8 @@ export class SQLiteGraphStorage implements GraphStorage {
 
   async addEntity(entity: Entity): Promise<void> {
     const stmt = this.db.prepare(`
-      INSERT OR REPLACE INTO entities (id, name, type, description, source_chunk_ids)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT OR REPLACE INTO entities (id, name, type, description, source_chunk_ids, fields)
+      VALUES (?, ?, ?, ?, ?, ?)
     `);
 
     stmt.run(
@@ -88,13 +92,14 @@ export class SQLiteGraphStorage implements GraphStorage {
       entity.type,
       entity.description,
       JSON.stringify(entity.sourceChunkIds),
+      entity.fields ? JSON.stringify(entity.fields) : null,
     );
   }
 
   async addRelation(relation: Relation): Promise<void> {
     const stmt = this.db.prepare(`
-      INSERT OR REPLACE INTO relations (id, source_id, target_id, type, description, keywords, source_chunk_ids)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT OR REPLACE INTO relations (id, source_id, target_id, type, description, keywords, source_chunk_ids, fields)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     stmt.run(
@@ -105,6 +110,7 @@ export class SQLiteGraphStorage implements GraphStorage {
       relation.description,
       JSON.stringify(relation.keywords),
       JSON.stringify(relation.sourceChunkIds),
+      relation.fields ? JSON.stringify(relation.fields) : null,
     );
   }
 
@@ -120,6 +126,7 @@ export class SQLiteGraphStorage implements GraphStorage {
       type: row.type,
       description: row.description,
       sourceChunkIds: JSON.parse(row.source_chunk_ids),
+      ...(row.fields ? { fields: JSON.parse(row.fields) } : {}),
     };
   }
 
@@ -151,6 +158,7 @@ export class SQLiteGraphStorage implements GraphStorage {
       type: row.type,
       description: row.description,
       sourceChunkIds: JSON.parse(row.source_chunk_ids),
+      ...(row.fields ? { fields: JSON.parse(row.fields) } : {}),
     }));
   }
 
@@ -181,6 +189,7 @@ export class SQLiteGraphStorage implements GraphStorage {
       description: row.description,
       keywords: JSON.parse(row.keywords),
       sourceChunkIds: JSON.parse(row.source_chunk_ids),
+      ...(row.fields ? { fields: JSON.parse(row.fields) } : {}),
     }));
   }
 

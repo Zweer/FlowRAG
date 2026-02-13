@@ -94,6 +94,7 @@ export class IndexingPipeline {
           type: entity.type,
           description: entity.description,
           sourceChunkIds: [chunk.id],
+          ...(entity.fields ? { fields: entity.fields } : {}),
         }),
       ),
 
@@ -107,6 +108,7 @@ export class IndexingPipeline {
           description: relation.description,
           keywords: relation.keywords,
           sourceChunkIds: [chunk.id],
+          ...(relation.fields ? { fields: relation.fields } : {}),
         }),
       ),
     ]);

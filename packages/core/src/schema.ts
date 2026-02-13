@@ -4,6 +4,14 @@
 
 import { z } from 'zod';
 
+/** Custom field definition */
+export interface FieldDefinition {
+  type: 'string' | 'enum';
+  values?: string[];
+  default?: string;
+  filterable?: boolean;
+}
+
 /** Schema configuration input */
 export interface SchemaConfig<
   E extends readonly string[] = readonly string[],
@@ -11,6 +19,9 @@ export interface SchemaConfig<
 > {
   entityTypes: E;
   relationTypes: R;
+  documentFields?: Record<string, FieldDefinition>;
+  entityFields?: Record<string, FieldDefinition>;
+  relationFields?: Record<string, FieldDefinition>;
 }
 
 /** Resolved schema with validation */
@@ -20,6 +31,9 @@ export interface Schema<
 > {
   entityTypes: E;
   relationTypes: R;
+  documentFields: Record<string, FieldDefinition>;
+  entityFields: Record<string, FieldDefinition>;
+  relationFields: Record<string, FieldDefinition>;
   isValidEntityType: (type: string) => boolean;
   isValidRelationType: (type: string) => boolean;
   normalizeEntityType: (type: string) => E[number] | 'Other';
@@ -46,6 +60,9 @@ export function defineSchema<const E extends readonly string[], const R extends 
   return {
     entityTypes: config.entityTypes,
     relationTypes: config.relationTypes,
+    documentFields: config.documentFields ?? {},
+    entityFields: config.entityFields ?? {},
+    relationFields: config.relationFields ?? {},
     isValidEntityType: (type: string) => entitySet.has(type),
     isValidRelationType: (type: string) => relationSet.has(type),
     normalizeEntityType: (type: string) => (entitySet.has(type) ? (type as E[number]) : 'Other'),

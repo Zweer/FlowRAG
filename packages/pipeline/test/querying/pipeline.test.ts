@@ -15,6 +15,9 @@ describe('QueryPipeline', () => {
       schema: {
         entityTypes: ['SERVICE'],
         relationTypes: ['USES'],
+        documentFields: {},
+        entityFields: {},
+        relationFields: {},
         isValidEntityType: vi.fn(() => true),
         isValidRelationType: vi.fn(() => true),
         normalizeEntityType: vi.fn((type) => type),

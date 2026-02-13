@@ -35,4 +35,26 @@ describe('defineSchema', () => {
   it('throws on empty relation types', () => {
     expect(() => defineSchema({ entityTypes: ['A'] as const, relationTypes: [] })).toThrow();
   });
+
+  it('should have empty custom fields by default', () => {
+    expect(schema.documentFields).toEqual({});
+    expect(schema.entityFields).toEqual({});
+    expect(schema.relationFields).toEqual({});
+  });
+
+  it('should accept custom field definitions', () => {
+    const s = defineSchema({
+      entityTypes: ['SERVICE'] as const,
+      relationTypes: ['USES'] as const,
+      documentFields: { domain: { type: 'string', filterable: true } },
+      entityFields: {
+        status: { type: 'enum', values: ['active', 'deprecated'], default: 'active' },
+      },
+      relationFields: { syncType: { type: 'enum', values: ['sync', 'async'] } },
+    });
+
+    expect(s.documentFields.domain).toEqual({ type: 'string', filterable: true });
+    expect(s.entityFields.status.values).toEqual(['active', 'deprecated']);
+    expect(s.relationFields.syncType.type).toBe('enum');
+  });
 });

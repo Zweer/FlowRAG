@@ -100,4 +100,25 @@ describe('BedrockExtractor', () => {
       );
     });
   });
+
+  it('should include custom fields in prompt when schema has them', async () => {
+    const schemaWithFields = defineSchema({
+      entityTypes: ['SERVICE'] as const,
+      relationTypes: ['USES'] as const,
+      entityFields: { status: { type: 'enum', values: ['active', 'deprecated'] } },
+      relationFields: { syncType: { type: 'string' } },
+    });
+
+    mockSend.mockResolvedValue({
+      output: { message: { content: [{ text: JSON.stringify(extraction) }] } },
+    });
+
+    await extractor.extractEntities('content', [], schemaWithFields);
+
+    const call = mockSend.mock.calls[0][0];
+    const prompt = call.input.messages[0].content[0].text;
+    expect(prompt).toContain('Entity custom fields');
+    expect(prompt).toContain('Relation custom fields');
+    expect(prompt).toContain('"fields": {}');
+  });
 });

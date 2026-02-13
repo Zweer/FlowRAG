@@ -89,6 +89,9 @@ describe('Types', () => {
       schema: {
         entityTypes: ['SERVICE'],
         relationTypes: ['USES'],
+        documentFields: {},
+        entityFields: {},
+        relationFields: {},
         isValidEntityType: () => true,
         isValidRelationType: () => true,
         normalizeEntityType: (type) => type,
