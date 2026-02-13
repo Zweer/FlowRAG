@@ -48,6 +48,11 @@ Or for a complete local setup:
 npm install @flowrag/pipeline @flowrag/presets
 ```
 
+For AWS cloud deployment:
+```bash
+npm install @flowrag/provider-bedrock @flowrag/storage-s3 @flowrag/storage-opensearch
+```
+
 ## Quick Start
 
 ```typescript
@@ -167,11 +172,11 @@ Interactive entity review during indexing with `--interactive`:
 │                      STORAGE LAYER                          │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
 │  │    KV    │  │  Vector  │  │  Graph   │                   │
-│  │  (JSON)  │  │ (LanceDB)│  │ (SQLite) │                   │
+│  │ JSON/S3  │  │Lance/OS  │  │SQLite/OS │                   │
 │  └──────────┘  └──────────┘  └──────────┘                   │
 ├─────────────────────────────────────────────────────────────┤
 │                      PROVIDERS                              │
-│  Embedder: Local ONNX │ Gemini                              │
+│  Embedder: Local ONNX │ Gemini │ Bedrock                    │
 │  Extractor: Gemini │ Bedrock                                │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -185,8 +190,11 @@ Interactive entity review during indexing with `--interactive`:
 | [`@flowrag/storage-json`](./packages/storage-json) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-json.svg)](https://www.npmjs.com/package/@flowrag/storage-json) | JSON file KV storage | ✅ Complete |
 | [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-sqlite.svg)](https://www.npmjs.com/package/@flowrag/storage-sqlite) | SQLite graph storage | ✅ Complete |
 | [`@flowrag/storage-lancedb`](./packages/storage-lancedb) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-lancedb.svg)](https://www.npmjs.com/package/@flowrag/storage-lancedb) | LanceDB vector storage | ✅ Complete |
+| [`@flowrag/storage-s3`](./packages/storage-s3) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | S3 KV storage | ✅ Complete |
+| [`@flowrag/storage-opensearch`](./packages/storage-opensearch) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | OpenSearch vector & graph storage | ✅ Complete |
 | [`@flowrag/provider-local`](./packages/provider-local) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-local.svg)](https://www.npmjs.com/package/@flowrag/provider-local) | Local AI provider (ONNX embeddings) | ✅ Complete |
 | [`@flowrag/provider-gemini`](./packages/provider-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-gemini.svg)](https://www.npmjs.com/package/@flowrag/provider-gemini) | Gemini AI provider (embeddings + extraction) | ✅ Complete |
+| [`@flowrag/provider-bedrock`](./packages/provider-bedrock) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | AWS Bedrock provider (embeddings + extraction) | ✅ Complete |
 | [`@flowrag/presets`](./packages/presets) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpresets.svg)](https://www.npmjs.com/package/@flowrag/presets) | Opinionated presets | ✅ Complete |
 | `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | ✅ Complete |
 
@@ -208,9 +216,26 @@ flowrag search "query"     # Search locally
 ### AWS Lambda
 
 ```typescript
-// Query Lambda - stateless, fast
-const rag = await createFlowRAG({ storage: s3Storage });
-const results = await rag.search(query);
+import { defineSchema } from '@flowrag/core';
+import { createFlowRAG } from '@flowrag/pipeline';
+import { BedrockEmbedder, BedrockExtractor } from '@flowrag/provider-bedrock';
+import { S3KVStorage } from '@flowrag/storage-s3';
+import { OpenSearchVectorStorage, OpenSearchGraphStorage } from '@flowrag/storage-opensearch';
+
+export const handler = async (event: { query: string }) => {
+  const rag = createFlowRAG({
+    schema,
+    storage: {
+      kv: new S3KVStorage({ client: s3Client, bucket: 'my-rag-bucket', prefix: 'kv/' }),
+      vector: new OpenSearchVectorStorage({ client: osClient, dimensions: 1024 }),
+      graph: new OpenSearchGraphStorage({ client: osClient }),
+    },
+    embedder: new BedrockEmbedder(),
+    extractor: new BedrockExtractor(),
+  });
+
+  return await rag.search(event.query);
+};
 ```
 
 ## Tech Stack
@@ -228,8 +253,8 @@ const results = await rag.search(query);
 
 ```bash
 npm install        # Install dependencies
-npm run build      # Build all packages
-npm test           # Run 210 tests across 22 test files
+npm run build      # Build all 12 packages
+npm test           # Run 284 tests across 29 test files
 npm run lint       # Lint code
 npm run typecheck  # Type check
 ```

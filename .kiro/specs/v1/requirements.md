@@ -65,7 +65,7 @@ Inspired by LightRAG's clean separation:
 - Vector: LanceDB
 - Graph: SQLite
 
-**Cloud (future)**:
+**Cloud**:
 - KV: S3
 - Vector: OpenSearch
 - Graph: OpenSearch
@@ -96,12 +96,12 @@ flowrag/
 │   ├── storage-json/         # JSON file KV storage
 │   ├── storage-sqlite/       # SQLite for Graph
 │   ├── storage-lancedb/      # LanceDB for Vectors
-│   ├── storage-s3/           # S3 adapter (future)
-│   ├── storage-opensearch/   # OpenSearch adapter (future)
+│   ├── storage-s3/           # S3 adapter
+│   ├── storage-opensearch/   # OpenSearch adapter
 │   │
 │   ├── provider-local/       # Local AI provider (ONNX embeddings)
 │   ├── provider-gemini/      # Gemini AI provider (embeddings + extraction)
-│   ├── provider-bedrock/     # AWS Bedrock provider (future)
+│   ├── provider-bedrock/     # AWS Bedrock provider
 │   │
 │   └── cli/                  # CLI for local usage (planned)
 │
@@ -374,7 +374,7 @@ GEMINI_API_KEY=your-key
 # LLM Extractor
 FLOWRAG_EXTRACTOR_MODEL=gemini-2.5-flash
 
-# AWS (for cloud storage - future)
+# AWS (for cloud storage)
 AWS_REGION=eu-central-1
 ```
 
@@ -442,24 +442,29 @@ await rag.index('./content');
 const results = await rag.search('how does authentication work');
 ```
 
-### 7.2 AWS Lambda (Future)
+### 7.2 AWS Lambda
 
 ```typescript
 // query-lambda.ts
+import { defineSchema } from '@flowrag/core';
+import { createFlowRAG } from '@flowrag/pipeline';
+import { BedrockEmbedder, BedrockExtractor } from '@flowrag/provider-bedrock';
+import { S3KVStorage } from '@flowrag/storage-s3';
+import { OpenSearchVectorStorage, OpenSearchGraphStorage } from '@flowrag/storage-opensearch';
+
 export const handler = async (event: { query: string }) => {
-  const rag = await createFlowRAG({
+  const rag = createFlowRAG({
     schema,
     storage: {
-      kv: new S3KVStorage({ bucket: 'my-rag-bucket', prefix: 'kv/' }),
-      vector: new OpenSearchVectorStorage({ endpoint: '...' }),
-      graph: new OpenSearchGraphStorage({ endpoint: '...' }),
+      kv: new S3KVStorage({ client: s3Client, bucket: 'my-rag-bucket', prefix: 'kv/' }),
+      vector: new OpenSearchVectorStorage({ client: osClient, dimensions: 1024 }),
+      graph: new OpenSearchGraphStorage({ client: osClient }),
     },
     embedder: new BedrockEmbedder(),
+    extractor: new BedrockExtractor(),
   });
 
-  const results = await rag.search(event.query);
-  
-  return { results };
+  return await rag.search(event.query);
 };
 ```
 
@@ -471,10 +476,11 @@ export const handler = async (event: { query: string }) => {
 | Language | TypeScript (strict mode, isolatedDeclarations) |
 | Package Manager | npm workspaces |
 | Build | tsdown (Rolldown-based) |
-| Vector DB | LanceDB |
-| Graph DB | SQLite |
-| Embeddings | @huggingface/transformers (ONNX) |
-| Entity Extraction | Gemini AI |
+| Vector DB | LanceDB, OpenSearch |
+| Graph DB | SQLite, OpenSearch |
+| KV Storage | JSON files, S3 |
+| Embeddings | @huggingface/transformers (ONNX), Gemini, AWS Bedrock |
+| Entity Extraction | Gemini AI, AWS Bedrock |
 | Testing | Vitest |
 | Linting/Formatting | Biome |
 | Schema Validation | Zod |
@@ -509,10 +515,10 @@ export const handler = async (event: { query: string }) => {
 - [x] Pipeline hooks (`onEntitiesExtracted` callback)
 - [x] 100% test coverage (210 tests)
 
-### Phase 5: Cloud Storage 📋 **Next**
-- [ ] `@flowrag/storage-s3`: S3 adapter
-- [ ] `@flowrag/storage-opensearch`: OpenSearch adapter
-- [ ] `@flowrag/provider-bedrock`: AWS Bedrock
+### Phase 5: Cloud Storage ✅ **Complete**
+- [x] `@flowrag/storage-s3`: S3 adapter
+- [x] `@flowrag/storage-opensearch`: OpenSearch adapter
+- [x] `@flowrag/provider-bedrock`: AWS Bedrock
 - [ ] Lambda examples
 
 ### Phase 6: Advanced Features (Future)
@@ -539,5 +545,5 @@ export const handler = async (event: { query: string }) => {
 
 ---
 
-*Last updated: 2026-02-12*
+*Last updated: 2026-02-13*
 *Version: 1.0*

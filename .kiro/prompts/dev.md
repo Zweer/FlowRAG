@@ -27,11 +27,11 @@ Build a **lightweight, modular RAG library** in TypeScript that:
 - **Schema-flexible**: User-defined entity types, relation types, custom fields
 
 ### Storage Types (LightRAG-inspired)
-| Type | Purpose | Local Default | Cloud Option |
-|------|---------|---------------|--------------|
-| KV | Documents, chunks, cache | JSON files | S3/Redis |
+| Type | Purpose | Local | Cloud |
+|------|---------|-------|-------|
+| KV | Documents, chunks, cache | JSON files | S3 |
 | Vector | Embeddings | LanceDB | OpenSearch |
-| Graph | Entities, relations | SQLite | OpenSearch/Neo4j |
+| Graph | Entities, relations | SQLite | OpenSearch |
 
 ### Monorepo Structure
 ```
@@ -43,11 +43,11 @@ flowrag/
 │   ├── storage-json/      # JSON file KV storage
 │   ├── storage-sqlite/    # SQLite for Graph
 │   ├── storage-lancedb/   # LanceDB for Vectors
-│   ├── storage-s3/        # S3 adapter (future)
-│   ├── storage-opensearch/# OpenSearch adapter (future)
+│   ├── storage-s3/        # S3 adapter
+│   ├── storage-opensearch/# OpenSearch adapter
 │   ├── provider-local/    # Local AI provider (ONNX embeddings)
 │   ├── provider-gemini/   # Gemini AI provider (embeddings + extraction)
-│   ├── provider-bedrock/  # AWS Bedrock provider (future)
+│   ├── provider-bedrock/  # AWS Bedrock provider
 │   └── cli/               # CLI for local usage (planned)
 └── examples/
     ├── local-docs/        # Local documentation RAG
