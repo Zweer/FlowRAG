@@ -4,6 +4,7 @@
     "core",
     "pipeline",
     "presets",
+    "provider-bedrock",
     "provider-gemini",
     "provider-local",
     "storage-json",

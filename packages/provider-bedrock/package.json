@@ -1,0 +1,47 @@
+{
+  "name": "@flowrag/provider-bedrock",
+  "version": "0.0.0",
+  "description": "AWS Bedrock provider for FlowRAG - embeddings and entity extraction",
+  "keywords": [
+    "flowrag",
+    "provider",
+    "bedrock",
+    "aws",
+    "embedder",
+    "extractor",
+    "ai",
+    "rag"
+  ],
+  "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/provider-bedrock",
+  "bugs": "https://github.com/Zweer/FlowRAG/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/provider-bedrock"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.750.0",
+    "@flowrag/core": "1.1.0"
+  },
+  "engines": {
+    "node": ">=20.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
