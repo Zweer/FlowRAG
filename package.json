@@ -28,6 +28,9 @@
   "scripts": {
     "build": "tsdown",
     "clean": "rimraf --glob packages/**/dist",
+    "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:preview": "vitepress preview docs",
     "prelint": "npm run build",
     "lint": "concurrently npm:lint:* --prefixColors auto",
     "postlint": "npm run clean",
@@ -77,6 +80,7 @@
     "tsdown": "^0.20.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
+    "vitepress": "^1.6.4",
     "vitest": "^4.0.18"
   },
   "engines": {
