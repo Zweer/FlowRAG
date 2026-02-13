@@ -9,6 +9,7 @@
     "provider-local",
     "storage-json",
     "storage-lancedb",
+    "storage-s3",
     "storage-sqlite"
   ]
 }
