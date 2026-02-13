@@ -278,4 +278,162 @@ describe('E2E: A Christmas Carol', () => {
     expect(typeof result.content).toBe('string');
     expect(typeof result.score).toBe('number');
   });
+
+  // --- Query modes ---
+
+  it('should search with local mode (entity-focused)', async () => {
+    const results = await rag.search('Scrooge the miser', { mode: 'local', limit: 5 });
+    // Local mode filters by entity relevance — may return fewer results
+    expect(results).toBeDefined();
+    if (results.length > 0) {
+      const content = results
+        .map((r) => r.content)
+        .join(' ')
+        .toLowerCase();
+      expect(content).toContain('scrooge');
+    }
+  });
+
+  it('should search with global mode', async () => {
+    const results = await rag.search('Christmas spirits and ghosts', { mode: 'global', limit: 5 });
+    expect(results.length).toBeGreaterThan(0);
+    expect(results[0].source).toBe('vector');
+  });
+
+  it('should search with hybrid mode', async () => {
+    const results = await rag.search('Bob Cratchit family', { mode: 'hybrid', limit: 5 });
+    expect(results.length).toBeGreaterThan(0);
+  });
+
+  // --- Graph details ---
+
+  it('should have correct entity types in graph', async () => {
+    const entities = await graphStorage.getEntities();
+    const types = new Set(entities.map((e) => e.type));
+    expect(types).toContain('CHARACTER');
+    expect(types).toContain('SPIRIT');
+  });
+
+  it('should have correct relation types in graph', async () => {
+    const entities = await graphStorage.getEntities();
+    const allRelations = await Promise.all(entities.map((e) => graphStorage.getRelations(e.id)));
+    const types = new Set(allRelations.flat().map((r) => r.type));
+    expect(types).toContain('EMPLOYS');
+    expect(types).toContain('PARENT_OF');
+  });
+
+  it('should have Scrooge connected to multiple entities', async () => {
+    const relations = await graphStorage.getRelations('Scrooge', 'out');
+    expect(relations.length).toBeGreaterThanOrEqual(2);
+    const targets = relations.map((r) => r.targetId);
+    expect(targets).toContain('Marley');
+    expect(targets).toContain('Bob Cratchit');
+  });
+});
+
+// --- Hook: onEntitiesExtracted ---
+
+describe('E2E: Pipeline hooks', () => {
+  const hookDir = join(tmpdir(), `flowrag-e2e-hook-${Date.now()}`);
+  let hookRag: ReturnType<typeof createFlowRAG>;
+  let hookGraph: SQLiteGraphStorage;
+
+  beforeAll(async () => {
+    await mkdir(join(hookDir, 'content'), { recursive: true });
+    await writeFile(join(hookDir, 'content', 'stave-1.md'), STAVE_1);
+
+    hookGraph = new SQLiteGraphStorage({ path: join(hookDir, 'graph.db') });
+
+    hookRag = createFlowRAG({
+      schema,
+      storage: {
+        kv: new JsonKVStorage({ path: join(hookDir, 'kv') }),
+        vector: new LanceDBVectorStorage({ path: join(hookDir, 'vectors') }),
+        graph: hookGraph,
+      },
+      embedder: new LocalEmbedder({ device: 'cpu' }),
+      extractor: createMockExtractor(),
+      hooks: {
+        onEntitiesExtracted: async (extraction, _context) => {
+          // Filter out BUSINESS entities, keep only CHARACTERs
+          return {
+            entities: extraction.entities.filter((e) => e.type === 'CHARACTER'),
+            relations: extraction.relations.filter((r) => {
+              const keptNames = new Set(
+                extraction.entities.filter((e) => e.type === 'CHARACTER').map((e) => e.name),
+              );
+              return keptNames.has(r.source) && keptNames.has(r.target);
+            }),
+          };
+        },
+      },
+    });
+
+    await hookRag.index(join(hookDir, 'content', 'stave-1.md'));
+  });
+
+  afterAll(async () => {
+    hookGraph.close();
+    await rm(hookDir, { recursive: true, force: true });
+  });
+
+  it('should have filtered out BUSINESS entities via hook', async () => {
+    const entities = await hookGraph.getEntities();
+    const types = entities.map((e) => e.type);
+    expect(types).not.toContain('BUSINESS');
+    expect(types).toContain('CHARACTER');
+  });
+
+  it('should have filtered out relations to removed entities', async () => {
+    const entity = await hookGraph.getEntity('Scrooge');
+    expect(entity).not.toBeNull();
+
+    const relations = await hookGraph.getRelations('Scrooge', 'out');
+    const targets = relations.map((r) => r.targetId);
+    // "Scrooge and Marley" (BUSINESS) was filtered, so OWNS relation should be gone
+    expect(targets).not.toContain('Scrooge and Marley');
+  });
+
+  it('should still have valid CHARACTER relations', async () => {
+    const relations = await hookGraph.getRelations('Scrooge', 'out');
+    expect(relations.length).toBeGreaterThanOrEqual(1);
+    // Scrooge → EMPLOYS → Bob Cratchit should survive
+    const targets = relations.map((r) => r.targetId);
+    expect(targets).toContain('Bob Cratchit');
+  });
+
+  it('should provide chunk context to hook', async () => {
+    // Re-index with a hook that captures context
+    const contexts: Array<{ chunkId: string; documentId: string; content: string }> = [];
+    const captureDir = join(tmpdir(), `flowrag-e2e-capture-${Date.now()}`);
+    await mkdir(join(captureDir, 'content'), { recursive: true });
+    await writeFile(join(captureDir, 'content', 'test.md'), 'Test content for context capture.');
+
+    const captureGraph = new SQLiteGraphStorage({ path: join(captureDir, 'graph.db') });
+    const captureRag = createFlowRAG({
+      schema,
+      storage: {
+        kv: new JsonKVStorage({ path: join(captureDir, 'kv') }),
+        vector: new LanceDBVectorStorage({ path: join(captureDir, 'vectors') }),
+        graph: captureGraph,
+      },
+      embedder: new LocalEmbedder({ device: 'cpu' }),
+      extractor: createMockExtractor(),
+      hooks: {
+        onEntitiesExtracted: async (extraction, context) => {
+          contexts.push(context);
+          return extraction;
+        },
+      },
+    });
+
+    await captureRag.index(join(captureDir, 'content', 'test.md'));
+    captureGraph.close();
+    await rm(captureDir, { recursive: true, force: true });
+
+    expect(contexts.length).toBeGreaterThanOrEqual(1);
+    expect(contexts[0].chunkId).toMatch(/^chunk:/);
+    expect(contexts[0].documentId).toMatch(/^doc:/);
+    expect(contexts[0].content).toBeTruthy();
+  });
 });
