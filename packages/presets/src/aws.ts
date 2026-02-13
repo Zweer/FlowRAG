@@ -1,8 +1,8 @@
 import type { Embedder, GraphStorage, KVStorage, LLMExtractor, VectorStorage } from '@flowrag/core';
 import { BedrockEmbedder, BedrockExtractor } from '@flowrag/provider-bedrock';
+import type { OpenSearchVectorStorageOptions } from '@flowrag/storage-opensearch';
 import { OpenSearchGraphStorage, OpenSearchVectorStorage } from '@flowrag/storage-opensearch';
 import { S3KVStorage } from '@flowrag/storage-s3';
-import type { Client } from '@opensearch-project/opensearch';
 
 export interface AWSStorageOptions {
   /** S3 bucket for KV storage */
@@ -10,7 +10,7 @@ export interface AWSStorageOptions {
   /** S3 key prefix (default: 'flowrag/') */
   prefix?: string;
   /** OpenSearch client instance */
-  opensearchClient: Client;
+  opensearchClient: OpenSearchVectorStorageOptions['client'];
   /** Embedding dimensions (default: 1024 for Titan V2) */
   dimensions?: number;
   /** AWS region */

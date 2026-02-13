@@ -9,18 +9,37 @@ export class QueryPipeline {
   ) {}
 
   async search(query: string, mode: QueryMode, limit: number): Promise<SearchResult[]> {
+    let results: SearchResult[];
     switch (mode) {
       case 'naive':
-        return this.naiveSearch(query, limit);
+        results = await this.naiveSearch(query, limit);
+        break;
       case 'local':
-        return this.localSearch(query, limit);
+        results = await this.localSearch(query, limit);
+        break;
       case 'global':
-        return this.globalSearch(query, limit);
+        results = await this.globalSearch(query, limit);
+        break;
       case 'hybrid':
-        return this.hybridSearch(query, limit);
+        results = await this.hybridSearch(query, limit);
+        break;
       default:
         throw new Error(`Unknown query mode: ${mode}`);
     }
+
+    if (this.config.reranker && results.length > 0) {
+      const reranked = await this.config.reranker.rerank(
+        query,
+        results.map((r) => ({ id: r.id, content: r.content, score: r.score })),
+        limit,
+      );
+      const byId = new Map(results.map((r) => [r.id, r]));
+      results = reranked
+        .filter((r) => byId.has(r.id))
+        .map((r) => ({ ...byId.get(r.id), score: r.score }) as SearchResult);
+    }
+
+    return results;
   }
 
   async traceDataFlow(entityId: string, _direction: 'upstream' | 'downstream'): Promise<Entity[]> {

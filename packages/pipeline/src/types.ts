@@ -4,6 +4,7 @@ import type {
   GraphStorage,
   KVStorage,
   LLMExtractor,
+  Reranker,
   Schema,
   VectorStorage,
 } from '@flowrag/core';
@@ -30,6 +31,7 @@ export interface FlowRAGConfig {
   };
   embedder: Embedder;
   extractor: LLMExtractor;
+  reranker?: Reranker;
   hooks?: FlowRAGHooks;
   options?: {
     indexing?: IndexingOptions;

@@ -390,4 +390,48 @@ describe('QueryPipeline', () => {
       expect(results).toHaveLength(0); // No valid content to match
     });
   });
+
+  describe('reranker integration', () => {
+    it('should rerank results when reranker is configured', async () => {
+      const mockReranker = {
+        rerank: vi.fn().mockResolvedValue([
+          { id: 'chunk:2', score: 0.99, index: 1 },
+          { id: 'chunk:1', score: 0.5, index: 0 },
+        ]),
+      };
+
+      const configWithReranker = { ...mockConfig, reranker: mockReranker };
+      const p = new QueryPipeline(configWithReranker, mockOptions);
+
+      const results = await p.search('test', 'naive', 5);
+
+      expect(mockReranker.rerank).toHaveBeenCalledWith(
+        'test',
+        expect.arrayContaining([
+          expect.objectContaining({ id: 'chunk:1' }),
+          expect.objectContaining({ id: 'chunk:2' }),
+        ]),
+        5,
+      );
+      expect(results[0].id).toBe('chunk:2');
+      expect(results[0].score).toBe(0.99);
+    });
+
+    it('should skip reranking when no results', async () => {
+      mockConfig.storage.vector.search = vi.fn().mockResolvedValue([]);
+      const mockReranker = { rerank: vi.fn() };
+      const configWithReranker = { ...mockConfig, reranker: mockReranker };
+      const p = new QueryPipeline(configWithReranker, mockOptions);
+
+      await p.search('test', 'naive', 5);
+
+      expect(mockReranker.rerank).not.toHaveBeenCalled();
+    });
+
+    it('should not rerank when no reranker configured', async () => {
+      const results = await pipeline.search('test', 'naive', 5);
+      expect(results).toHaveLength(2);
+      expect(results[0].score).toBe(0.9); // Original score preserved
+    });
+  });
 });
