@@ -83,12 +83,21 @@ const results = await rag.search('how does authentication work');
 
 ### Schema-Flexible
 
-Define your own entity and relation types. Unknown types fallback to `Other`:
+Define your own entity and relation types with optional custom fields:
 
 ```typescript
 const schema = defineSchema({
   entityTypes: ['SERVICE', 'PROTOCOL', 'TEAM'],
   relationTypes: ['PRODUCES', 'CONSUMES', 'OWNS'],
+  
+  // Optional custom fields for richer metadata
+  entityFields: {
+    status: { type: 'enum', values: ['active', 'deprecated'], default: 'active' },
+    owner: { type: 'string' },
+  },
+  relationFields: {
+    syncType: { type: 'enum', values: ['sync', 'async'] },
+  },
 });
 
 // schema.isValidEntityType('SERVICE') → true
@@ -134,6 +143,15 @@ Three implementations available:
 - `GeminiReranker` — LLM-based relevance scoring
 - `BedrockReranker` — Amazon Rerank API (`amazon.rerank-v1:0`)
 
+### Incremental Indexing
+
+Only re-process changed documents. Content is hashed (SHA-256) and compared on re-index:
+
+```typescript
+await rag.index('./content');                  // Skips unchanged docs
+await rag.index('./content', { force: true }); // Re-index everything
+```
+
 ### CLI
 
 Full-featured command-line interface for local usage:
@@ -144,7 +162,7 @@ flowrag init
 
 # Index documents (with optional interactive entity review)
 flowrag index ./content
-flowrag index ./content --force          # Re-index from scratch
+flowrag index ./content --force          # Re-index all documents
 flowrag index ./content --interactive    # Review extracted entities
 
 # Search
@@ -274,7 +292,7 @@ export const handler = async (event: { query: string }) => {
 ```bash
 npm install        # Install dependencies
 npm run build      # Build all 12 packages
-npm test           # Run 316 tests across 33 test files
+npm test           # Run 325 tests across 33 test files
 npm run lint       # Lint code
 npm run typecheck  # Type check
 ```

@@ -48,7 +48,7 @@ flowrag/
 │   ├── provider-local/    # Local AI provider (ONNX embeddings)
 │   ├── provider-gemini/   # Gemini AI provider (embeddings + extraction)
 │   ├── provider-bedrock/  # AWS Bedrock provider
-│   └── cli/               # CLI for local usage (planned)
+│   └── cli/               # CLI for local usage
 └── examples/
     ├── local-docs/        # Local documentation RAG
     └── lambda-query/      # AWS Lambda query example

@@ -130,10 +130,9 @@ const schema = defineSchema({
 });
 ```
 
-**Future (v1.1+)**: Custom fields for richer metadata:
+**Custom fields** for richer metadata:
 
 ```typescript
-// NOT IN V1 - Planned for future
 const schema = defineSchema({
   entityTypes: ['SERVICE', 'PROTOCOL', 'DATABASE', 'TEAM'] as const,
   relationTypes: ['PRODUCES', 'CONSUMES', 'OWNS', 'DEPENDS_ON'] as const,
@@ -303,6 +302,12 @@ Input Documents
 - `maxParallelInsert`: max documents processed concurrently (default: 2)
 - `llmMaxAsync`: max concurrent LLM calls (default: 4)
 - `embeddingMaxAsync`: max concurrent embedding calls (default: 16)
+
+**Incremental Indexing**:
+- Each document's content is hashed (SHA-256) after processing
+- Hash stored in KV as `docHash:{documentId}`
+- On re-index, unchanged documents are skipped automatically
+- Use `force: true` to re-process all documents regardless of hash
 
 ### 4.2 Query Pipeline
 
@@ -541,10 +546,10 @@ export const handler = async (event: { query: string }) => {
 - [x] `@flowrag/provider-bedrock`: AWS Bedrock
 - [x] Lambda examples
 
-### Phase 6: Advanced Features 🚧 **In Progress**
+### Phase 6: Advanced Features ✅ **Complete**
 - [x] Reranker support
-- [ ] Custom fields (documentFields, entityFields, relationFields)
-- [ ] Incremental indexing with document status tracking
+- [x] Custom fields (documentFields, entityFields, relationFields)
+- [x] Incremental indexing with document status tracking
 
 ## 10. Non-Goals (Out of Scope for v1)
 
@@ -554,7 +559,6 @@ export const handler = async (event: { query: string }) => {
 - **Neo4j integration**: SQLite/OpenSearch sufficient for our scale
 - **Multi-tenancy**: Single workspace per instance
 - **MCP server**: Not in v1
-- **Custom fields**: Planned for v1.1+
 
 ## 11. Success Criteria
 
