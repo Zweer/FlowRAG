@@ -503,11 +503,13 @@ export const handler = async (event: { query: string }) => {
 - [x] `@flowrag/presets`: Opinionated local storage preset
 - [x] 100% test coverage (160 tests)
 
-### Phase 4: CLI 📋 **Next**
-- [ ] `@flowrag/cli`: Command-line interface
-- [ ] Human-in-the-loop for local indexing
+### Phase 4: CLI ✅ **Complete**
+- [x] `@flowrag/cli`: Command-line interface (init, index, search, stats, graph)
+- [x] Human-in-the-loop for local indexing (`--interactive` with @inquirer/prompts)
+- [x] Pipeline hooks (`onEntitiesExtracted` callback)
+- [x] 100% test coverage (210 tests)
 
-### Phase 5: Cloud Storage (Future)
+### Phase 5: Cloud Storage 📋 **Next**
 - [ ] `@flowrag/storage-s3`: S3 adapter
 - [ ] `@flowrag/storage-opensearch`: OpenSearch adapter
 - [ ] `@flowrag/provider-bedrock`: AWS Bedrock

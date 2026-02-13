@@ -110,6 +110,52 @@ Combines vector search with graph traversal:
 2. **Graph expansion**: Follow entity relationships
 3. **Merge & dedupe**: Combine results
 
+### CLI
+
+Full-featured command-line interface for local usage:
+
+```bash
+# Initialize data directory
+flowrag init
+
+# Index documents (with optional interactive entity review)
+flowrag index ./content
+flowrag index ./content --force          # Re-index from scratch
+flowrag index ./content --interactive    # Review extracted entities
+
+# Search
+flowrag search "how does OCPP work"
+flowrag search "OCPP" --type entities    # Search entities
+flowrag search "ServiceA" --type relations  # Show entity relations
+flowrag search "query" --mode local --limit 20
+
+# Knowledge graph
+flowrag graph stats                      # Entity/relation breakdown
+flowrag graph export                     # Export as DOT format
+
+# Statistics
+flowrag stats
+```
+
+### Human-in-the-Loop
+
+Interactive entity review during indexing with `--interactive`:
+
+```
+📄 Chunk chunk:abc123 — doc:readme
+
+? Entities — select to keep:
+  ◉ [SERVICE]  becky-ocpp16 — "Backend OCPP 1.6..."
+  ◉ [PROTOCOL] OCPP 1.6 — "Open Charge Point Protocol..."
+  ◯ [OTHER]    WebSocket — "Communication protocol..."
+
+? What next?
+  → Continue to relations
+    ✏️  Edit an entity
+    ➕ Add new entity
+    📄 Show chunk content
+```
+
 ## Architecture
 
 ```
@@ -142,7 +188,7 @@ Combines vector search with graph traversal:
 | [`@flowrag/provider-local`](./packages/provider-local) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-local.svg)](https://www.npmjs.com/package/@flowrag/provider-local) | Local AI provider (ONNX embeddings) | ✅ Complete |
 | [`@flowrag/provider-gemini`](./packages/provider-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-gemini.svg)](https://www.npmjs.com/package/@flowrag/provider-gemini) | Gemini AI provider (embeddings + extraction) | ✅ Complete |
 | [`@flowrag/presets`](./packages/presets) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpresets.svg)](https://www.npmjs.com/package/@flowrag/presets) | Opinionated presets | ✅ Complete |
-| `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | 📋 Planned |
+| `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | ✅ Complete |
 
 ### Development Status
 - **✅ Complete**: Fully implemented with 100% test coverage
@@ -183,7 +229,7 @@ const results = await rag.search(query);
 ```bash
 npm install        # Install dependencies
 npm run build      # Build all packages
-npm test           # Run tests
+npm test           # Run 210 tests across 22 test files
 npm run lint       # Lint code
 npm run typecheck  # Type check
 ```
