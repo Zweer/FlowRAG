@@ -9,6 +9,7 @@
     "provider-local",
     "storage-json",
     "storage-lancedb",
+    "storage-opensearch",
     "storage-s3",
     "storage-sqlite"
   ]
