@@ -1,0 +1,52 @@
+{
+  "name": "@flowrag/cli",
+  "version": "0.0.0",
+  "description": "Command-line interface for FlowRAG - index documents and search from your terminal",
+  "keywords": [
+    "rag",
+    "cli",
+    "knowledge-graph",
+    "vector-search",
+    "indexing"
+  ],
+  "homepage": "https://github.com/Zweer/FlowRAG#readme",
+  "bugs": {
+    "url": "https://github.com/Zweer/FlowRAG/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/cli"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.mts",
+  "bin": {
+    "flowrag": "./dist/index.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@commander-js/extra-typings": "^14.0.0",
+    "@flowrag/core": "1.1.0",
+    "@flowrag/pipeline": "1.1.0",
+    "@flowrag/presets": "1.1.0",
+    "commander": "^14.0.0"
+  },
+  "engines": {
+    "node": ">= 20.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
