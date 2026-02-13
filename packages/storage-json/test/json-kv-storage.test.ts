@@ -11,12 +11,12 @@ describe('JsonKVStorage', () => {
   let testPath: string;
 
   beforeEach(() => {
-    testPath = join(tmpdir(), `flowrag-test-${Date.now()}`);
+    testPath = join(tmpdir(), `flowrag-test-json-${Date.now()}`);
     storage = new JsonKVStorage({ path: testPath });
   });
 
   afterEach(async () => {
-    await rm(testPath, { recursive: true, force: true });
+    await rm(testPath, { recursive: true, force: true, maxRetries: 3, retryDelay: 50 });
   });
 
   describe('get/set', () => {

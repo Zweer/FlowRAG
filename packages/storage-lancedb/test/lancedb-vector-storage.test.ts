@@ -12,7 +12,7 @@ describe('LanceDBVectorStorage', () => {
   let testPath: string;
 
   beforeEach(() => {
-    testPath = join(tmpdir(), `flowrag-test-${Date.now()}`);
+    testPath = join(tmpdir(), `flowrag-test-lance-${Date.now()}`);
     storage = new LanceDBVectorStorage({ path: testPath });
   });
 
