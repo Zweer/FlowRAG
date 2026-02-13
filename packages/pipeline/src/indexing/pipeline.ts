@@ -66,6 +66,15 @@ export class IndexingPipeline {
     // 4. Embedder: Generate embeddings
     const embedding = await this.config.embedder.embed(chunk.content);
 
+    // Call hook if provided
+    if (this.config.hooks?.onEntitiesExtracted) {
+      extraction = await this.config.hooks.onEntitiesExtracted(extraction, {
+        chunkId: chunk.id,
+        documentId: chunk.documentId,
+        content: chunk.content,
+      });
+    }
+
     // 5. Storage: Save to all stores
     await Promise.all([
       // Vector storage

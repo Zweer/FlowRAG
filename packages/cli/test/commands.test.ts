@@ -72,7 +72,7 @@ describe('index command', () => {
     const { getFlowRAG } = await import('../src/rag.js');
     await indexCommand.parseAsync(['./docs', '--data', '/tmp/mydata'], { from: 'user' });
 
-    expect(getFlowRAG).toHaveBeenCalledWith('/tmp/mydata');
+    expect(getFlowRAG).toHaveBeenCalledWith('/tmp/mydata', undefined);
   });
 
   it('should clear data directory with --force', async () => {
@@ -85,6 +85,16 @@ describe('index command', () => {
     await freshCmd.parseAsync(['./content', '--force'], { from: 'user' });
 
     expect(console.log).toHaveBeenCalledWith('🗑️  Cleared existing index');
+  });
+
+  it('should pass review hook with --interactive', async () => {
+    const { getFlowRAG } = await import('../src/rag.js');
+    await indexCommand.parseAsync(['./content', '--interactive'], { from: 'user' });
+
+    expect(getFlowRAG).toHaveBeenCalledWith(
+      './data',
+      expect.objectContaining({ onEntitiesExtracted: expect.any(Function) }),
+    );
   });
 });
 

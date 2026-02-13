@@ -40,10 +40,11 @@
     "@flowrag/core": "1.1.0",
     "@flowrag/pipeline": "1.1.0",
     "@flowrag/presets": "1.1.0",
+    "@inquirer/prompts": "^8.2.0",
     "commander": "^14.0.0"
   },
   "engines": {
-    "node": ">= 20.3"
+    "node": ">= 20.17"
   },
   "publishConfig": {
     "access": "public",

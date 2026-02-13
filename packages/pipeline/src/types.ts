@@ -1,11 +1,25 @@
 import type {
   Embedder,
+  ExtractionResult,
   GraphStorage,
   KVStorage,
   LLMExtractor,
   Schema,
   VectorStorage,
 } from '@flowrag/core';
+
+export interface ExtractionContext {
+  chunkId: string;
+  documentId: string;
+  content: string;
+}
+
+export interface FlowRAGHooks {
+  onEntitiesExtracted?: (
+    extraction: ExtractionResult,
+    context: ExtractionContext,
+  ) => Promise<ExtractionResult>;
+}
 
 export interface FlowRAGConfig {
   schema: Schema;
@@ -16,6 +30,7 @@ export interface FlowRAGConfig {
   };
   embedder: Embedder;
   extractor: LLMExtractor;
+  hooks?: FlowRAGHooks;
   options?: {
     indexing?: IndexingOptions;
     querying?: QueryOptions;

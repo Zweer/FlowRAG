@@ -173,6 +173,78 @@ describe('createFlowRAG', () => {
     }
   });
 
+  it('should call onEntitiesExtracted hook during indexing', async () => {
+    const hook = vi.fn((extraction) => Promise.resolve(extraction));
+
+    mockExtractor.extractEntities.mockResolvedValue({
+      entities: [{ name: 'TestService', type: 'SERVICE', description: 'A test service' }],
+      relations: [],
+    });
+
+    const rag = createFlowRAG({
+      schema,
+      storage: mockStorage,
+      embedder: mockEmbedder,
+      extractor: mockExtractor,
+      hooks: { onEntitiesExtracted: hook },
+    });
+
+    await fs.writeFile('/tmp/hook-test.txt', 'hook test content');
+
+    try {
+      await rag.index('/tmp/hook-test.txt');
+
+      expect(hook).toHaveBeenCalledWith(
+        {
+          entities: [{ name: 'TestService', type: 'SERVICE', description: 'A test service' }],
+          relations: [],
+        },
+        expect.objectContaining({
+          documentId: expect.any(String),
+          chunkId: expect.any(String),
+          content: expect.any(String),
+        }),
+      );
+      expect(mockStorage.graph.addEntity).toHaveBeenCalled();
+    } finally {
+      await fs.unlink('/tmp/hook-test.txt').catch(() => {});
+    }
+  });
+
+  it('should use modified extraction from hook', async () => {
+    mockExtractor.extractEntities.mockResolvedValue({
+      entities: [{ name: 'Original', type: 'SERVICE', description: 'Original entity' }],
+      relations: [],
+    });
+
+    const hook = vi.fn(() =>
+      Promise.resolve({
+        entities: [{ name: 'Modified', type: 'DATABASE', description: 'Modified entity' }],
+        relations: [],
+      }),
+    );
+
+    const rag = createFlowRAG({
+      schema,
+      storage: mockStorage,
+      embedder: mockEmbedder,
+      extractor: mockExtractor,
+      hooks: { onEntitiesExtracted: hook },
+    });
+
+    await fs.writeFile('/tmp/hook-modify-test.txt', 'modify test content');
+
+    try {
+      await rag.index('/tmp/hook-modify-test.txt');
+
+      expect(mockStorage.graph.addEntity).toHaveBeenCalledWith(
+        expect.objectContaining({ name: 'Modified', type: 'DATABASE' }),
+      );
+    } finally {
+      await fs.unlink('/tmp/hook-modify-test.txt').catch(() => {});
+    }
+  });
+
   it('should handle traceDataFlow', async () => {
     const rag = createFlowRAG({
       schema,

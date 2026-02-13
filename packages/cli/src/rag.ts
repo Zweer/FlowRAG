@@ -1,5 +1,5 @@
 import { defineSchema } from '@flowrag/core';
-import type { FlowRAG } from '@flowrag/pipeline';
+import type { FlowRAG, FlowRAGHooks } from '@flowrag/pipeline';
 import { createFlowRAG } from '@flowrag/pipeline';
 import type { LocalStorageConfig } from '@flowrag/presets';
 import { createLocalStorage } from '@flowrag/presets';
@@ -11,7 +11,7 @@ export interface FlowRAGInstance {
 
 let instance: FlowRAGInstance | null = null;
 
-export function getFlowRAG(dataPath: string): FlowRAGInstance {
+export function getFlowRAG(dataPath: string, hooks?: FlowRAGHooks): FlowRAGInstance {
   if (!instance) {
     const schema = defineSchema({
       entityTypes: [],
@@ -21,7 +21,7 @@ export function getFlowRAG(dataPath: string): FlowRAGInstance {
     const config = createLocalStorage({ path: dataPath });
 
     instance = {
-      rag: createFlowRAG({ schema, ...config }),
+      rag: createFlowRAG({ schema, ...config, hooks }),
       config,
     };
   }
