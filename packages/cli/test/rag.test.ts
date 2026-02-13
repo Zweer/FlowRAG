@@ -21,10 +21,12 @@ describe('getFlowRAG', () => {
     vi.resetModules();
   });
 
-  it('should create a FlowRAG instance', async () => {
+  it('should create a FlowRAG instance with rag and config', async () => {
     const { getFlowRAG } = await import('../src/rag.js');
-    const rag = getFlowRAG('./test-data');
-    expect(rag).toBeDefined();
+    const instance = getFlowRAG('./test-data');
+    expect(instance.rag).toBeDefined();
+    expect(instance.config).toBeDefined();
+    expect(instance.config.storage).toBeDefined();
   });
 
   it('should cache the instance on subsequent calls', async () => {

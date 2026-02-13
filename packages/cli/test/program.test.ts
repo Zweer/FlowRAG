@@ -16,8 +16,10 @@ describe('program', () => {
 
   it('should register all commands', () => {
     const commandNames = program.commands.map((cmd) => cmd.name());
+    expect(commandNames).toContain('init');
     expect(commandNames).toContain('index');
     expect(commandNames).toContain('search');
     expect(commandNames).toContain('stats');
+    expect(commandNames).toContain('graph');
   });
 });

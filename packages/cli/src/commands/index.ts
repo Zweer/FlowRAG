@@ -1,3 +1,5 @@
+import { rm } from 'node:fs/promises';
+
 import { Command } from '@commander-js/extra-typings';
 
 import { getFlowRAG } from '../rag.js';
@@ -8,7 +10,12 @@ export const indexCommand = new Command('index')
   .option('-d, --data <path>', 'data storage path', './data')
   .option('-f, --force', 'force re-index all documents')
   .action(async (inputPath, options) => {
-    const rag = getFlowRAG(options.data);
+    if (options.force) {
+      await rm(options.data, { recursive: true, force: true });
+      console.log('🗑️  Cleared existing index');
+    }
+
+    const { rag } = getFlowRAG(options.data);
 
     console.log(`📄 Indexing documents from: ${inputPath}`);
 

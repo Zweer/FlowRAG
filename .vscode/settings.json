@@ -1,5 +1,6 @@
 {
   "conventionalCommits.scopes": [
+    "cli",
     "core",
     "pipeline",
     "presets",
