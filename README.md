@@ -115,6 +115,25 @@ Combines vector search with graph traversal:
 2. **Graph expansion**: Follow entity relationships
 3. **Merge & dedupe**: Combine results
 
+### Reranker (Optional)
+
+Improve result quality with a post-retrieval reranking step:
+
+```typescript
+import { LocalReranker } from '@flowrag/provider-local';
+
+const rag = createFlowRAG({
+  schema,
+  ...createLocalStorage('./data'),
+  reranker: new LocalReranker(), // Cross-encoder ONNX, fully offline
+});
+```
+
+Three implementations available:
+- `LocalReranker` — cross-encoder via ONNX (Xenova/ms-marco-MiniLM-L-6-v2), no API needed
+- `GeminiReranker` — LLM-based relevance scoring
+- `BedrockReranker` — Amazon Rerank API (`amazon.rerank-v1:0`)
+
 ### CLI
 
 Full-featured command-line interface for local usage:
@@ -178,6 +197,7 @@ Interactive entity review during indexing with `--interactive`:
 │                      PROVIDERS                              │
 │  Embedder: Local ONNX │ Gemini │ Bedrock                    │
 │  Extractor: Gemini │ Bedrock                                │
+│  Reranker: Local ONNX │ Gemini │ Bedrock                    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -254,7 +274,7 @@ export const handler = async (event: { query: string }) => {
 ```bash
 npm install        # Install dependencies
 npm run build      # Build all 12 packages
-npm test           # Run 290 tests across 30 test files
+npm test           # Run 316 tests across 33 test files
 npm run lint       # Lint code
 npm run typecheck  # Type check
 ```

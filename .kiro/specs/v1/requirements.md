@@ -236,6 +236,26 @@ interface ExtractedRelation {
 }
 ```
 
+### 3.5 Reranker Interface
+
+```typescript
+interface Reranker {
+  rerank(query: string, documents: RerankDocument[], limit?: number): Promise<RerankResult[]>;
+}
+
+interface RerankDocument {
+  id: string;
+  content: string;
+  score: number;
+}
+
+interface RerankResult {
+  id: string;
+  score: number;
+  index: number;
+}
+```
+
 ## 4. Pipeline
 
 ### 4.1 Indexing Pipeline
@@ -521,9 +541,9 @@ export const handler = async (event: { query: string }) => {
 - [x] `@flowrag/provider-bedrock`: AWS Bedrock
 - [x] Lambda examples
 
-### Phase 6: Advanced Features (Future)
+### Phase 6: Advanced Features 🚧 **In Progress**
+- [x] Reranker support
 - [ ] Custom fields (documentFields, entityFields, relationFields)
-- [ ] Reranker support
 - [ ] Incremental indexing with document status tracking
 
 ## 10. Non-Goals (Out of Scope for v1)
