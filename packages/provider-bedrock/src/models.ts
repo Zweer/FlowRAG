@@ -5,6 +5,11 @@ export const BedrockEmbeddingModels = {
   COHERE_EMBED_MULTILINGUAL_V3: 'cohere.embed-multilingual-v3',
 } as const;
 
+/** Well-known Bedrock reranker model IDs */
+export const BedrockRerankerModels = {
+  RERANK_V1: 'amazon.rerank-v1:0',
+} as const;
+
 /** Well-known Bedrock LLM model IDs for entity extraction */
 export const BedrockLLMModels = {
   CLAUDE_SONNET_4_5: 'anthropic.claude-sonnet-4-5-20250929-v1:0',

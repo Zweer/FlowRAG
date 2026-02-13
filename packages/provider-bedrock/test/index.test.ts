@@ -5,6 +5,8 @@ import {
   BedrockEmbeddingModels,
   BedrockExtractor,
   BedrockLLMModels,
+  BedrockReranker,
+  BedrockRerankerModels,
 } from '../src/index.js';
 
 describe('provider-bedrock exports', () => {
@@ -30,5 +32,10 @@ describe('provider-bedrock exports', () => {
     expect(BedrockLLMModels.CLAUDE_OPUS_4_6).toBe('anthropic.claude-opus-4-6-v1');
     expect(BedrockLLMModels.NOVA_LITE).toBe('amazon.nova-lite-v1:0');
     expect(BedrockLLMModels.NOVA_PRO).toBe('amazon.nova-pro-v1:0');
+  });
+
+  it('should export BedrockReranker and models', () => {
+    expect(BedrockReranker).toBeDefined();
+    expect(BedrockRerankerModels.RERANK_V1).toBe('amazon.rerank-v1:0');
   });
 });
