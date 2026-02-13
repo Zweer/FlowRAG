@@ -401,6 +401,23 @@ describe('LanceDBVectorStorage', () => {
       await rm(freshPath, { recursive: true, force: true });
     });
 
+    it('should reuse tableInitPromise on concurrent upserts', async () => {
+      const freshPath = join(tmpdir(), `flowrag-concurrent-${Date.now()}`);
+      const freshStorage = new LanceDBVectorStorage({ path: freshPath });
+
+      const record1: VectorRecord = { id: 'c1', vector: [1.0, 0.0], metadata: { n: 1 } };
+      const record2: VectorRecord = { id: 'c2', vector: [0.0, 1.0], metadata: { n: 2 } };
+
+      // Two concurrent upserts on a fresh storage — second hits the existing tableInitPromise branch
+      await Promise.all([freshStorage.upsert([record1]), freshStorage.upsert([record2])]);
+
+      const count = await freshStorage.count();
+      expect(count).toBe(2);
+
+      await freshStorage.close();
+      await rm(freshPath, { recursive: true, force: true });
+    });
+
     it('should handle multiple init calls', async () => {
       const record: VectorRecord = {
         id: 'test',

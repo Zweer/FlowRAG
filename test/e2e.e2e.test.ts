@@ -12,7 +12,7 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { defineSchema, type ExtractionResult, type LLMExtractor, type Schema } from '@flowrag/core';
+import { defineSchema, type ExtractionResult, type LLMExtractor } from '@flowrag/core';
 import { createFlowRAG } from '@flowrag/pipeline';
 import { LocalEmbedder } from '@flowrag/provider-local';
 import { JsonKVStorage } from '@flowrag/storage-json';
