@@ -1,5 +1,3 @@
-import { rm } from 'node:fs/promises';
-
 import { Command } from '@commander-js/extra-typings';
 
 import { getFlowRAG } from '../rag.js';
@@ -12,17 +10,12 @@ export const indexCommand = new Command('index')
   .option('-f, --force', 'force re-index all documents')
   .option('-i, --interactive', 'review extracted entities interactively')
   .action(async (inputPath, options) => {
-    if (options.force) {
-      await rm(options.data, { recursive: true, force: true });
-      console.log('🗑️  Cleared existing index');
-    }
-
     const hooks = options.interactive ? { onEntitiesExtracted: reviewExtraction } : undefined;
     const { rag } = getFlowRAG(options.data, hooks);
 
     console.log(`📄 Indexing documents from: ${inputPath}`);
 
-    await rag.index(inputPath);
+    await rag.index(inputPath, { force: options.force });
 
     const stats = await rag.stats();
     console.log(`✅ Indexed ${stats.documents} documents, ${stats.chunks} chunks`);

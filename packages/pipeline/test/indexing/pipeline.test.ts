@@ -139,8 +139,8 @@ describe('IndexingPipeline', () => {
 
     await pipeline.process(['/1.txt', '/2.txt']);
 
-    // 2 docs + 2 chunks + 2 cache entries = 6 calls
-    expect(mockConfig.storage.kv.set).toHaveBeenCalledTimes(6);
+    // 2 docs + 2 chunks + 2 cache entries + 2 docHashes = 8 calls
+    expect(mockConfig.storage.kv.set).toHaveBeenCalledTimes(8);
   });
 
   it('should use LLM cache when available', async () => {
@@ -236,8 +236,8 @@ describe('IndexingPipeline', () => {
 
     await batchPipeline.process(['/1.txt', '/2.txt', '/3.txt']);
 
-    // 3 docs + 3 chunks + 3 cache entries = 9 calls
-    expect(mockConfig.storage.kv.set).toHaveBeenCalledTimes(9);
+    // 3 docs + 3 chunks + 3 cache entries + 3 docHashes = 12 calls
+    expect(mockConfig.storage.kv.set).toHaveBeenCalledTimes(12);
 
     batchPipeline.dispose();
   });
@@ -286,6 +286,51 @@ describe('IndexingPipeline', () => {
     const batches = (pipeline as any).createBatches(items, 2);
 
     expect(batches).toEqual([[1, 2], [3, 4], [5]]);
+  });
+
+  it('should skip unchanged documents on re-index', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+
+    mockScanner.scanFiles = vi
+      .fn()
+      .mockResolvedValue([
+        { id: 'doc:test', content: 'same content', metadata: { path: '/test.txt' } },
+      ]);
+    mockChunker.chunkDocument = vi.fn(() => [
+      {
+        id: 'doc:test:chunk:0',
+        content: 'same content',
+        documentId: 'doc:test',
+        startToken: 0,
+        endToken: 5,
+      },
+    ]);
+
+    // First index: no stored hash → processes
+    mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+    await pipeline.process(['/test.txt']);
+    expect(mockConfig.storage.kv.set).toHaveBeenCalled();
+
+    // Second index: hash matches → skips
+    const setCalls = vi.mocked(mockConfig.storage.kv.set).mock.calls;
+    const storedHash = setCalls.find(([key]) => (key as string).startsWith('docHash:'))?.[1];
+
+    mockConfig.storage.kv.set = vi.fn().mockResolvedValue(undefined);
+    mockConfig.storage.kv.get = vi
+      .fn()
+      .mockImplementation((key: string) =>
+        key.startsWith('docHash:') ? Promise.resolve(storedHash) : Promise.resolve(null),
+      );
+
+    await pipeline.process(['/test.txt']);
+    expect(mockConfig.storage.kv.set).not.toHaveBeenCalled();
+
+    // Third index with force: processes even if hash matches
+    await pipeline.process(['/test.txt'], true);
+    expect(mockConfig.storage.kv.set).toHaveBeenCalled();
   });
 
   it('should pass custom fields from extraction to storage', async () => {

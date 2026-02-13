@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 import type { ExtractionResult } from '@flowrag/core';
 
 import type { Chunk, Document, FlowRAGConfig, IndexingOptions } from '../types.js';
@@ -15,7 +17,7 @@ export class IndexingPipeline {
     this.chunker = new Chunker(options.chunkSize, options.chunkOverlap);
   }
 
-  async process(inputs: string[]): Promise<void> {
+  async process(inputs: string[], force = false): Promise<void> {
     // 1. Scanner: Parse files
     const documents = await this.scanner.scanFiles(inputs);
 
@@ -23,11 +25,18 @@ export class IndexingPipeline {
     const batches = this.createBatches(documents, this.options.maxParallelInsert);
 
     for (const batch of batches) {
-      await Promise.all(batch.map((doc) => this.processDocument(doc)));
+      await Promise.all(batch.map((doc) => this.processDocument(doc, force)));
     }
   }
 
-  private async processDocument(document: Document): Promise<void> {
+  private async processDocument(document: Document, force: boolean): Promise<void> {
+    // Incremental: skip unchanged documents
+    const hash = this.hashDocument(document.content);
+    if (!force) {
+      const stored = await this.config.storage.kv.get<string>(`docHash:${document.id}`);
+      if (stored === hash) return;
+    }
+
     // Store document
     await this.config.storage.kv.set(document.id, document);
 
@@ -40,6 +49,9 @@ export class IndexingPipeline {
     for (const chunkBatch of chunkBatches) {
       await Promise.all(chunkBatch.map((chunk) => this.processChunk(chunk)));
     }
+
+    // Save hash after successful processing
+    await this.config.storage.kv.set(`docHash:${document.id}`, hash);
   }
 
   private async processChunk(chunk: Chunk): Promise<void> {
@@ -117,6 +129,10 @@ export class IndexingPipeline {
   private async getKnownEntities(): Promise<string[]> {
     const entities = await this.config.storage.graph.getEntities();
     return entities.map((e) => e.name);
+  }
+
+  private hashDocument(content: string): string {
+    return createHash('sha256').update(content).digest('hex');
   }
 
   private hashContent(content: string): string {

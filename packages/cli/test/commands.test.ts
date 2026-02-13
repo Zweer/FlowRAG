@@ -62,7 +62,7 @@ describe('index command', () => {
   it('should index documents and print stats', async () => {
     await indexCommand.parseAsync(['./content'], { from: 'user' });
 
-    expect(mockRag.index).toHaveBeenCalledWith('./content');
+    expect(mockRag.index).toHaveBeenCalledWith('./content', { force: undefined });
     expect(mockRag.stats).toHaveBeenCalled();
     expect(console.log).toHaveBeenCalledWith('📄 Indexing documents from: ./content');
     expect(console.log).toHaveBeenCalledWith('✅ Indexed 3 documents, 10 chunks');
@@ -75,16 +75,10 @@ describe('index command', () => {
     expect(getFlowRAG).toHaveBeenCalledWith('/tmp/mydata', undefined);
   });
 
-  it('should clear data directory with --force', async () => {
-    vi.mock('node:fs/promises', async (importOriginal) => {
-      const actual = await importOriginal<typeof import('node:fs/promises')>();
-      return { ...actual, rm: vi.fn() };
-    });
+  it('should pass force option with --force', async () => {
+    await indexCommand.parseAsync(['./content', '--force'], { from: 'user' });
 
-    const { indexCommand: freshCmd } = await import('../src/commands/index.js');
-    await freshCmd.parseAsync(['./content', '--force'], { from: 'user' });
-
-    expect(console.log).toHaveBeenCalledWith('🗑️  Cleared existing index');
+    expect(mockRag.index).toHaveBeenCalledWith('./content', { force: true });
   });
 
   it('should pass review hook with --interactive', async () => {

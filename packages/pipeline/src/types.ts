@@ -56,8 +56,12 @@ export interface QueryOptions {
 
 export type QueryMode = 'local' | 'global' | 'hybrid' | 'naive';
 
+export interface IndexOptions {
+  force?: boolean;
+}
+
 export interface FlowRAG {
-  index(input: string | string[]): Promise<void>;
+  index(input: string | string[], options?: IndexOptions): Promise<void>;
   search(query: string, options?: { mode?: QueryMode; limit?: number }): Promise<SearchResult[]>;
   traceDataFlow(entityId: string, direction: 'upstream' | 'downstream'): Promise<Entity[]>;
   findPath(fromId: string, toId: string, maxDepth?: number): Promise<Relation[]>;

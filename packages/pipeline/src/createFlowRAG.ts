@@ -1,6 +1,12 @@
 import { IndexingPipeline } from './indexing/pipeline.js';
 import { QueryPipeline } from './querying/pipeline.js';
-import type { FlowRAG, FlowRAGConfig, IndexingOptions, QueryOptions } from './types.js';
+import type {
+  FlowRAG,
+  FlowRAGConfig,
+  IndexingOptions,
+  IndexOptions,
+  QueryOptions,
+} from './types.js';
 
 export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
   const indexingOptions: Required<IndexingOptions> = {
@@ -24,9 +30,9 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
   const queryPipeline = new QueryPipeline(config, queryOptions);
 
   return {
-    async index(input: string | string[]): Promise<void> {
+    async index(input: string | string[], options?: IndexOptions): Promise<void> {
       const inputs = Array.isArray(input) ? input : [input];
-      await indexingPipeline.process(inputs);
+      await indexingPipeline.process(inputs, options?.force);
     },
 
     async search(query: string, options = {}) {
