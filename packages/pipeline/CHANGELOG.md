@@ -1,5 +1,275 @@
 # Changelog
 
+
+
+
+
+
+
+
+
+
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
 ## [1.1.0](https://github.com/Zweer/FlowRAG/compare/pipeline-v1.0.2...pipeline-v1.1.0) (2026-01-06)
 
 

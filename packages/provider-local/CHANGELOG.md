@@ -1,5 +1,125 @@
 # Changelog
 
+
+
+
+
+
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
 ## [1.1.0](https://github.com/Zweer/FlowRAG/compare/provider-local-v0.0.1...provider-local-v1.1.0) (2026-01-06)
 
 

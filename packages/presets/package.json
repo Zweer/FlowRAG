@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/presets",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Opinionated presets for FlowRAG",
   "keywords": [
     "rag",
@@ -32,15 +32,15 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "1.1.0",
-    "@flowrag/provider-bedrock": "0.0.0",
-    "@flowrag/provider-gemini": "1.1.0",
-    "@flowrag/provider-local": "1.1.0",
-    "@flowrag/storage-json": "1.1.0",
-    "@flowrag/storage-lancedb": "1.1.0",
-    "@flowrag/storage-opensearch": "0.0.0",
-    "@flowrag/storage-s3": "0.0.0",
-    "@flowrag/storage-sqlite": "1.1.0"
+    "@flowrag/core": "^1.2.0",
+    "@flowrag/provider-bedrock": "^0.1.0",
+    "@flowrag/provider-gemini": "^1.2.0",
+    "@flowrag/provider-local": "^1.2.0",
+    "@flowrag/storage-json": "^1.1.1",
+    "@flowrag/storage-lancedb": "^1.1.1",
+    "@flowrag/storage-opensearch": "^0.1.0",
+    "@flowrag/storage-s3": "^0.1.0",
+    "@flowrag/storage-sqlite": "^1.2.0"
   },
   "engines": {
     "node": ">= 20.3"

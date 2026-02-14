@@ -1,5 +1,100 @@
 # Changelog
 
+
+
+
+
+
+## [1.1.0] - 2026-02-14
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
 ## [1.1.0](https://github.com/Zweer/FlowRAG/compare/storage-json-v1.0.2...storage-json-v1.1.0) (2026-01-06)
 
 

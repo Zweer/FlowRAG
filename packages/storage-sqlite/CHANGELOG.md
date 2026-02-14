@@ -1,5 +1,23 @@
 # Changelog
 
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
 ## [1.1.0](https://github.com/Zweer/FlowRAG/compare/storage-sqlite-v1.0.2...storage-sqlite-v1.1.0) (2026-01-06)
 
 

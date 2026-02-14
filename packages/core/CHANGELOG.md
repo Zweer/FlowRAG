@@ -1,5 +1,148 @@
 # Changelog
 
+
+
+
+
+
+
+
+
+
+
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(core): ✨ add Reranker interface
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+
 ## [1.1.0](https://github.com/Zweer/FlowRAG/compare/core-v1.0.2...core-v1.1.0) (2026-01-06)
 
 

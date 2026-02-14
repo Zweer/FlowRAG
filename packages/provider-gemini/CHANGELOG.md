@@ -1,5 +1,159 @@
 # Changelog
 
+
+
+
+
+
+
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-gemini): ✨ add GeminiReranker
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+- chore(deps): bump @google/genai in the production-dependencies group (#25)
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-gemini): ✨ add GeminiReranker
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+- chore(deps): bump @google/genai in the production-dependencies group (#25)
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-gemini): ✨ add GeminiReranker
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+- chore(deps): bump @google/genai in the production-dependencies group (#25)
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-gemini): ✨ add GeminiReranker
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+- chore(deps): bump @google/genai in the production-dependencies group (#25)
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-gemini): ✨ add GeminiReranker
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+- chore(deps): bump @google/genai in the production-dependencies group (#25)
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-gemini): ✨ add GeminiReranker
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+- chore(deps): bump @google/genai in the production-dependencies group (#25)
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-gemini): ✨ add GeminiReranker
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+- chore(deps): bump @google/genai in the production-dependencies group (#25)
+- chore(deps): bump the production-dependencies group with 2 updates (#22)
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
 ## [1.1.0](https://github.com/Zweer/FlowRAG/compare/provider-gemini-v0.0.1...provider-gemini-v1.1.0) (2026-01-06)
 
 

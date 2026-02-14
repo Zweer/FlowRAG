@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/cli",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Command-line interface for FlowRAG - index documents and search from your terminal",
   "keywords": [
     "rag",
@@ -37,9 +37,9 @@
   ],
   "dependencies": {
     "@commander-js/extra-typings": "^14.0.0",
-    "@flowrag/core": "1.1.0",
-    "@flowrag/pipeline": "1.1.0",
-    "@flowrag/presets": "1.1.0",
+    "@flowrag/core": "^1.2.0",
+    "@flowrag/pipeline": "^1.2.0",
+    "@flowrag/presets": "^1.2.0",
     "@inquirer/prompts": "^8.2.0",
     "commander": "^14.0.0"
   },

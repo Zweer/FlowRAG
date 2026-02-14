@@ -1,5 +1,149 @@
 # Changelog
 
+
+
+
+
+
+
+
+
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
+## [1.1.0] - 2026-02-14
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### ### chore
+
+- chore: :broom: sync docs and config with current project state
+
 ## [1.1.0](https://github.com/Zweer/FlowRAG/compare/presets-v0.1.0...presets-v1.1.0) (2026-01-06)
 
 
