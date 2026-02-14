@@ -6,7 +6,7 @@ import { initCommand } from './commands/init.js';
 import { searchCommand } from './commands/search.js';
 import { statsCommand } from './commands/stats.js';
 
-export const program = new Command()
+export const program: Command = new Command()
   .name('flowrag')
   .description('FlowRAG CLI - index documents and search with knowledge graph support')
   .version('0.0.0')

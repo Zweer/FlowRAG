@@ -39,7 +39,7 @@
     "lint:lockfile": "lockfile-lint",
     "lint:package": "npmPkgJsonLint .",
     "lint:sort_package": "sort-package-json \"package.json\" \"packages/*/package.json\"",
-    "lint:typecheck": "tsc --noEmit && tsc --noEmit -p packages/cli/tsconfig.json",
+    "lint:typecheck": "tsc --noEmit",
     "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky",
     "release": "bonvoy shipit",
     "pretest": "npm run build",

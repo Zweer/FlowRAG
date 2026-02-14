@@ -2,7 +2,12 @@
   "name": "dev",
   "description": "Agent for FlowRAG - TypeScript RAG library with knowledge graph support",
   "prompt": "file://../prompts/dev.md",
-  "resources": ["file://README.md", "file://.kiro/specs/v1/requirements.md"],
+  "resources": [
+    "file://README.md",
+    "file://.kiro/specs/**/*.md",
+    "file://.kiro/steering/**/*.md",
+    "file://docs/**/*.md"
+  ],
   "tools": [
     "read",
     "write",
@@ -33,7 +38,7 @@
     },
     "shell": {
       "autoAllowReadonly": true,
-      "excludeCommands": ["*git commit*", "*git push*"]
+      "deniedCommands": [".*git commit.*", ".*git push.*", ".*git tag .*", ".*npm publish.*"]
     }
   }
 }
