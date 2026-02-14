@@ -17,7 +17,7 @@ describe('LocalEmbedder', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    embedder = new LocalEmbedder();
+    embedder = new LocalEmbedder({ dtype: 'fp32' });
   });
 
   describe('constructor', () => {

@@ -21,7 +21,7 @@ describe('LocalReranker', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    reranker = new LocalReranker();
+    reranker = new LocalReranker({ dtype: 'fp32' });
   });
 
   it('should use default model', () => {

@@ -54,7 +54,7 @@ export function createLocalStorage(options: LocalStorageOptions = {}): LocalStor
       vector: options.vector ?? new LanceDBVectorStorage({ path: join(basePath, 'vectors') }),
       graph: options.graph ?? new SQLiteGraphStorage({ path: join(basePath, 'graph.db') }),
     },
-    embedder: options.embedder ?? new LocalEmbedder({ model: 'Xenova/e5-small-v2' }),
+    embedder: options.embedder ?? new LocalEmbedder({ model: 'Xenova/e5-small-v2', dtype: 'fp32' }),
     extractor: options.extractor ?? new GeminiExtractor({ model: 'gemini-2.0-flash-exp' }),
   };
 }
