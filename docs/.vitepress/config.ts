@@ -16,54 +16,49 @@ export default defineConfig({
       { text: 'Blog', link: '/blog/' },
     ],
 
-    sidebar: {
-      '/guide/': [
-        {
-          text: 'Introduction',
-          items: [
-            { text: 'Getting Started', link: '/guide/getting-started' },
-            { text: 'Schema Definition', link: '/guide/schema' },
-          ],
-        },
-        {
-          text: 'Pipeline',
-          items: [
-            { text: 'Indexing', link: '/guide/indexing' },
-            { text: 'Querying', link: '/guide/querying' },
-            { text: 'Reranker', link: '/guide/reranker' },
-          ],
-        },
-      ],
-      '/providers/': [
-        {
-          text: 'Providers',
-          items: [
-            { text: 'Local (ONNX)', link: '/providers/local' },
-            { text: 'Gemini', link: '/providers/gemini' },
-            { text: 'AWS Bedrock', link: '/providers/bedrock' },
-          ],
-        },
-      ],
-      '/deployment/': [
-        {
-          text: 'Deployment',
-          items: [
-            { text: 'Local Development', link: '/deployment/local' },
-            { text: 'AWS Lambda', link: '/deployment/aws-lambda' },
-          ],
-        },
-      ],
-      '/reference/': [
-        {
-          text: 'API Reference',
-          items: [
-            { text: 'Interfaces', link: '/reference/interfaces' },
-            { text: 'Configuration', link: '/reference/configuration' },
-            { text: 'CLI', link: '/reference/cli' },
-          ],
-        },
-      ],
-    },
+    sidebar: [
+      {
+        text: 'Guide',
+        items: [
+          { text: 'Getting Started', link: '/guide/getting-started' },
+          { text: 'Schema Definition', link: '/guide/schema' },
+          { text: 'Indexing', link: '/guide/indexing' },
+          { text: 'Querying', link: '/guide/querying' },
+          { text: 'Reranker', link: '/guide/reranker' },
+        ],
+      },
+      {
+        text: 'Providers',
+        items: [
+          { text: 'Local (ONNX)', link: '/providers/local' },
+          { text: 'Gemini', link: '/providers/gemini' },
+          { text: 'AWS Bedrock', link: '/providers/bedrock' },
+        ],
+      },
+      {
+        text: 'Deployment',
+        items: [
+          { text: 'Local Development', link: '/deployment/local' },
+          { text: 'AWS Lambda', link: '/deployment/aws-lambda' },
+        ],
+      },
+      {
+        text: 'Reference',
+        items: [
+          { text: 'Interfaces', link: '/reference/interfaces' },
+          { text: 'Configuration', link: '/reference/configuration' },
+          { text: 'CLI', link: '/reference/cli' },
+        ],
+      },
+      {
+        text: 'Blog',
+        items: [
+          { text: 'Why We Built FlowRAG', link: '/blog/why-flowrag' },
+          { text: 'TypeScript vs Python for RAG', link: '/blog/typescript-rag' },
+          { text: 'Knowledge Graphs: The Missing Piece', link: '/blog/knowledge-graphs' },
+        ],
+      },
+    ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/Zweer/FlowRAG' }],
 

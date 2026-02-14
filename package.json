@@ -28,6 +28,7 @@
   "scripts": {
     "build": "tsdown",
     "clean": "rimraf --glob packages/**/dist",
+    "predocs:build": "tsx scripts/generate-llms-txt.ts",
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",

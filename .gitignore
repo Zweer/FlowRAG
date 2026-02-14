@@ -107,6 +107,10 @@ dist
 # vitepress cache directory
 **/.vitepress/cache
 
+# llms.txt generated files
+docs/public/llms.txt
+docs/public/llms-full.txt
+
 # Docusaurus cache and generated files
 .docusaurus
 
