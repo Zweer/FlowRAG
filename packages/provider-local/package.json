@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-local",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Local AI provider for FlowRAG - ONNX embeddings and future local extraction",
   "keywords": [
     "flowrag",
@@ -34,7 +34,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.3.0",
+    "@flowrag/core": "^1.4.0",
     "@huggingface/transformers": "3.1.0"
   },
   "engines": {

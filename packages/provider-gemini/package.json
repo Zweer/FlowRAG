@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-gemini",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Gemini AI provider for FlowRAG - embeddings and entity extraction",
   "keywords": [
     "flowrag",
@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.3.0",
+    "@flowrag/core": "^1.4.0",
     "@google/genai": "^1.41.0"
   },
   "engines": {

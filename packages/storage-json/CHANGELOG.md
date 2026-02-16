@@ -10,6 +10,131 @@
 
 
 
+
+
+
+
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
 ## [1.1.1] - 2026-02-16
 
 ### 🐛 Bug Fixes

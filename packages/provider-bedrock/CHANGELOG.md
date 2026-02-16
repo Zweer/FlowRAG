@@ -15,6 +15,190 @@
 
 
 
+
+
+
+
+
+
+
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+## [0.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+- feat(provider-bedrock): ✨ add BedrockReranker
+- feat(provider-bedrock): :sparkles: add AWS Bedrock provider with embeddings and extraction
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
 ## [0.1.0] - 2026-02-16
 
 ### ✨ Features

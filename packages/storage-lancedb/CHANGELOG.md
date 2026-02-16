@@ -8,6 +8,114 @@
 
 
 
+
+
+
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: ✅ fix 100% branch coverage and remove unused import
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: ✅ fix 100% branch coverage and remove unused import
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: ✅ fix 100% branch coverage and remove unused import
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.2] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore: ✅ fix 100% branch coverage and remove unused import
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#27)
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
 ## [1.1.1] - 2026-02-16
 
 ### 🐛 Bug Fixes

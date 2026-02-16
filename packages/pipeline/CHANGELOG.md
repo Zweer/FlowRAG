@@ -20,6 +20,366 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.3.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat: ✨ add custom fields support
+- feat: ✨ integrate reranker in query pipeline
+- feat(cli): :children_crossing: add interactive entity review during indexing
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+- test(e2e): :sparkles: added e2e tests
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
 ## [1.2.0] - 2026-02-16
 
 ### ✨ Features
