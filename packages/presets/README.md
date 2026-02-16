@@ -58,7 +58,7 @@ const rag = await createFlowRAG({
 - **Vector Storage**: LanceDB (`./data/vectors/`)
 - **Graph Storage**: SQLite (`./data/graph.db`)
 - **Embedder**: Local ONNX (Xenova/e5-small-v2)
-- **Extractor**: Gemini (gemini-2.0-flash-exp)
+- **Extractor**: Gemini (gemini-3-flash-preview)
 
 ## API
 

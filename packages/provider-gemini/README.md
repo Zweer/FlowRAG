@@ -35,7 +35,7 @@ import { defineSchema } from '@flowrag/core';
 
 const extractor = new GeminiExtractor({
   apiKey: 'your-gemini-api-key', // or set GEMINI_API_KEY env var
-  model: 'gemini-2.0-flash-exp', // optional, default
+  model: 'gemini-3-flash-preview', // optional, default
   temperature: 0.1, // optional, default
 });
 

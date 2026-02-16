@@ -36,13 +36,6 @@ const embeddings = await embedder.embedBatch(['Hello', 'World']);
 - `Xenova/all-MiniLM-L6-v2` (384 dims) - Compact
 - `Xenova/all-mpnet-base-v2` (768 dims) - Good balance
 
-## Environment Variables
-
-```bash
-FLOWRAG_EMBEDDING_MODEL=Xenova/e5-small-v2
-FLOWRAG_EMBEDDING_DTYPE=q8
-```
-
 ## License
 
 MIT
