@@ -54,7 +54,7 @@ function containsLogic(source: string): string[] {
   return violations;
 }
 
-const files = await glob(DECLARATION_ONLY_GLOBS, { cwd: ROOT });
+const files = await glob(DECLARATION_ONLY_GLOBS, { cwd: ROOT, ignore: ['**/node_modules/**'] });
 
 describe('declaration-only files contain no runtime logic', () => {
   for (const file of files.sort()) {
