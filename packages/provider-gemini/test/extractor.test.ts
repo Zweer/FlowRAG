@@ -43,7 +43,7 @@ describe('GeminiExtractor', () => {
 
   describe('constructor', () => {
     it('should create with API key', () => {
-      expect(extractor.modelName).toBe('gemini-2.0-flash-exp');
+      expect(extractor.modelName).toBe('gemini-3-flash-preview');
     });
 
     it('should throw without API key', () => {

@@ -55,6 +55,6 @@ export function createLocalStorage(options: LocalStorageOptions = {}): LocalStor
       graph: options.graph ?? new SQLiteGraphStorage({ path: join(basePath, 'graph.db') }),
     },
     embedder: options.embedder ?? new LocalEmbedder({ model: 'Xenova/e5-small-v2', dtype: 'fp32' }),
-    extractor: options.extractor ?? new GeminiExtractor({ model: 'gemini-2.0-flash-exp' }),
+    extractor: options.extractor ?? new GeminiExtractor({ model: 'gemini-3-flash-preview' }),
   };
 }

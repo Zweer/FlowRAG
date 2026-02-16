@@ -25,7 +25,7 @@ export class GeminiExtractor implements LLMExtractor {
       );
     }
 
-    this.modelName = options.model || 'gemini-2.0-flash-exp';
+    this.modelName = options.model || 'gemini-3-flash-preview';
     this.temperature = options.temperature ?? 0.1;
     this.client = new GoogleGenAI({ apiKey });
   }

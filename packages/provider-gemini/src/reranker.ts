@@ -18,7 +18,7 @@ export class GeminiReranker implements Reranker {
       );
     }
 
-    this.model = options.model || 'gemini-2.0-flash-exp';
+    this.model = options.model || 'gemini-3-flash-preview';
     this.client = new GoogleGenAI({ apiKey });
   }
 
