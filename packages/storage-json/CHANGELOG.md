@@ -5,6 +5,126 @@
 
 
 
+
+
+
+
+
+## [1.1.1] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.1] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.1] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.1] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
+## [1.1.1] - 2026-02-16
+
+### 🐛 Bug Fixes
+
+- fix: 🐛 fix flaky test from temp dir collision
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### test
+
+- test(e2e): :sparkles: added e2e tests
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
 ## [1.1.0] - 2026-02-14
 
 ### 🐛 Bug Fixes

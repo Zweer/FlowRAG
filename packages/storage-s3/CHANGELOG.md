@@ -1,6 +1,44 @@
 # Changelog
 
 
+
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(storage-s3): ✨ add S3 KV storage adapter
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(storage-s3): ✨ add S3 KV storage adapter
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+
 ## [0.0.0] - 2026-02-14
 
 ### ✨ Features

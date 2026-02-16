@@ -11,6 +11,330 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.1.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ⚡ add incremental indexing
+- feat(cli): :children_crossing: add interactive entity review during indexing
+- feat(cli): :sparkles: add init, graph, search --type and --force commands
+- feat(cli): ✨ scaffold @flowrag/cli package with index, search, stats commands
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: fix scanner, traceDataFlow, stats, hash, and query modes
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+
 ## [0.0.0] - 2026-02-14
 
 ### ✨ Features

@@ -6,6 +6,180 @@
 
 
 
+
+
+
+
+
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat(provider-local): ✨ add LocalReranker
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+- fix(cli): :bug: enable TypeScript declarations and fix package validation
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### test
+
+- test(provider-local): :white_check_mark: use destructuring defaults for 100% branch coverage
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+### ### build
+
+- build: :recycle: migrate from changesets to bonvoy for release management
+
 ## [1.1.0] - 2026-02-14
 
 ### ✨ Features

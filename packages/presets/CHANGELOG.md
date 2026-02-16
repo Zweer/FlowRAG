@@ -9,6 +9,204 @@
 
 
 
+
+
+
+
+
+
+
+
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ integrate reranker in query pipeline
+- feat(presets): ✨ add createAWSStorage preset and Lambda example
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :arrow_up: update default models to gemini-3-flash-preview
+- fix(provider-local): :bug: downgrade transformers to 3.1.0 to fix ONNX model loading
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore: :broom: sync docs and config with current project state
+
 ## [1.1.0] - 2026-02-14
 
 ### ✨ Features

@@ -1,6 +1,29 @@
 # Changelog
 
 
+
+## [1.2.0] - 2026-02-16
+
+### ✨ Features
+
+- feat: ✨ add custom fields support
+
+### 📚 Documentation
+
+- docs: :memo: add READMEs for all packages and local-docs example
+
+### ### chore
+
+- chore: :bookmark: release
+- chore(deps): :arrow_up: update dependencies across all packages
+- chore: :broom: sync docs and config with current project state
+- chore(deps): bump the production-dependencies group with 2 updates (#20)
+- chore(deps): bump the production-dependencies group with 2 updates (#17)
+
+### ### refactor
+
+- refactor: :recycle: extract storage implementations from index.ts, wildcard coverage exclusions
+
 ## [1.1.0] - 2026-02-14
 
 ### ✨ Features
