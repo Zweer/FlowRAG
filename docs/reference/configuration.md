@@ -79,5 +79,3 @@ interface ExtractionContext {
 |----------|-------------|----------|
 | `GEMINI_API_KEY` | Gemini API key | For Gemini provider |
 | `AWS_REGION` | AWS region | For Bedrock/S3/OpenSearch |
-| `FLOWRAG_EMBEDDING_MODEL` | Override embedding model | No |
-| `FLOWRAG_EMBEDDING_DTYPE` | Quantization (fp32, q8, q4) | No |

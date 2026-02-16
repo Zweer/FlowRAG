@@ -382,7 +382,7 @@ const rag = createFlowRAG({
     graph: new SQLiteGraphStorage({ path: './data/graph.db' }),
   },
   embedder: new LocalEmbedder({ model: 'Xenova/e5-small-v2' }),
-  extractor: new GeminiExtractor({ model: 'gemini-2.5-flash' }),
+  extractor: new GeminiExtractor({ model: 'gemini-3-flash-preview' }),
 });
 ```
 
@@ -397,7 +397,7 @@ FLOWRAG_EMBEDDING_DTYPE=q8  # fp32, q8, q4
 GEMINI_API_KEY=your-key
 
 # LLM Extractor
-FLOWRAG_EXTRACTOR_MODEL=gemini-2.5-flash
+FLOWRAG_EXTRACTOR_MODEL=gemini-3-flash-preview
 
 # AWS (for cloud storage)
 AWS_REGION=eu-central-1
@@ -558,16 +558,16 @@ export const handler = async (event: { query: string }) => {
 - **Python support**: TypeScript only
 - **Neo4j integration**: SQLite/OpenSearch sufficient for our scale
 - **Multi-tenancy**: Single workspace per instance
-- **MCP server**: Not in v1
+- **MCP server**: Planned for v2
 
 ## 11. Success Criteria
 
 1. **Local use case**: Index 500 docs, query in <100ms, DB <50MB
 2. **Developer experience**: `npm install` + 10 lines of code to get started
-3. **Test coverage**: >90% on core packages
+3. **Test coverage**: 100% on all packages (335 tests across 34 files)
 4. **Documentation**: README + examples for each package
 
 ---
 
-*Last updated: 2026-02-13*
+*Last updated: 2026-02-16*
 *Version: 1.0*
