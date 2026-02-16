@@ -94,6 +94,14 @@ describe('Scanner', () => {
     expect(documents).toHaveLength(2); // .md and .json only
   });
 
+  it('should skip non-text files passed directly', async () => {
+    mockStat.mockResolvedValue(fileStat());
+
+    const documents = await scanner.scanFiles(['/test/image.png']);
+
+    expect(documents).toHaveLength(0);
+  });
+
   it('should handle file read errors gracefully', async () => {
     const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     mockStat.mockResolvedValue(fileStat());

@@ -13,10 +13,14 @@ export class LocalEmbedder implements Embedder {
   private readonly device: string;
   private pipeline: unknown = null;
 
-  constructor(options: LocalEmbedderOptions = {}) {
-    this.modelName = options.model || 'Xenova/e5-small-v2';
-    this.dtype = options.dtype || 'q8';
-    this.device = options.device || 'auto';
+  constructor({
+    model = 'Xenova/e5-small-v2',
+    dtype = 'q8',
+    device = 'auto',
+  }: LocalEmbedderOptions = {}) {
+    this.modelName = model;
+    this.dtype = dtype;
+    this.device = device;
 
     // Set dimensions based on model
     this.dimensions = this.getModelDimensions(this.modelName);

@@ -22,8 +22,11 @@ describe('LocalEmbedder', () => {
 
   describe('constructor', () => {
     it('should create with default options', () => {
-      expect(embedder.modelName).toBe('Xenova/e5-small-v2');
-      expect(embedder.dimensions).toBe(384);
+      const defaultEmbedder = new LocalEmbedder();
+      expect(defaultEmbedder.modelName).toBe('Xenova/e5-small-v2');
+      expect(defaultEmbedder.dimensions).toBe(384);
+      expect((defaultEmbedder as unknown as { device: string }).device).toBe('auto');
+      expect((defaultEmbedder as unknown as { dtype: string }).dtype).toBe('q8');
     });
 
     it('should create with custom options', () => {
@@ -34,6 +37,8 @@ describe('LocalEmbedder', () => {
       });
 
       expect(customEmbedder.modelName).toBe('custom-model');
+      // Verify device is set (not defaulting to 'auto')
+      expect((customEmbedder as unknown as { device: string }).device).toBe('cpu');
     });
   });
 

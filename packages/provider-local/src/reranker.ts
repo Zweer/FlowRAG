@@ -12,10 +12,14 @@ export class LocalReranker implements Reranker {
   private readonly device: string;
   private pipeline: unknown = null;
 
-  constructor(options: LocalRerankerOptions = {}) {
-    this.modelName = options.model || 'Xenova/ms-marco-MiniLM-L-6-v2';
-    this.dtype = options.dtype || 'q8';
-    this.device = options.device || 'auto';
+  constructor({
+    model = 'Xenova/ms-marco-MiniLM-L-6-v2',
+    dtype = 'q8',
+    device = 'auto',
+  }: LocalRerankerOptions = {}) {
+    this.modelName = model;
+    this.dtype = dtype;
+    this.device = device;
   }
 
   async rerank(

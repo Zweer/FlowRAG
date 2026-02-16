@@ -263,6 +263,15 @@ describe('QueryPipeline', () => {
       expect(mockConfig.storage.graph.getRelations).toHaveBeenCalledWith('entity1', 'out');
       expect(entities.length).toBeGreaterThanOrEqual(1);
     });
+
+    it('should skip null entities during traversal', async () => {
+      mockConfig.storage.graph.getEntity = vi.fn(() => Promise.resolve(null));
+      mockConfig.storage.graph.getRelations = vi.fn(() => Promise.resolve([]));
+
+      const entities = await pipeline.traceDataFlow('missing', 'downstream');
+
+      expect(entities).toHaveLength(0);
+    });
   });
 
   describe('private methods', () => {

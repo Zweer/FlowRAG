@@ -25,12 +25,16 @@ describe('LocalReranker', () => {
   });
 
   it('should use default model', () => {
-    expect(reranker.modelName).toBe('Xenova/ms-marco-MiniLM-L-6-v2');
+    const defaultReranker = new LocalReranker();
+    expect(defaultReranker.modelName).toBe('Xenova/ms-marco-MiniLM-L-6-v2');
+    expect((defaultReranker as unknown as { device: string }).device).toBe('auto');
+    expect((defaultReranker as unknown as { dtype: string }).dtype).toBe('q8');
   });
 
   it('should accept custom options', () => {
     const r = new LocalReranker({ model: 'custom', dtype: 'fp32', device: 'cpu' });
     expect(r.modelName).toBe('custom');
+    expect((r as unknown as { device: string }).device).toBe('cpu');
   });
 
   it('should return empty for empty documents', async () => {

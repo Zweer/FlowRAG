@@ -67,6 +67,9 @@ describe('getFlowRAG', () => {
       JSON.stringify({
         entityTypes: ['SERVICE', 'DATABASE'],
         relationTypes: ['USES'],
+        documentFields: { domain: { type: 'string' } },
+        entityFields: { status: { type: 'enum', values: ['active'] } },
+        relationFields: { syncType: { type: 'string' } },
       }),
     );
 
@@ -79,6 +82,9 @@ describe('getFlowRAG', () => {
       expect.objectContaining({
         entityTypes: ['SERVICE', 'DATABASE'],
         relationTypes: ['USES'],
+        documentFields: { domain: { type: 'string' } },
+        entityFields: { status: { type: 'enum', values: ['active'] } },
+        relationFields: { syncType: { type: 'string' } },
       }),
     );
   });
