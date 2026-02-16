@@ -136,14 +136,7 @@ export class IndexingPipeline {
   }
 
   private hashContent(content: string): string {
-    // Simple hash for caching
-    let hash = 0;
-    for (let i = 0; i < content.length; i++) {
-      const char = content.charCodeAt(i);
-      hash = (hash << 5) - hash + char;
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    return hash.toString(36);
+    return createHash('sha256').update(content).digest('hex').slice(0, 16);
   }
 
   private createBatches<T>(items: T[], batchSize: number): T[][] {

@@ -49,6 +49,7 @@ describe('createFlowRAG', () => {
       graph: {
         addEntity: vi.fn(),
         addRelation: vi.fn(),
+        getEntity: vi.fn(() => Promise.resolve(null)),
         getEntities: vi.fn(() => Promise.resolve([])),
         getRelations: vi.fn(() => Promise.resolve([])),
         traverse: vi.fn(() => Promise.resolve([])),
@@ -253,10 +254,21 @@ describe('createFlowRAG', () => {
       extractor: mockExtractor,
     });
 
+    mockStorage.graph.getEntity.mockResolvedValue({
+      id: 'entity1',
+      name: 'Entity1',
+      type: 'SERVICE',
+      description: 'Test',
+      sourceChunkIds: [],
+    });
+    mockStorage.graph.getRelations.mockResolvedValue([]);
+
     const result = await rag.traceDataFlow('entity1', 'upstream');
 
-    expect(mockStorage.graph.traverse).toHaveBeenCalledWith('entity1', 10, undefined);
-    expect(result).toEqual([]);
+    // Should call getRelations with 'in' for upstream
+    expect(mockStorage.graph.getRelations).toHaveBeenCalledWith('entity1', 'in');
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('entity1');
   });
 
   it('should handle findPath', async () => {

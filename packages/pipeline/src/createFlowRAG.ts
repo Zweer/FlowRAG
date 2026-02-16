@@ -53,18 +53,18 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
       const [documents, chunks, entities, relations, vectors] = await Promise.all([
         config.storage.kv.list('doc:').then((keys) => keys.length),
         config.storage.kv.list('chunk:').then((keys) => keys.length),
-        config.storage.graph.getEntities().then((entities) => entities.length),
-        // Count relations by getting all entities and their relations
+        config.storage.graph.getEntities().then((e) => e.length),
+        // Count relations using 'out' only to avoid double-counting
         config.storage.graph.getEntities().then(async (entities) => {
-          const relationCounts = await Promise.all(
-            entities.map((e) => config.storage.graph.getRelations(e.id)),
+          const counts = await Promise.all(
+            entities.map((e) => config.storage.graph.getRelations(e.id, 'out')),
           );
-          return relationCounts.flat().length;
+          return counts.flat().length;
         }),
         config.storage.vector.count(),
       ]);
 
-      return { documents, chunks, entities, relations: await relations, vectors };
+      return { documents, chunks, entities, relations, vectors };
     },
   };
 }

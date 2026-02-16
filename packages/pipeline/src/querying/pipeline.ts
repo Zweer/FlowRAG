@@ -42,12 +42,30 @@ export class QueryPipeline {
     return results;
   }
 
-  async traceDataFlow(entityId: string, _direction: 'upstream' | 'downstream'): Promise<Entity[]> {
-    return this.config.storage.graph.traverse(entityId, 10, undefined);
+  async traceDataFlow(entityId: string, direction: 'upstream' | 'downstream'): Promise<Entity[]> {
+    const visited = new Set<string>();
+    const result: Entity[] = [];
+    const relationDir = direction === 'downstream' ? 'out' : 'in';
+
+    const walk = async (id: string, depth: number): Promise<void> => {
+      if (depth > 10 || visited.has(id)) return;
+      visited.add(id);
+
+      const entity = await this.config.storage.graph.getEntity(id);
+      if (entity) result.push(entity);
+
+      const relations = await this.config.storage.graph.getRelations(id, relationDir);
+      for (const rel of relations) {
+        const nextId = direction === 'downstream' ? rel.targetId : rel.sourceId;
+        await walk(nextId, depth + 1);
+      }
+    };
+
+    await walk(entityId, 0);
+    return result;
   }
 
   private async naiveSearch(query: string, limit: number): Promise<SearchResult[]> {
-    // Simple vector search only
     const queryVector = await this.config.embedder.embed(query);
     const vectorResults = await this.config.storage.vector.search(queryVector, limit);
 
@@ -61,42 +79,56 @@ export class QueryPipeline {
   }
 
   private async localSearch(query: string, limit: number): Promise<SearchResult[]> {
-    // Focus on specific entities found in query
+    // Extract entities from query, then boost results containing related entities
     const entities = await this.extractEntitiesFromQuery(query);
-    const entityIds = entities.map((e) => e.name);
+    const entityNames = entities.map((e) => e.name);
 
-    // Get related chunks through graph traversal
+    // Expand via graph traversal
     const relatedEntities = await Promise.all(
-      entityIds.map((id) => this.config.storage.graph.traverse(id, 2)),
+      entityNames.map((name) => this.config.storage.graph.traverse(name, 2)),
     );
+    const allNames = new Set([...entityNames, ...relatedEntities.flat().map((e) => e.name)]);
 
-    const allEntityIds = new Set([...entityIds, ...relatedEntities.flat().map((e) => e.id)]);
-
-    // Vector search with entity context
+    // Vector search
     const queryVector = await this.config.embedder.embed(query);
-    const vectorResults = await this.config.storage.vector.search(queryVector, limit * 2);
+    const vectorResults = await this.config.storage.vector.search(queryVector, limit * 3);
 
-    // Filter and score based on entity relevance
-    return vectorResults
-      .filter((result) => {
-        const content = (result.metadata?.content as string) || '';
-        return Array.from(allEntityIds).some((entityId) =>
-          content.toLowerCase().includes(entityId.toLowerCase()),
-        );
-      })
-      .slice(0, limit)
-      .map((result) => ({
+    // Score boost for results mentioning known entities
+    const scored = vectorResults.map((result) => {
+      const content = ((result.metadata?.content as string) || '').toLowerCase();
+      const entityHits = Array.from(allNames).filter((name) =>
+        content.includes(name.toLowerCase()),
+      ).length;
+      const boost = entityHits > 0 ? 1 + entityHits * 0.1 : 0.5;
+      return {
         id: result.id,
-        content: result.metadata?.content as string,
-        score: result.score,
-        source: 'vector' as const,
+        content: (result.metadata?.content as string) || '',
+        score: result.score * boost,
+        source: 'graph' as const,
         metadata: result.metadata,
-      }));
+      };
+    });
+
+    return scored.sort((a, b) => b.score - a.score).slice(0, limit);
   }
 
   private async globalSearch(query: string, limit: number): Promise<SearchResult[]> {
-    // Use high-level concepts and themes
-    const queryVector = await this.config.embedder.embed(query);
+    // Enrich query with high-level graph context (entity types, relation keywords)
+    const entities = await this.config.storage.graph.getEntities();
+    const keywords = new Set<string>();
+
+    for (const entity of entities.slice(0, 50)) {
+      const relations = await this.config.storage.graph.getRelations(entity.id, 'out');
+      for (const rel of relations) {
+        for (const kw of rel.keywords) keywords.add(kw);
+      }
+    }
+
+    // Augment query with top relation keywords for broader context
+    const topKeywords = Array.from(keywords).slice(0, 10).join(' ');
+    const enrichedQuery = topKeywords ? `${query} ${topKeywords}` : query;
+
+    const queryVector = await this.config.embedder.embed(enrichedQuery);
     const vectorResults = await this.config.storage.vector.search(queryVector, limit);
 
     return vectorResults.map((result) => ({
@@ -109,19 +141,15 @@ export class QueryPipeline {
   }
 
   private async hybridSearch(query: string, limit: number): Promise<SearchResult[]> {
-    // Combine local and global approaches
     const [localResults, globalResults] = await Promise.all([
       this.localSearch(query, Math.ceil(limit * this.options.graphWeight)),
       this.globalSearch(query, Math.ceil(limit * this.options.vectorWeight)),
     ]);
 
-    // Merge and deduplicate
-    const merged = this.mergeResults(localResults, globalResults);
-    return merged.slice(0, limit);
+    return this.mergeResults(localResults, globalResults).slice(0, limit);
   }
 
   private async extractEntitiesFromQuery(query: string): Promise<ExtractedEntity[]> {
-    // Simple entity extraction from query
     try {
       const extraction = await this.config.extractor.extractEntities(
         query,
@@ -150,7 +178,6 @@ export class QueryPipeline {
       }
     }
 
-    // Sort by score descending
     return merged.sort((a, b) => b.score - a.score);
   }
 }

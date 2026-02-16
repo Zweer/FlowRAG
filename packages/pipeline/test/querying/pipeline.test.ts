@@ -45,7 +45,15 @@ describe('QueryPipeline', () => {
         graph: {
           addEntity: vi.fn(),
           addRelation: vi.fn(),
-          getEntity: vi.fn(() => Promise.resolve(null)),
+          getEntity: vi.fn((id: string) =>
+            Promise.resolve({
+              id,
+              name: id,
+              type: 'SERVICE',
+              description: 'Test',
+              sourceChunkIds: [],
+            }),
+          ),
           getEntities: vi.fn(() =>
             Promise.resolve([
               {
@@ -116,8 +124,7 @@ describe('QueryPipeline', () => {
       });
     });
 
-    it('should perform local search', async () => {
-      // Mock extractor to return entities that match the query
+    it('should perform local search with entity boosting', async () => {
       mockConfig.extractor.extractEntities = vi.fn(() =>
         Promise.resolve({
           entities: [{ name: 'TestService', type: 'SERVICE', description: 'Test service' }],
@@ -125,7 +132,6 @@ describe('QueryPipeline', () => {
         }),
       );
 
-      // Mock vector search to return content that includes entity names
       mockConfig.storage.vector.search = vi.fn(() =>
         Promise.resolve([
           {
@@ -141,21 +147,36 @@ describe('QueryPipeline', () => {
 
       expect(mockConfig.extractor.extractEntities).toHaveBeenCalled();
       expect(mockConfig.storage.graph.traverse).toHaveBeenCalled();
-      expect(results).toHaveLength(1); // Only the one with TestService
+      // Both returned but entity-matching result has higher boosted score
+      expect(results.length).toBeGreaterThan(0);
       expect(results[0].content).toBe('TestService implementation details');
-      expect(results[0].metadata).toEqual({ content: 'TestService implementation details' });
+      expect(results[0].score).toBeGreaterThan(results[results.length - 1].score);
     });
 
-    it('should perform global search', async () => {
+    it('should perform global search with keyword enrichment', async () => {
+      mockConfig.storage.graph.getRelations = vi.fn(() =>
+        Promise.resolve([
+          {
+            id: 'r1',
+            sourceId: 'a',
+            targetId: 'b',
+            type: 'USES',
+            description: '',
+            keywords: ['auth', 'security'],
+            sourceChunkIds: [],
+          },
+        ]),
+      );
+
       const results = await pipeline.search('test query', 'global', 5);
 
-      expect(mockConfig.embedder.embed).toHaveBeenCalledWith('test query');
+      // Embed should be called with enriched query
+      expect(mockConfig.embedder.embed).toHaveBeenCalled();
       expect(results).toHaveLength(2);
       expect(results[0].source).toBe('vector');
     });
 
     it('should handle global search with null metadata content', async () => {
-      // Mock vector search with null/undefined content
       mockConfig.storage.vector.search = vi.fn(() =>
         Promise.resolve([
           { id: 'chunk:1', score: 0.9, metadata: { content: null } },
@@ -166,32 +187,28 @@ describe('QueryPipeline', () => {
       const results = await pipeline.search('test query', 'global', 5);
 
       expect(results).toHaveLength(2);
-      expect(results[0].content).toBe(''); // null becomes empty string
-      expect(results[1].content).toBe(''); // undefined becomes empty string
+      expect(results[0].content).toBe('');
+      expect(results[1].content).toBe('');
     });
 
     it('should perform hybrid search', async () => {
-      // Mock different results for local vs global
       let callCount = 0;
       mockConfig.storage.vector.search = vi.fn(() => {
         callCount++;
         if (callCount === 1) {
-          // Local search call
           return Promise.resolve([
             { id: 'chunk:local', score: 0.9, metadata: { content: 'local result' } },
           ]);
-        } else {
-          // Global search call
-          return Promise.resolve([
-            { id: 'chunk:global', score: 0.8, metadata: { content: 'global result' } },
-          ]);
         }
+        return Promise.resolve([
+          { id: 'chunk:global', score: 0.8, metadata: { content: 'global result' } },
+        ]);
       });
 
       const results = await pipeline.search('test query', 'hybrid', 5);
 
       expect(results.length).toBeGreaterThan(0);
-      expect(mockConfig.embedder.embed).toHaveBeenCalledTimes(2); // Once for local, once for global
+      expect(mockConfig.embedder.embed).toHaveBeenCalledTimes(2);
     });
 
     it('should throw error for unknown mode', async () => {
@@ -203,19 +220,48 @@ describe('QueryPipeline', () => {
   });
 
   describe('traceDataFlow', () => {
-    it('should trace upstream data flow', async () => {
+    it('should trace upstream data flow using incoming relations', async () => {
+      mockConfig.storage.graph.getRelations = vi.fn(() =>
+        Promise.resolve([
+          {
+            id: 'r1',
+            sourceId: 'upstream1',
+            targetId: 'entity1',
+            type: 'USES',
+            description: '',
+            keywords: [],
+            sourceChunkIds: [],
+          },
+        ]),
+      );
+
       const entities = await pipeline.traceDataFlow('entity1', 'upstream');
 
-      expect(mockConfig.storage.graph.traverse).toHaveBeenCalledWith('entity1', 10, undefined);
-      expect(entities).toHaveLength(1);
-      expect(entities[0].name).toBe('RelatedService');
+      // Should use 'in' direction for upstream
+      expect(mockConfig.storage.graph.getRelations).toHaveBeenCalledWith('entity1', 'in');
+      expect(entities.length).toBeGreaterThanOrEqual(1);
     });
 
-    it('should trace downstream data flow', async () => {
+    it('should trace downstream data flow using outgoing relations', async () => {
+      mockConfig.storage.graph.getRelations = vi.fn(() =>
+        Promise.resolve([
+          {
+            id: 'r1',
+            sourceId: 'entity1',
+            targetId: 'downstream1',
+            type: 'USES',
+            description: '',
+            keywords: [],
+            sourceChunkIds: [],
+          },
+        ]),
+      );
+
       const entities = await pipeline.traceDataFlow('entity1', 'downstream');
 
-      expect(mockConfig.storage.graph.traverse).toHaveBeenCalledWith('entity1', 10, undefined);
-      expect(entities).toHaveLength(1);
+      // Should use 'out' direction for downstream
+      expect(mockConfig.storage.graph.getRelations).toHaveBeenCalledWith('entity1', 'out');
+      expect(entities.length).toBeGreaterThanOrEqual(1);
     });
   });
 
@@ -278,7 +324,7 @@ describe('QueryPipeline', () => {
 
       expect(merged).toHaveLength(3);
       expect(merged.map((r: SearchResult) => r.id)).toEqual(['chunk:1', 'chunk:2', 'chunk:3']);
-      expect(merged[0].score).toBe(0.9); // Sorted by score descending
+      expect(merged[0].score).toBe(0.9);
     });
 
     it('should handle empty results in merge', () => {
@@ -314,42 +360,17 @@ describe('QueryPipeline', () => {
 
     it('should handle local search with no entities found', async () => {
       mockConfig.extractor.extractEntities = vi.fn(() =>
-        Promise.resolve({
-          entities: [],
-          relations: [],
-        }),
+        Promise.resolve({ entities: [], relations: [] }),
       );
 
       const results = await pipeline.search('test query', 'local', 5);
 
-      expect(results).toHaveLength(0);
-    });
-
-    it('should handle local search with empty entity IDs set', async () => {
-      // Mock extractor to return entities but graph has no related entities
-      mockConfig.extractor.extractEntities = vi.fn(() =>
-        Promise.resolve({
-          entities: [{ name: 'TestEntity', type: 'SERVICE', description: 'Test' }],
-          relations: [],
-        }),
-      );
-
-      // Mock traverse to return empty array (no related entities)
-      mockConfig.storage.graph.traverse = vi.fn(() => Promise.resolve([]));
-
-      // Mock vector search
-      mockConfig.storage.vector.search = vi.fn(() =>
-        Promise.resolve([{ id: 'chunk:1', score: 0.9, metadata: { content: 'some content' } }]),
-      );
-
-      const results = await pipeline.search('test query', 'local', 5);
-
-      // Should filter based on original entity name only
-      expect(results).toHaveLength(0); // No content matches 'TestEntity'
+      // With no entities, all results get penalized score (0.5x) but still returned
+      expect(results.length).toBeGreaterThan(0);
+      expect(results[0].score).toBeLessThan(0.9); // Penalized
     });
 
     it('should handle local search with no matching content', async () => {
-      // Mock extractor to return entities
       mockConfig.extractor.extractEntities = vi.fn(() =>
         Promise.resolve({
           entities: [{ name: 'SpecificEntity', type: 'SERVICE', description: 'Test' }],
@@ -357,7 +378,6 @@ describe('QueryPipeline', () => {
         }),
       );
 
-      // Mock vector search with content that doesn't match any entity
       mockConfig.storage.vector.search = vi.fn(() =>
         Promise.resolve([
           { id: 'chunk:1', score: 0.9, metadata: { content: 'completely unrelated content' } },
@@ -367,11 +387,14 @@ describe('QueryPipeline', () => {
 
       const results = await pipeline.search('SpecificEntity query', 'local', 5);
 
-      expect(results).toHaveLength(0); // No content matches entity names
+      // Results returned but with penalized scores (no entity matches)
+      expect(results.length).toBeGreaterThan(0);
+      for (const r of results) {
+        expect(r.score).toBeLessThan(0.9); // All penalized
+      }
     });
 
     it('should handle local search with null metadata content', async () => {
-      // Mock extractor to return entities
       mockConfig.extractor.extractEntities = vi.fn(() =>
         Promise.resolve({
           entities: [{ name: 'TestEntity', type: 'SERVICE', description: 'Test' }],
@@ -379,7 +402,6 @@ describe('QueryPipeline', () => {
         }),
       );
 
-      // Mock vector search with null/undefined content
       mockConfig.storage.vector.search = vi.fn(() =>
         Promise.resolve([
           { id: 'chunk:1', score: 0.9, metadata: { content: null } },
@@ -390,7 +412,11 @@ describe('QueryPipeline', () => {
 
       const results = await pipeline.search('TestEntity query', 'local', 5);
 
-      expect(results).toHaveLength(0); // No valid content to match
+      // Results returned with penalized scores (no content to match)
+      expect(results.length).toBeGreaterThan(0);
+      for (const r of results) {
+        expect(r.content).toBe('');
+      }
     });
   });
 
@@ -434,7 +460,7 @@ describe('QueryPipeline', () => {
     it('should not rerank when no reranker configured', async () => {
       const results = await pipeline.search('test', 'naive', 5);
       expect(results).toHaveLength(2);
-      expect(results[0].score).toBe(0.9); // Original score preserved
+      expect(results[0].score).toBe(0.9);
     });
   });
 });
