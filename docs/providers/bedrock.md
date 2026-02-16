@@ -34,7 +34,7 @@ embedder.dimensions; // 1024
 import { BedrockExtractor } from '@flowrag/provider-bedrock';
 
 const extractor = new BedrockExtractor({
-  model: 'us.anthropic.claude-3-5-haiku-20241022-v1:0', // default
+  model: 'anthropic.claude-haiku-4-5-20251001-v1:0', // default
 });
 ```
 

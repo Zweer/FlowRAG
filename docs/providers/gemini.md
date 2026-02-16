@@ -34,7 +34,7 @@ embedder.dimensions; // 768
 import { GeminiExtractor } from '@flowrag/provider-gemini';
 
 const extractor = new GeminiExtractor({
-  model: 'gemini-2.5-flash', // default
+  model: 'gemini-3-flash-preview', // default
 });
 ```
 
