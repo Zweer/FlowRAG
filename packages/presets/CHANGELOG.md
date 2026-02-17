@@ -27,6 +27,13 @@
 
 
 
+
+## [1.4.0] - 2026-02-17
+
+### 🐛 Bug Fixes
+
+- fix(presets): :bug: accept string arg in createLocalStorage, fix docs and badges
+
 ## [1.3.0] - 2026-02-16
 
 ### ✨ Features

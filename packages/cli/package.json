@@ -39,7 +39,7 @@
     "@commander-js/extra-typings": "^14.0.0",
     "@flowrag/core": "^1.4.0",
     "@flowrag/pipeline": "^1.4.0",
-    "@flowrag/presets": "^1.4.0",
+    "@flowrag/presets": "^1.4.1",
     "@inquirer/prompts": "^8.2.1",
     "commander": "^14.0.0"
   },
