@@ -32,7 +32,7 @@ We took the architecture and rebuilt it for our world:
 
 ## The Result
 
-FlowRAG is 12 packages, 335 tests, 100% coverage. It indexes documents, extracts entities and relations, builds a knowledge graph, and answers queries using both vector similarity and graph traversal.
+FlowRAG is a fully tested TypeScript library with 100% coverage. It indexes documents, extracts entities and relations, builds a knowledge graph, and answers queries using both vector similarity and graph traversal.
 
 You can run it locally with zero external services:
 

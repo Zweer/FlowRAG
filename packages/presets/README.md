@@ -32,7 +32,8 @@ const rag = await createFlowRAG({
 ```typescript
 const rag = await createFlowRAG({
   schema,
-  ...createLocalStorage({ path: './my-data' }),
+  ...createLocalStorage('./my-data'),
+  // or: ...createLocalStorage({ path: './my-data' }),
 });
 ```
 
@@ -63,6 +64,8 @@ const rag = await createFlowRAG({
 ## API
 
 ### `createLocalStorage(options?)`
+
+Accepts a path string or an options object.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|

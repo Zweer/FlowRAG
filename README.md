@@ -1,7 +1,6 @@
 # FlowRAG 🌊
 
 [![CI](https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml/badge.svg)](https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml)
-[![Security](https://github.com/Zweer/FlowRAG/actions/workflows/security.yml/badge.svg)](https://github.com/Zweer/FlowRAG/actions/workflows/security.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Coverage Badge](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat)
 
@@ -291,8 +290,8 @@ export const handler = async (event: { query: string }) => {
 
 ```bash
 npm install        # Install dependencies
-npm run build      # Build all 12 packages
-npm test           # Run 335 tests across 34 test files
+npm run build      # Build all packages
+npm test           # Run all tests
 npm run lint       # Lint code
 npm run typecheck  # Type check
 ```

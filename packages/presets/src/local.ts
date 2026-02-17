@@ -45,16 +45,18 @@ export interface LocalStorageConfig {
  * @param options Configuration options with overrides
  * @returns Storage configuration object
  */
-export function createLocalStorage(options: LocalStorageOptions = {}): LocalStorageConfig {
-  const basePath = options.path ?? './data';
+export function createLocalStorage(options: string | LocalStorageOptions = {}): LocalStorageConfig {
+  const resolved = typeof options === 'string' ? { path: options } : options;
+  const basePath = resolved.path ?? './data';
 
   return {
     storage: {
-      kv: options.kv ?? new JsonKVStorage({ path: join(basePath, 'kv') }),
-      vector: options.vector ?? new LanceDBVectorStorage({ path: join(basePath, 'vectors') }),
-      graph: options.graph ?? new SQLiteGraphStorage({ path: join(basePath, 'graph.db') }),
+      kv: resolved.kv ?? new JsonKVStorage({ path: join(basePath, 'kv') }),
+      vector: resolved.vector ?? new LanceDBVectorStorage({ path: join(basePath, 'vectors') }),
+      graph: resolved.graph ?? new SQLiteGraphStorage({ path: join(basePath, 'graph.db') }),
     },
-    embedder: options.embedder ?? new LocalEmbedder({ model: 'Xenova/e5-small-v2', dtype: 'fp32' }),
-    extractor: options.extractor ?? new GeminiExtractor({ model: 'gemini-3-flash-preview' }),
+    embedder:
+      resolved.embedder ?? new LocalEmbedder({ model: 'Xenova/e5-small-v2', dtype: 'fp32' }),
+    extractor: resolved.extractor ?? new GeminiExtractor({ model: 'gemini-3-flash-preview' }),
   };
 }
