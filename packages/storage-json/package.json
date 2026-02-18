@@ -33,7 +33,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "@flowrag/core": "^1.4.0"
+    "@flowrag/core": "^1.5.0"
   },
   "engines": {
     "node": ">=20"

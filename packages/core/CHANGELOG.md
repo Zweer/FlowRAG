@@ -33,6 +33,48 @@
 
 
 
+
+
+
+
+
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(core): :sparkles: add multi-tenancy namespace support
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(core): :sparkles: add multi-tenancy namespace support
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(core): :sparkles: add multi-tenancy namespace support
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(core): :sparkles: add multi-tenancy namespace support
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(core): :sparkles: add multi-tenancy namespace support
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(core): :sparkles: add multi-tenancy namespace support
+
 ## [1.3.0] - 2026-02-16
 
 ### ✨ Features

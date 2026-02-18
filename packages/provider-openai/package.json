@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-openai",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "OpenAI provider for FlowRAG - embeddings, entity extraction, and reranking",
   "keywords": [
     "flowrag",
@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.4.0",
+    "@flowrag/core": "^1.5.0",
     "openai": "^5.23.2"
   },
   "engines": {

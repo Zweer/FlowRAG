@@ -35,6 +35,83 @@
 
 
 
+
+
+
+
+
+
+
+## [0.3.0] - 2026-02-18
+
+### 🐛 Bug Fixes
+
+- fix: :white_check_mark: typecheck cli and mcp packages
+
+### ### chore
+
+- chore(deps): :arrow_up: update all dependencies to latest
+
+## [0.3.0] - 2026-02-18
+
+### 🐛 Bug Fixes
+
+- fix: :white_check_mark: typecheck cli and mcp packages
+
+### ### chore
+
+- chore(deps): :arrow_up: update all dependencies to latest
+
+## [0.3.0] - 2026-02-18
+
+### 🐛 Bug Fixes
+
+- fix: :white_check_mark: typecheck cli and mcp packages
+
+### ### chore
+
+- chore(deps): :arrow_up: update all dependencies to latest
+
+## [0.3.0] - 2026-02-18
+
+### 🐛 Bug Fixes
+
+- fix: :white_check_mark: typecheck cli and mcp packages
+
+### ### chore
+
+- chore(deps): :arrow_up: update all dependencies to latest
+
+## [0.3.0] - 2026-02-18
+
+### 🐛 Bug Fixes
+
+- fix: :white_check_mark: typecheck cli and mcp packages
+
+### ### chore
+
+- chore(deps): :arrow_up: update all dependencies to latest
+
+## [0.3.0] - 2026-02-18
+
+### 🐛 Bug Fixes
+
+- fix: :white_check_mark: typecheck cli and mcp packages
+
+### ### chore
+
+- chore(deps): :arrow_up: update all dependencies to latest
+
+## [0.3.0] - 2026-02-18
+
+### 🐛 Bug Fixes
+
+- fix: :white_check_mark: typecheck cli and mcp packages
+
+### ### chore
+
+- chore(deps): :arrow_up: update all dependencies to latest
+
 ## [0.2.0] - 2026-02-16
 
 ### ✨ Features

@@ -30,6 +30,50 @@
 
 
 
+
+
+
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: add progress callbacks to indexing
+
+### ⚡ Performance
+
+- perf(pipeline): :bug: replace non-null assertion with optional chain
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: add progress callbacks to indexing
+
+### ⚡ Performance
+
+- perf(pipeline): :bug: replace non-null assertion with optional chain
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: add progress callbacks to indexing
+
+### ⚡ Performance
+
+- perf(pipeline): :bug: replace non-null assertion with optional chain
+
+## [1.4.0] - 2026-02-18
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: add progress callbacks to indexing
+
+### ⚡ Performance
+
+- perf(pipeline): :bug: replace non-null assertion with optional chain
+
 ## [1.3.0] - 2026-02-16
 
 ### ✨ Features
