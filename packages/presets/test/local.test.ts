@@ -70,6 +70,12 @@ describe('createLocalStorage', () => {
     }).toThrow('Gemini API key is required');
   });
 
+  it('accepts a string path shorthand', () => {
+    expect(() => {
+      createLocalStorage(tempDir);
+    }).toThrow('Gemini API key is required');
+  });
+
   it('uses custom path', () => {
     const config = createLocalStorage({
       path: tempDir,
