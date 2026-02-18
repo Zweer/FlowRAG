@@ -42,6 +42,7 @@ npx @flowrag/mcp --config ./flowrag.config.json
 - ~~**Anthropic provider**~~: `@flowrag/provider-anthropic` ✅ Complete
 - ~~**Redis storage**~~: `@flowrag/storage-redis` (KV + Vector) ✅ Complete
 - **Multi-tenancy**: Namespace support for multi-workspace scenarios ✅ Complete
+- **MCP configurability**: Support all storage backends, providers, and namespacing in MCP server ✅ Complete
 
 ---
 
