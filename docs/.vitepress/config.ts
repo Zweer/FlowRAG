@@ -43,6 +43,7 @@ export default defineConfig({
         items: [
           { text: 'Local Development', link: '/deployment/local' },
           { text: 'AWS Lambda', link: '/deployment/aws-lambda' },
+          { text: 'Redis', link: '/deployment/redis' },
         ],
       },
       {

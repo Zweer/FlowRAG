@@ -40,7 +40,7 @@ npx @flowrag/mcp --config ./flowrag.config.json
 - ~~**Streaming indexing**~~: Progress callbacks during batch indexing ✅ Complete
 - ~~**OpenAI provider**~~: `@flowrag/provider-openai` ✅ Complete
 - ~~**Anthropic provider**~~: `@flowrag/provider-anthropic` ✅ Complete
-- **Redis storage**: `@flowrag/storage-redis` (KV + Vector)
+- ~~**Redis storage**~~: `@flowrag/storage-redis` (KV + Vector) ✅ Complete
 - **Multi-tenancy**: Namespace support for multi-workspace scenarios
 
 ---

@@ -1,0 +1,45 @@
+{
+  "name": "@flowrag/storage-redis",
+  "version": "0.3.0",
+  "description": "Redis storage for FlowRAG - KV and vector storage on Redis Stack",
+  "keywords": [
+    "flowrag",
+    "storage",
+    "redis",
+    "kv",
+    "vector",
+    "cloud"
+  ],
+  "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/storage-redis",
+  "bugs": "https://github.com/Zweer/FlowRAG/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/storage-redis"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@flowrag/core": "^1.4.0",
+    "redis": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

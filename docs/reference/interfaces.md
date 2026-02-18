@@ -18,7 +18,7 @@ interface KVStorage {
 }
 ```
 
-**Implementations**: `JsonKVStorage` (files), `S3KVStorage` (S3)
+**Implementations**: `JsonKVStorage` (files), `S3KVStorage` (S3), `RedisKVStorage` (Redis)
 
 ### VectorStorage
 
@@ -33,7 +33,7 @@ interface VectorStorage {
 }
 ```
 
-**Implementations**: `LanceDBVectorStorage`, `OpenSearchVectorStorage`
+**Implementations**: `LanceDBVectorStorage`, `OpenSearchVectorStorage`, `RedisVectorStorage`
 
 ### GraphStorage
 
