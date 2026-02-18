@@ -135,7 +135,7 @@ describe('createServer', () => {
 describe('tool handlers', () => {
   function getToolHandler(name: string): (...args: unknown[]) => Promise<unknown> {
     const call = mockTool.mock.calls.find((c: unknown[]) => c[0] === name);
-    // Handler is the last argument (4th for tools with schema, 3rd for tools without)
+    if (!call) throw new Error(`Tool "${name}" not found`);
     return call[call.length - 1];
   }
 

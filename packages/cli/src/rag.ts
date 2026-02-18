@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
+import type { FieldDefinition } from '@flowrag/core';
 import { defineSchema } from '@flowrag/core';
 import type { FlowRAG, FlowRAGHooks } from '@flowrag/pipeline';
 import { createFlowRAG } from '@flowrag/pipeline';
@@ -15,9 +16,9 @@ export interface FlowRAGInstance {
 interface FlowRAGConfigFile {
   entityTypes?: string[];
   relationTypes?: string[];
-  documentFields?: Record<string, unknown>;
-  entityFields?: Record<string, unknown>;
-  relationFields?: Record<string, unknown>;
+  documentFields?: Record<string, FieldDefinition>;
+  entityFields?: Record<string, FieldDefinition>;
+  relationFields?: Record<string, FieldDefinition>;
 }
 
 const CONFIG_FILES = ['flowrag.json', '.flowrag.json'];

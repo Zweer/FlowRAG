@@ -1,5 +1,6 @@
 import { parseArgs } from 'node:util';
 
+import type { CliFlags } from './config.js';
 import { loadConfig } from './config.js';
 import { createRagFromConfig } from './factory.js';
 import { detectConfigChanges, readMetadata } from './metadata.js';
@@ -15,7 +16,7 @@ export async function main(): Promise<void> {
     strict: false,
   });
 
-  const config = await loadConfig(values);
+  const config = await loadConfig(values as CliFlags);
   const { rag, graph } = createRagFromConfig(config);
 
   // Check for config changes

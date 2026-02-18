@@ -40,7 +40,7 @@
     "lint:lockfile": "lockfile-lint",
     "lint:package": "npmPkgJsonLint .",
     "lint:sort_package": "sort-package-json \"package.json\" \"packages/*/package.json\"",
-    "lint:typecheck": "tsc --noEmit",
+    "lint:typecheck": "tsc --noEmit && tsc --noEmit -p packages/cli && tsc --noEmit -p packages/mcp",
     "prepare": "[ \"$CI\" = \"true\" ] || [ \"$GITHUB_ACTIONS\" = \"true\" ] && echo 'Skipping husky' && exit 0 || husky",
     "release": "bonvoy shipit",
     "scripts:dummy": "publish-dummy-package",
