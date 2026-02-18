@@ -414,7 +414,7 @@ describe('IndexingPipeline', () => {
     expect(onProgress.mock.calls[0][0].documentsTotal).toBe(2);
 
     // Verify done event has final counts
-    const doneEvent = onProgress.mock.calls.at(-1)[0];
+    const doneEvent = onProgress.mock.calls.at(-1)?.[0];
     expect(doneEvent.documentsProcessed).toBe(2);
     expect(doneEvent.chunksProcessed).toBe(2);
   });
