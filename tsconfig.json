@@ -7,5 +7,5 @@
     "allowImportingTsExtensions": true
   },
   "include": ["packages/*/src", "packages/*/test"],
-  "exclude": ["**/dist", "**/node_modules", "packages/cli"]
+  "exclude": ["**/dist", "**/node_modules", "packages/cli", "packages/mcp"]
 }

@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "cli",
     "core",
+    "mcp",
     "pipeline",
     "presets",
     "provider-bedrock",
