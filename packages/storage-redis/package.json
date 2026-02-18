@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@flowrag/core": "^1.4.0",
-    "redis": "^5.0.0"
+    "redis": "^5.11.0"
   },
   "engines": {
     "node": ">=20.3"

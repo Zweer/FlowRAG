@@ -45,7 +45,7 @@
     "@flowrag/provider-local": "^1.4.0",
     "@flowrag/provider-openai": "^0.0.0",
     "@modelcontextprotocol/sdk": "^1.27.0",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.6.1"
   },
   "peerDependencies": {
     "zod": "^3.25.0"

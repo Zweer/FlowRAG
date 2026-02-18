@@ -60,9 +60,12 @@
       "@commitlint/config-conventional"
     ]
   },
+  "overrides": {
+    "fast-xml-parser": "5.3.6"
+  },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
-    "@biomejs/biome": "^2.4.1",
+    "@biomejs/biome": "^2.4.2",
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",
     "@tsconfig/node22": "^22.0.5",

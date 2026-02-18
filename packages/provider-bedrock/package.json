@@ -34,7 +34,7 @@
     "dist"
   ],
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.750.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.992.0",
     "@flowrag/core": "^1.4.0"
   },
   "engines": {
