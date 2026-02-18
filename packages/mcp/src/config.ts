@@ -7,17 +7,11 @@ export interface FlowRAGMcpConfig {
   data: string;
   docs?: string;
   schema: SchemaConfig;
-  storage?: StorageConfig;
   namespace?: string;
   embedder: ProviderConfig;
   extractor: ProviderConfig;
   transport: 'stdio' | 'http';
   port: number;
-}
-
-export interface StorageConfig {
-  type: 'local' | 'redis';
-  url?: string;
 }
 
 export interface SchemaConfig {

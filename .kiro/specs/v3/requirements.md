@@ -156,6 +156,31 @@ const rag = createFlowRAG({
 
 **Inspired by**: LightRAG's `entity_extract_max_gleaning`.
 
+## 10. MCP HTTP Transport + Remote Storage
+
+Enable the MCP server to run remotely with Streamable HTTP transport, unlocking enterprise/team scenarios.
+
+```bash
+# Remote MCP server with HTTP transport
+npx @flowrag/mcp --config ./flowrag.config.json
+```
+
+```json
+{
+  "transport": "http",
+  "port": 3000,
+  "storage": {
+    "type": "redis",
+    "url": "redis://redis.internal:6379"
+  },
+  "namespace": "team-docs"
+}
+```
+
+**Unlocks**: shared knowledge base for teams, centralized MCP server, chatbot backends via MCP.
+
+When deployed remotely, storage backends like Redis, S3, and OpenSearch make sense — the MCP server lives next to the data.
+
 ## Priority Order
 
 | # | Feature | Impact | Effort |

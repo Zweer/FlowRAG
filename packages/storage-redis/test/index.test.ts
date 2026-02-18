@@ -1,6 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { RedisKVStorage, RedisVectorStorage } from '../src/index.js';
+vi.mock('redis', () => ({
+  createClient: vi.fn().mockReturnValue({ connect: vi.fn() }),
+}));
+
+const { RedisKVStorage, RedisVectorStorage, createRedisStorage } = await import('../src/index.js');
 
 describe('storage-redis exports', () => {
   it('should export RedisKVStorage', () => {
@@ -9,5 +13,9 @@ describe('storage-redis exports', () => {
 
   it('should export RedisVectorStorage', () => {
     expect(RedisVectorStorage).toBeDefined();
+  });
+
+  it('should export createRedisStorage', () => {
+    expect(createRedisStorage).toBeDefined();
   });
 });
