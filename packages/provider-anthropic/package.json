@@ -1,0 +1,46 @@
+{
+  "name": "@flowrag/provider-anthropic",
+  "version": "0.0.0",
+  "description": "Anthropic provider for FlowRAG - entity extraction and reranking via Claude",
+  "keywords": [
+    "flowrag",
+    "provider",
+    "anthropic",
+    "claude",
+    "extractor",
+    "ai",
+    "rag"
+  ],
+  "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/provider-anthropic",
+  "bugs": "https://github.com/Zweer/FlowRAG/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zweer/FlowRAG.git",
+    "directory": "packages/provider-anthropic"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Zweer",
+    "email": "n.olivieriachille@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.62.0",
+    "@flowrag/core": "^1.4.0"
+  },
+  "engines": {
+    "node": ">=20.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
