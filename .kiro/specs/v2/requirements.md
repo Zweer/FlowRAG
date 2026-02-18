@@ -2,7 +2,7 @@
 
 > Planned features for FlowRAG v2.
 
-## 1. MCP Server (High Priority)
+## 1. MCP Server ✅ Complete
 
 Model Context Protocol server to expose FlowRAG as a tool for AI assistants.
 
@@ -11,24 +11,20 @@ Model Context Protocol server to expose FlowRAG as a tool for AI assistants.
 ### Goals
 - Expose `search`, `traceDataFlow`, `findPath`, `stats` as MCP tools
 - Allow AI assistants (Claude, Kiro, etc.) to query the knowledge base directly
-- Support both local (stdio) and remote (Streamable HTTP) transport
-- Zero-config: point at a FlowRAG data directory and serve
+- stdio transport (all major MCP clients use it)
+- Config-driven: single `flowrag.config.json` + CLI flags
 
 ### Package
 `@flowrag/mcp` — standalone MCP server package
 
 ### Usage
 ```bash
-# stdio transport (for local AI assistants)
-flowrag mcp
-# or
-npx @flowrag/mcp --data ./data
-
-# Streamable HTTP transport (for remote clients)
-flowrag mcp --transport http --port 3000
+npx @flowrag/mcp --data ./data --docs ./content
+npx @flowrag/mcp --config ./flowrag.config.json
 ```
 
 ### MCP Tools
+- `flowrag_index` — index documents from config docs path
 - `flowrag_search` — search the knowledge base (vector + graph dual retrieval)
 - `flowrag_trace` — trace data flow upstream/downstream
 - `flowrag_path` — find path between entities

@@ -313,13 +313,11 @@ Exposes the current schema definition so the AI assistant understands what entit
 
 ## 6. Transport
 
-### 6.1 stdio (default)
+### 6.1 stdio
 
-Standard input/output transport for local AI assistants. This is the primary use case.
+Standard input/output transport for local AI assistants. All major MCP clients (Claude Desktop, Kiro, VS Code) use stdio.
 
-### 6.2 Streamable HTTP (optional)
-
-HTTP transport for remote clients or web-based AI assistants. Configured via `transport: "http"` and `port` in the config file.
+> **Decision (2026-02-18)**: Streamable HTTP transport was originally planned but removed. The use case (remote AI assistant connecting to FlowRAG) doesn't exist today — all MCP clients run locally with stdio. For server-side use cases (e.g., chatbot Lambda), FlowRAG should be used directly as a library, not through MCP. HTTP transport can be added later as a retrocompatible change if needed.
 
 ## 7. Entity Resolution
 
@@ -335,38 +333,20 @@ Tools that accept entity names (`flowrag_trace`, `flowrag_path`, `flowrag_relati
 ```
 packages/mcp/
 ├── src/
-│   ├── index.ts          # CLI entry point (bin)
+│   ├── index.ts          # Barrel exports + CLI entry point
+│   ├── main.ts           # Main logic (parseArgs → config → factory → server)
 │   ├── config.ts         # Config loading, validation, defaults
 │   ├── metadata.ts       # Metadata file read/write, config change detection
 │   ├── server.ts         # MCP server setup (McpServer, tools, resources)
 │   ├── factory.ts        # Create FlowRAG instance from config
-│   ├── resolve.ts        # Entity name resolution
-│   ├── tools/
-│   │   ├── index.ts      # flowrag_index tool
-│   │   ├── search.ts     # flowrag_search tool
-│   │   ├── entities.ts   # flowrag_entities tool
-│   │   ├── relations.ts  # flowrag_relations tool
-│   │   ├── trace.ts      # flowrag_trace tool
-│   │   ├── path.ts       # flowrag_path tool
-│   │   └── stats.ts      # flowrag_stats tool
-│   └── resources/
-│       └── schema.ts     # flowrag://schema resource
+│   └── resolve.ts        # Entity name resolution
 ├── test/
 │   ├── config.test.ts
 │   ├── metadata.test.ts
 │   ├── server.test.ts
 │   ├── factory.test.ts
 │   ├── resolve.test.ts
-│   ├── tools/
-│   │   ├── index.test.ts
-│   │   ├── search.test.ts
-│   │   ├── entities.test.ts
-│   │   ├── relations.test.ts
-│   │   ├── trace.test.ts
-│   │   ├── path.test.ts
-│   │   └── stats.test.ts
-│   └── resources/
-│       └── schema.test.ts
+│   └── main.test.ts
 ├── package.json
 └── README.md
 ```
@@ -404,12 +384,7 @@ The indexing pipeline needs to write `flowrag.meta.json` after indexing:
 
 ### 10.2 `@flowrag/cli`
 
-Add `mcp` subcommand that delegates to `@flowrag/mcp`:
-
-```bash
-flowrag mcp                              # uses ./flowrag.config.json
-flowrag mcp --config /path/to/config.json
-```
+> **Decision (2026-02-18)**: The `flowrag mcp` subcommand was originally planned but removed. MCP and CLI serve different audiences (AI assistants vs humans). Adding `@flowrag/mcp` as a CLI dependency would bloat the CLI with the MCP SDK for a command most CLI users won't need. Users who want MCP just run `npx @flowrag/mcp` directly.
 
 ## 11. Testing Strategy
 
@@ -423,41 +398,41 @@ flowrag mcp --config /path/to/config.json
 
 ## 12. Development Phases
 
-### Phase 1: Config & Factory
-- [ ] Package scaffolding (package.json, tsconfig, etc.)
-- [ ] Config loading, validation, defaults (`config.ts`)
-- [ ] FlowRAG instance creation from config (`factory.ts`)
-- [ ] Metadata file read/write (`metadata.ts`)
-- [ ] Tests
+### Phase 1: Config & Factory ✅
+- [x] Package scaffolding (package.json, tsconfig, etc.)
+- [x] Config loading, validation, defaults (`config.ts`)
+- [x] FlowRAG instance creation from config (`factory.ts`)
+- [x] Metadata file read/write (`metadata.ts`)
+- [x] Tests
 
-### Phase 2: Core Tools
-- [ ] MCP server setup with stdio transport (`server.ts`)
-- [ ] `flowrag_index` tool
-- [ ] `flowrag_search` tool
-- [ ] `flowrag_stats` tool
-- [ ] `flowrag://schema` resource
-- [ ] Tests
+### Phase 2: Core Tools ✅
+- [x] MCP server setup with stdio transport (`server.ts`)
+- [x] `flowrag_index` tool
+- [x] `flowrag_search` tool
+- [x] `flowrag_stats` tool
+- [x] `flowrag://schema` resource
+- [x] Tests
 
-### Phase 3: Graph Tools
-- [ ] Entity name resolution (`resolve.ts`)
-- [ ] `flowrag_entities` tool
-- [ ] `flowrag_relations` tool
-- [ ] `flowrag_trace` tool
-- [ ] `flowrag_path` tool
-- [ ] Tests
+### Phase 3: Graph Tools ✅
+- [x] Entity name resolution (`resolve.ts`)
+- [x] `flowrag_entities` tool
+- [x] `flowrag_relations` tool
+- [x] `flowrag_trace` tool
+- [x] `flowrag_path` tool
+- [x] Tests
 
-### Phase 4: Transport & CLI
-- [ ] Streamable HTTP transport support
-- [ ] CLI entry point (`bin` in package.json)
-- [ ] `flowrag mcp` subcommand in `@flowrag/cli`
-- [ ] Config change detection warnings
-- [ ] Tests
+### Phase 4: Entry Point ✅
+- [x] CLI entry point (`bin` in package.json)
+- [x] Config change detection warnings on startup (`main.ts`)
+- [x] Tests
+- ~~Streamable HTTP transport~~ — removed (see §6)
+- ~~`flowrag mcp` CLI subcommand~~ — removed (see §10.2)
 
-### Phase 5: Documentation
-- [ ] Package README
-- [ ] VitePress docs page (`docs/guide/mcp.md`)
-- [ ] Configuration examples for Claude Desktop, Kiro, VS Code
-- [ ] Update main README
+### Phase 5: Documentation ✅
+- [x] Package README
+- [x] VitePress docs page (`docs/guide/mcp.md`)
+- [x] Configuration examples for Claude Desktop, Kiro
+- [x] Update main README
 
 ## 13. Success Criteria
 
@@ -470,4 +445,4 @@ flowrag mcp --config /path/to/config.json
 ---
 
 *Created: 2026-02-18*
-*Status: Ready for implementation*
+*Status: Complete*
