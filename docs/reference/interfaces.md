@@ -111,6 +111,18 @@ interface RerankResult {
 
 **Implementations**: `LocalReranker` (ONNX), `GeminiReranker`, `BedrockReranker`, `OpenAIReranker`, `AnthropicReranker`
 
+## Multi-Tenancy
+
+Wrap any storage set with `withNamespace` for tenant isolation:
+
+```typescript
+import { withNamespace } from '@flowrag/core';
+
+const storage = withNamespace({ kv, vector, graph }, 'tenant-123');
+```
+
+KV keys and graph entity/relation IDs are transparently prefixed. Vector records get a `__ns` metadata field for filtered search. See [Multi-Tenancy guide](/guide/multi-tenancy) for details.
+
 ## Core Types
 
 ```typescript

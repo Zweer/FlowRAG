@@ -41,7 +41,7 @@ npx @flowrag/mcp --config ./flowrag.config.json
 - ~~**OpenAI provider**~~: `@flowrag/provider-openai` ✅ Complete
 - ~~**Anthropic provider**~~: `@flowrag/provider-anthropic` ✅ Complete
 - ~~**Redis storage**~~: `@flowrag/storage-redis` (KV + Vector) ✅ Complete
-- **Multi-tenancy**: Namespace support for multi-workspace scenarios
+- **Multi-tenancy**: Namespace support for multi-workspace scenarios ✅ Complete
 
 ---
 

@@ -26,6 +26,7 @@ export default defineConfig({
           { text: 'Querying', link: '/guide/querying' },
           { text: 'Reranker', link: '/guide/reranker' },
           { text: 'MCP Server', link: '/guide/mcp' },
+          { text: 'Multi-Tenancy', link: '/guide/multi-tenancy' },
         ],
       },
       {
