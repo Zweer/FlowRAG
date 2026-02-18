@@ -1,6 +1,8 @@
 import type { Embedder } from '@flowrag/core';
 import { GoogleGenAI } from '@google/genai';
 
+import { GeminiEmbeddingModels } from './models.js';
+
 export interface GeminiEmbedderOptions {
   apiKey?: string;
   model?: string;
@@ -19,7 +21,7 @@ export class GeminiEmbedder implements Embedder {
       );
     }
 
-    this.modelName = options.model || 'text-embedding-004';
+    this.modelName = options.model || GeminiEmbeddingModels.TEXT_EMBEDDING_004;
     this.client = new GoogleGenAI({ apiKey });
   }
 

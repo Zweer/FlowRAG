@@ -6,6 +6,8 @@ import {
 } from '@flowrag/core';
 import { GoogleGenAI } from '@google/genai';
 
+import { GeminiLLMModels } from './models.js';
+
 export interface GeminiExtractorOptions {
   apiKey?: string;
   model?: string;
@@ -25,7 +27,7 @@ export class GeminiExtractor implements LLMExtractor {
       );
     }
 
-    this.modelName = options.model || 'gemini-3-flash-preview';
+    this.modelName = options.model || GeminiLLMModels.GEMINI_3_FLASH_PREVIEW;
     this.temperature = options.temperature ?? 0.1;
     this.client = new GoogleGenAI({ apiKey });
   }

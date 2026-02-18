@@ -1,6 +1,8 @@
 import type { RerankDocument, Reranker, RerankResult } from '@flowrag/core';
 import { GoogleGenAI } from '@google/genai';
 
+import { GeminiLLMModels } from './models.js';
+
 export interface GeminiRerankerOptions {
   apiKey?: string;
   model?: string;
@@ -18,7 +20,7 @@ export class GeminiReranker implements Reranker {
       );
     }
 
-    this.model = options.model || 'gemini-3-flash-preview';
+    this.model = options.model || GeminiLLMModels.GEMINI_3_FLASH_PREVIEW;
     this.client = new GoogleGenAI({ apiKey });
   }
 
