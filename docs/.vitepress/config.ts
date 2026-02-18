@@ -34,6 +34,8 @@ export default defineConfig({
           { text: 'Local (ONNX)', link: '/providers/local' },
           { text: 'Gemini', link: '/providers/gemini' },
           { text: 'AWS Bedrock', link: '/providers/bedrock' },
+          { text: 'OpenAI', link: '/providers/openai' },
+          { text: 'Anthropic', link: '/providers/anthropic' },
         ],
       },
       {

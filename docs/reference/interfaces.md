@@ -68,7 +68,7 @@ interface Embedder {
 }
 ```
 
-**Implementations**: `LocalEmbedder` (ONNX), `GeminiEmbedder`, `BedrockEmbedder`
+**Implementations**: `LocalEmbedder` (ONNX), `GeminiEmbedder`, `BedrockEmbedder`, `OpenAIEmbedder`
 
 ### LLMExtractor
 
@@ -87,7 +87,7 @@ interface ExtractionResult {
 }
 ```
 
-**Implementations**: `GeminiExtractor`, `BedrockExtractor`
+**Implementations**: `GeminiExtractor`, `BedrockExtractor`, `OpenAIExtractor`, `AnthropicExtractor`
 
 ### Reranker
 
@@ -109,7 +109,7 @@ interface RerankResult {
 }
 ```
 
-**Implementations**: `LocalReranker` (ONNX), `GeminiReranker`, `BedrockReranker`
+**Implementations**: `LocalReranker` (ONNX), `GeminiReranker`, `BedrockReranker`, `OpenAIReranker`, `AnthropicReranker`
 
 ## Core Types
 

@@ -232,6 +232,8 @@ Interactive entity review during indexing with `--interactive`:
 | [`@flowrag/provider-local`](./packages/provider-local) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-local.svg)](https://www.npmjs.com/package/@flowrag/provider-local) | Local AI provider (ONNX embeddings) | ✅ Complete |
 | [`@flowrag/provider-gemini`](./packages/provider-gemini) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fprovider-gemini.svg)](https://www.npmjs.com/package/@flowrag/provider-gemini) | Gemini AI provider (embeddings + extraction) | ✅ Complete |
 | [`@flowrag/provider-bedrock`](./packages/provider-bedrock) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | AWS Bedrock provider (embeddings + extraction) | ✅ Complete |
+| [`@flowrag/provider-openai`](./packages/provider-openai) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | OpenAI provider (embeddings + extraction) | ✅ Complete |
+| [`@flowrag/provider-anthropic`](./packages/provider-anthropic) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Anthropic provider (extraction only) | ✅ Complete |
 | [`@flowrag/presets`](./packages/presets) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpresets.svg)](https://www.npmjs.com/package/@flowrag/presets) | Opinionated presets | ✅ Complete |
 | `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | ✅ Complete |
 | `@flowrag/mcp` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | MCP server for AI assistants | ✅ Complete |

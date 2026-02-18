@@ -38,8 +38,8 @@ npx @flowrag/mcp --config ./flowrag.config.json
 ## 2. Other Planned Features
 
 - **Streaming indexing**: Progress events during batch indexing
-- **OpenAI provider**: `@flowrag/provider-openai` (GPT embeddings + extraction)
-- **Anthropic provider**: `@flowrag/provider-anthropic` (Claude extraction)
+- ~~**OpenAI provider**~~: `@flowrag/provider-openai` ✅ Complete
+- ~~**Anthropic provider**~~: `@flowrag/provider-anthropic` ✅ Complete
 - **Redis storage**: `@flowrag/storage-redis` (KV + Vector)
 - **Multi-tenancy**: Namespace support for multi-workspace scenarios
 
