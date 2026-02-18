@@ -25,6 +25,7 @@ export default defineConfig({
           { text: 'Indexing', link: '/guide/indexing' },
           { text: 'Querying', link: '/guide/querying' },
           { text: 'Reranker', link: '/guide/reranker' },
+          { text: 'MCP Server', link: '/guide/mcp' },
         ],
       },
       {

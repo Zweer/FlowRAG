@@ -234,6 +234,7 @@ Interactive entity review during indexing with `--interactive`:
 | [`@flowrag/provider-bedrock`](./packages/provider-bedrock) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | AWS Bedrock provider (embeddings + extraction) | ✅ Complete |
 | [`@flowrag/presets`](./packages/presets) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpresets.svg)](https://www.npmjs.com/package/@flowrag/presets) | Opinionated presets | ✅ Complete |
 | `@flowrag/cli` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | Command-line interface | ✅ Complete |
+| `@flowrag/mcp` | ![npm](https://img.shields.io/badge/v0.0.0-gray) | MCP server for AI assistants | ✅ Complete |
 
 ### Development Status
 - **✅ Complete**: Fully implemented with 100% test coverage
