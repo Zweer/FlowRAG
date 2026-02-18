@@ -532,13 +532,13 @@ export const handler = async (event: { query: string }) => {
 - [x] `@flowrag/pipeline`: Indexing pipeline (scanner, chunker, extractor, embedder, storage)
 - [x] `@flowrag/pipeline`: Query pipeline with dual retrieval (vector + graph)
 - [x] `@flowrag/presets`: Opinionated local storage preset
-- [x] 100% test coverage (160 tests)
+- [x] 100% test coverage
 
 ### Phase 4: CLI ✅ **Complete**
 - [x] `@flowrag/cli`: Command-line interface (init, index, search, stats, graph)
 - [x] Human-in-the-loop for local indexing (`--interactive` with @inquirer/prompts)
 - [x] Pipeline hooks (`onEntitiesExtracted` callback)
-- [x] 100% test coverage (210 tests)
+- [x] 100% test coverage
 
 ### Phase 5: Cloud Storage ✅ **Complete**
 - [x] `@flowrag/storage-s3`: S3 adapter
@@ -550,6 +550,16 @@ export const handler = async (event: { query: string }) => {
 - [x] Reranker support
 - [x] Custom fields (documentFields, entityFields, relationFields)
 - [x] Incremental indexing with document status tracking
+
+### Additional Deliverables (not originally planned)
+- [x] `@flowrag/presets`: AWS preset (`createAWSStorage`) with Bedrock + S3 + OpenSearch
+- [x] `@flowrag/core`: Extraction prompt template (`prompt.ts`) for consistent LLM prompting
+- [x] E2E test suite (`test/e2e.e2e.test.ts`) with real pipeline integration
+- [x] Declaration-only tests (`test/declaration-only.test.ts`) to verify public type exports
+- [x] VitePress documentation site (`docs/`) with guide, reference, providers, deployment, and blog sections
+- [x] `llms.txt` and `llms-full.txt` for AI discoverability
+- [x] CI/CD: GitHub Actions with test matrix (Node 20, 22, 24), e2e, lint, auto-release, auto-docs deploy
+- [x] Release management via [bonvoy](https://github.com/Zweer/bonvoy) with independent versioning per package
 
 ## 10. Non-Goals (Out of Scope for v1)
 
@@ -564,7 +574,7 @@ export const handler = async (event: { query: string }) => {
 
 1. **Local use case**: Index 500 docs, query in <100ms, DB <50MB
 2. **Developer experience**: `npm install` + 10 lines of code to get started
-3. **Test coverage**: 100% on all packages (335 tests across 34 files)
+3. **Test coverage**: 100% on all packages
 4. **Documentation**: README + examples for each package
 
 ---

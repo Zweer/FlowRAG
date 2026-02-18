@@ -292,9 +292,25 @@ export const handler = async (event: { query: string }) => {
 npm install        # Install dependencies
 npm run build      # Build all packages
 npm test           # Run all tests
+npm run test:e2e   # Run end-to-end tests
 npm run lint       # Lint code
 npm run typecheck  # Type check
 ```
+
+### Documentation
+
+The docs site is built with [VitePress](https://vitepress.dev/) and includes guides, API reference, provider docs, deployment patterns, and blog posts:
+
+```bash
+npm run docs:dev   # Local dev server
+npm run docs:build # Build for production
+```
+
+AI-friendly `llms.txt` and `llms-full.txt` are auto-generated and served from the docs site.
+
+### Release
+
+Releases are managed by [bonvoy](https://github.com/Zweer/bonvoy) with independent versioning per package. CI runs on every push to `main`: tests (Node 20/22/24), e2e, lint, then auto-release and docs deploy.
 
 ## Comparison
 

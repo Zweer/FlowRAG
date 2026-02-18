@@ -2,7 +2,7 @@
 
 > ~~Custom release tool requirements after evaluating existing solutions (Changesets, Beachball, Release-It, Bumpp).~~
 >
-> **Status**: Superseded. Migrating to [bonvoy](https://github.com/Zweer/bonvoy) as the release tool. The custom `@flowrag/release-tool` approach described below is no longer planned.
+> **Status**: Superseded. Using [bonvoy](https://github.com/Zweer/bonvoy) as the release tool with **independent versioning** (each package versioned separately based on its own changes). The custom `@flowrag/release-tool` approach and synchronized versioning described below are no longer planned.
 
 ## Current Problems with Existing Tools
 
