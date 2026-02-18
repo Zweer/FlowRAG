@@ -32,7 +32,7 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
   return {
     async index(input: string | string[], options?: IndexOptions): Promise<void> {
       const inputs = Array.isArray(input) ? input : [input];
-      await indexingPipeline.process(inputs, options?.force);
+      await indexingPipeline.process(inputs, options?.force, options?.onProgress);
     },
 
     async search(query: string, options = {}) {

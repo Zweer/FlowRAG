@@ -58,6 +58,17 @@ export type QueryMode = 'local' | 'global' | 'hybrid' | 'naive';
 
 export interface IndexOptions {
   force?: boolean;
+  onProgress?: (event: IndexProgress) => void;
+}
+
+export interface IndexProgress {
+  type: 'scan' | 'document:skip' | 'document:start' | 'document:done' | 'chunk:done' | 'done';
+  documentId?: string;
+  chunkId?: string;
+  documentsTotal: number;
+  documentsProcessed: number;
+  chunksTotal: number;
+  chunksProcessed: number;
 }
 
 export interface FlowRAG {

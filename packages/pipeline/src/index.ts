@@ -8,6 +8,7 @@ export type {
   FlowRAGHooks,
   IndexingOptions,
   IndexOptions,
+  IndexProgress,
   QueryMode,
   QueryOptions,
 } from './types.js';

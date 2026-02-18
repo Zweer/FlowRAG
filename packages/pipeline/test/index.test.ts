@@ -6,6 +6,7 @@ import {
   type FlowRAGConfig,
   type IndexingOptions,
   IndexingPipeline,
+  type IndexProgress,
   type QueryMode,
   type QueryOptions,
   QueryPipeline,
@@ -38,11 +39,15 @@ describe('Package exports', () => {
     // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
     const _queryOptions: QueryOptions = {} as any;
 
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const _progress: IndexProgress = {} as any;
+
     // Suppress unused variable warnings
     expect(_flowRAG).toBeDefined();
     expect(_config).toBeDefined();
     expect(_indexingOptions).toBeDefined();
     expect(_queryMode).toBe('hybrid');
     expect(_queryOptions).toBeDefined();
+    expect(_progress).toBeDefined();
   });
 });

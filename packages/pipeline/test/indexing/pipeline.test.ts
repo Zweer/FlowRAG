@@ -376,4 +376,78 @@ describe('IndexingPipeline', () => {
       expect.objectContaining({ fields: { syncType: 'async' } }),
     );
   });
+
+  it('should emit progress events during indexing', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+
+    mockScanner.scanFiles = vi.fn().mockResolvedValue([
+      { id: 'doc:1', content: 'content 1', metadata: { path: '/1.txt' } },
+      { id: 'doc:2', content: 'content 2', metadata: { path: '/2.txt' } },
+    ]);
+    mockChunker.chunkDocument = vi.fn(() => [
+      { id: 'chunk:1', content: 'c', documentId: 'doc:1', startToken: 0, endToken: 5 },
+    ]);
+
+    const events: { type: string; documentId?: string; chunkId?: string }[] = [];
+    const onProgress = vi.fn((e) =>
+      events.push({ type: e.type, documentId: e.documentId, chunkId: e.chunkId }),
+    );
+
+    await pipeline.process(['/1.txt', '/2.txt'], false, onProgress);
+
+    const types = events.map((e) => e.type);
+    expect(types).toEqual([
+      'scan',
+      'document:start',
+      'chunk:done',
+      'document:done',
+      'document:start',
+      'chunk:done',
+      'document:done',
+      'done',
+    ]);
+
+    // Verify scan event has correct totals
+    expect(onProgress.mock.calls[0][0].documentsTotal).toBe(2);
+
+    // Verify done event has final counts
+    const doneEvent = onProgress.mock.calls.at(-1)[0];
+    expect(doneEvent.documentsProcessed).toBe(2);
+    expect(doneEvent.chunksProcessed).toBe(2);
+  });
+
+  it('should emit document:skip for unchanged documents', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+
+    mockScanner.scanFiles = vi
+      .fn()
+      .mockResolvedValue([{ id: 'doc:1', content: 'same', metadata: { path: '/1.txt' } }]);
+    mockChunker.chunkDocument = vi.fn(() => []);
+
+    // First pass: index
+    mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+    await pipeline.process(['/1.txt']);
+
+    // Get stored hash
+    const setCalls = vi.mocked(mockConfig.storage.kv.set).mock.calls;
+    const storedHash = setCalls.find(([key]) => (key as string).startsWith('docHash:'))?.[1];
+
+    // Second pass: skip
+    mockConfig.storage.kv.get = vi
+      .fn()
+      .mockImplementation((key: string) =>
+        key.startsWith('docHash:') ? Promise.resolve(storedHash) : Promise.resolve(null),
+      );
+
+    const events: string[] = [];
+    await pipeline.process(['/1.txt'], false, (e) => events.push(e.type));
+
+    expect(events).toEqual(['scan', 'document:skip', 'done']);
+  });
 });
