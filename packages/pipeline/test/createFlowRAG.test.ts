@@ -370,6 +370,77 @@ describe('createFlowRAG', () => {
     expect(results[0].content).toBe('TestEntity implementation');
   });
 
+  describe('export', () => {
+    beforeEach(() => {
+      mockStorage.graph.getEntities.mockResolvedValue([
+        {
+          id: 'svc',
+          name: 'AuthService',
+          type: 'SERVICE',
+          description: 'Auth',
+          sourceChunkIds: [],
+        },
+        { id: 'db', name: 'PostgreSQL', type: 'DATABASE', description: 'DB', sourceChunkIds: [] },
+      ]);
+      mockStorage.graph.getRelations.mockImplementation((id: string) => {
+        if (id === 'svc')
+          return Promise.resolve([
+            {
+              id: 'r1',
+              sourceId: 'svc',
+              targetId: 'db',
+              type: 'USES',
+              description: 'stores data',
+              keywords: [],
+              sourceChunkIds: [],
+            },
+          ]);
+        return Promise.resolve([]);
+      });
+    });
+
+    it('should export as JSON', async () => {
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      const result = JSON.parse(await rag.export('json'));
+      expect(result.entities).toHaveLength(2);
+      expect(result.relations).toHaveLength(1);
+      expect(result.relations[0].type).toBe('USES');
+    });
+
+    it('should export as CSV', async () => {
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      const result = await rag.export('csv');
+      const lines = result.split('\n');
+      expect(lines[0]).toBe('source,type,target,description');
+      expect(lines[1]).toContain('USES');
+      expect(lines).toHaveLength(2);
+    });
+
+    it('should export as DOT', async () => {
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      const result = await rag.export('dot');
+      expect(result).toContain('digraph FlowRAG');
+      expect(result).toContain('AuthService');
+      expect(result).toContain('-> "PostgreSQL"');
+      expect(result).toContain('[label="USES"]');
+    });
+  });
+
   it('should handle stats with relations count', async () => {
     const rag = createFlowRAG({
       schema,

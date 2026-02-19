@@ -1,6 +1,7 @@
 import { IndexingPipeline } from './indexing/pipeline.js';
 import { QueryPipeline } from './querying/pipeline.js';
 import type {
+  ExportFormat,
   FlowRAG,
   FlowRAGConfig,
   IndexingOptions,
@@ -52,6 +53,47 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
 
     async findPath(fromId: string, toId: string, maxDepth = 5) {
       return config.storage.graph.findPath(fromId, toId, maxDepth);
+    },
+
+    async export(format: ExportFormat): Promise<string> {
+      const entities = await config.storage.graph.getEntities();
+      const allRelations = [];
+      for (const entity of entities) {
+        const rels = await config.storage.graph.getRelations(entity.id, 'out');
+        allRelations.push(...rels);
+      }
+
+      switch (format) {
+        case 'json':
+          return JSON.stringify({ entities, relations: allRelations }, null, 2);
+
+        case 'csv': {
+          const header = 'source,type,target,description';
+          const rows = allRelations.map(
+            (r) =>
+              `"${r.sourceId}","${r.type}","${r.targetId}","${r.description.replace(/"/g, '""')}"`,
+          );
+          return [header, ...rows].join('\n');
+        }
+
+        case 'dot': {
+          const lines = ['digraph FlowRAG {', '  rankdir=LR;'];
+          for (const e of entities) {
+            lines.push(`  "${e.name}" [label="${e.name}\\n(${e.type})"];`);
+          }
+          for (const r of allRelations) {
+            const target = entities.find((e) => e.id === r.targetId);
+            if (target) {
+              const source = entities.find((e) => e.id === r.sourceId);
+              if (source) {
+                lines.push(`  "${source.name}" -> "${target.name}" [label="${r.type}"];`);
+              }
+            }
+          }
+          lines.push('}');
+          return lines.join('\n');
+        }
+      }
     },
 
     async stats() {

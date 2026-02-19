@@ -147,6 +147,7 @@ describe('Types', () => {
       search: async () => [],
       traceDataFlow: async () => [],
       findPath: async () => [],
+      export: async () => '',
       stats: async () => ({
         documents: 0,
         chunks: 0,
