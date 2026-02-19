@@ -7,13 +7,14 @@ import { Chunker } from './chunker.js';
 import { Scanner } from './scanner.js';
 
 export class IndexingPipeline {
-  private scanner = new Scanner();
+  private scanner: Scanner;
   private chunker: Chunker;
 
   constructor(
     private config: FlowRAGConfig,
     private options: Required<IndexingOptions>,
   ) {
+    this.scanner = new Scanner(config.parsers);
     this.chunker = new Chunker(options.chunkSize, options.chunkOverlap);
   }
 

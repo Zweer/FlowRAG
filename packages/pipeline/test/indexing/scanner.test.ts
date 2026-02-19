@@ -1,6 +1,7 @@
 import type { Stats } from 'node:fs';
 import { readdir, readFile, stat } from 'node:fs/promises';
 
+import type { DocumentParser } from '@flowrag/core';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { Scanner } from '../../src/indexing/scanner.js';
@@ -131,5 +132,51 @@ describe('Scanner', () => {
     const documents = await scanner.scanFiles([]);
 
     expect(documents).toHaveLength(0);
+  });
+
+  describe('with parsers', () => {
+    let mockParser: DocumentParser;
+
+    beforeEach(() => {
+      mockParser = {
+        supportedExtensions: ['.pdf'],
+        parse: vi.fn(() =>
+          Promise.resolve({ content: 'parsed PDF content', metadata: { pages: 3 } }),
+        ),
+      };
+      scanner = new Scanner([mockParser]);
+    });
+
+    it('should use parser for matching extensions', async () => {
+      mockStat.mockResolvedValue(fileStat());
+
+      const documents = await scanner.scanFiles(['/test/doc.pdf']);
+
+      expect(mockParser.parse).toHaveBeenCalledWith('/test/doc.pdf');
+      expect(documents).toHaveLength(1);
+      expect(documents[0].content).toBe('parsed PDF content');
+      expect(documents[0].metadata?.pages).toBe(3);
+    });
+
+    it('should include parser files in directory scan', async () => {
+      mockStat.mockResolvedValue(dirStat());
+      mockReaddir.mockResolvedValue([dirent('readme.md', false), dirent('manual.pdf', false)]);
+      mockReadFile.mockResolvedValue('md content');
+
+      const documents = await scanner.scanFiles(['/docs']);
+
+      expect(documents).toHaveLength(2);
+      expect(mockParser.parse).toHaveBeenCalledWith('/docs/manual.pdf');
+    });
+
+    it('should still use readFile for text files', async () => {
+      mockStat.mockResolvedValue(fileStat());
+      mockReadFile.mockResolvedValue('text content');
+
+      const documents = await scanner.scanFiles(['/test/file.txt']);
+
+      expect(mockParser.parse).not.toHaveBeenCalled();
+      expect(documents[0].content).toBe('text content');
+    });
   });
 });

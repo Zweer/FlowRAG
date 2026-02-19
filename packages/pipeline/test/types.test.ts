@@ -133,6 +133,9 @@ describe('Types', () => {
       extractor: {
         extractEntities: async () => ({ entities: [], relations: [] }),
       },
+      parsers: [
+        { supportedExtensions: ['.pdf'], parse: async () => ({ content: '', metadata: {} }) },
+      ],
     };
 
     expect(config.schema.entityTypes).toContain('SERVICE');

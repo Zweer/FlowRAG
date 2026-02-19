@@ -1,4 +1,5 @@
 import type {
+  DocumentParser,
   Embedder,
   ExtractionResult,
   GraphStorage,
@@ -33,6 +34,7 @@ export interface FlowRAGConfig {
   embedder: Embedder;
   extractor: LLMExtractor;
   reranker?: Reranker;
+  parsers?: DocumentParser[];
   hooks?: FlowRAGHooks;
   observability?: ObservabilityHooks;
   options?: {
