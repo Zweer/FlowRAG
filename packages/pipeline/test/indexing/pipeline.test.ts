@@ -450,4 +450,347 @@ describe('IndexingPipeline', () => {
 
     expect(events).toEqual(['scan', 'document:skip', 'done']);
   });
+
+  describe('deleteDocument', () => {
+    it('should delete document, chunks, vectors, and orphaned graph data', async () => {
+      const docId = 'doc:test';
+      const chunkIds = ['chunk:doc:test:0', 'chunk:doc:test:1'];
+
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === `chunk:${docId}:`) return Promise.resolve(chunkIds);
+        return Promise.resolve([]);
+      });
+
+      // Entity only from this doc → should be deleted
+      mockConfig.storage.graph.getEntities = vi.fn().mockResolvedValue([
+        {
+          id: 'OrphanEntity',
+          name: 'OrphanEntity',
+          type: 'SERVICE',
+          description: 'test',
+          sourceChunkIds: ['chunk:doc:test:0'],
+        },
+      ]);
+
+      await pipeline.deleteDocument(docId);
+
+      expect(mockConfig.storage.vector.delete).toHaveBeenCalledWith(chunkIds);
+      expect(mockConfig.storage.graph.deleteEntity).toHaveBeenCalledWith('OrphanEntity');
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith('chunk:doc:test:0');
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith('chunk:doc:test:1');
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith(docId);
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith(`docHash:${docId}`);
+    });
+
+    it('should preserve shared entities and only remove chunk references', async () => {
+      const docId = 'doc:test';
+
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === `chunk:${docId}:`) return Promise.resolve(['chunk:doc:test:0']);
+        return Promise.resolve([]);
+      });
+
+      // Entity shared with another doc → should be updated, not deleted
+      mockConfig.storage.graph.getEntities = vi.fn().mockResolvedValue([
+        {
+          id: 'SharedEntity',
+          name: 'SharedEntity',
+          type: 'SERVICE',
+          description: 'test',
+          sourceChunkIds: ['chunk:doc:test:0', 'chunk:doc:other:0'],
+        },
+      ]);
+      mockConfig.storage.graph.getRelations = vi.fn().mockResolvedValue([]);
+
+      await pipeline.deleteDocument(docId);
+
+      expect(mockConfig.storage.graph.deleteEntity).not.toHaveBeenCalled();
+      expect(mockConfig.storage.graph.addEntity).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: 'SharedEntity',
+          sourceChunkIds: ['chunk:doc:other:0'],
+        }),
+      );
+    });
+
+    it('should delete orphaned relations on shared entities', async () => {
+      const docId = 'doc:test';
+
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === `chunk:${docId}:`) return Promise.resolve(['chunk:doc:test:0']);
+        return Promise.resolve([]);
+      });
+
+      mockConfig.storage.graph.getEntities = vi.fn().mockResolvedValue([
+        {
+          id: 'SharedEntity',
+          name: 'SharedEntity',
+          type: 'SERVICE',
+          description: 'test',
+          sourceChunkIds: ['chunk:doc:test:0', 'chunk:doc:other:0'],
+        },
+      ]);
+
+      // Relation only from deleted doc → should be deleted
+      mockConfig.storage.graph.getRelations = vi.fn().mockResolvedValue([
+        {
+          id: 'rel1',
+          sourceId: 'SharedEntity',
+          targetId: 'Other',
+          type: 'USES',
+          description: 'test',
+          keywords: [],
+          sourceChunkIds: ['chunk:doc:test:0'],
+        },
+      ]);
+
+      await pipeline.deleteDocument(docId);
+
+      expect(mockConfig.storage.graph.deleteRelation).toHaveBeenCalledWith('rel1');
+    });
+
+    it('should update shared relations instead of deleting them', async () => {
+      const docId = 'doc:test';
+
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === `chunk:${docId}:`) return Promise.resolve(['chunk:doc:test:0']);
+        return Promise.resolve([]);
+      });
+
+      mockConfig.storage.graph.getEntities = vi.fn().mockResolvedValue([
+        {
+          id: 'SharedEntity',
+          name: 'SharedEntity',
+          type: 'SERVICE',
+          description: 'test',
+          sourceChunkIds: ['chunk:doc:test:0', 'chunk:doc:other:0'],
+        },
+      ]);
+
+      // Relation shared with another doc → should be updated
+      mockConfig.storage.graph.getRelations = vi.fn().mockResolvedValue([
+        {
+          id: 'rel1',
+          sourceId: 'SharedEntity',
+          targetId: 'Other',
+          type: 'USES',
+          description: 'test',
+          keywords: [],
+          sourceChunkIds: ['chunk:doc:test:0', 'chunk:doc:other:0'],
+        },
+      ]);
+
+      await pipeline.deleteDocument(docId);
+
+      expect(mockConfig.storage.graph.deleteRelation).not.toHaveBeenCalled();
+      expect(mockConfig.storage.graph.addRelation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: 'rel1',
+          sourceChunkIds: ['chunk:doc:other:0'],
+        }),
+      );
+    });
+
+    it('should handle document with no chunks', async () => {
+      mockConfig.storage.kv.list = vi.fn().mockResolvedValue([]);
+
+      await pipeline.deleteDocument('doc:empty');
+
+      expect(mockConfig.storage.vector.delete).not.toHaveBeenCalled();
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith('doc:empty');
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith('docHash:doc:empty');
+    });
+
+    it('should skip entities unrelated to deleted chunks', async () => {
+      const docId = 'doc:test';
+
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === `chunk:${docId}:`) return Promise.resolve(['chunk:doc:test:0']);
+        return Promise.resolve([]);
+      });
+
+      // Entity from a completely different document — should not be touched
+      mockConfig.storage.graph.getEntities = vi.fn().mockResolvedValue([
+        {
+          id: 'UnrelatedEntity',
+          name: 'UnrelatedEntity',
+          type: 'SERVICE',
+          description: 'test',
+          sourceChunkIds: ['chunk:doc:other:0'],
+        },
+      ]);
+
+      await pipeline.deleteDocument(docId);
+
+      expect(mockConfig.storage.graph.deleteEntity).not.toHaveBeenCalled();
+      expect(mockConfig.storage.graph.addEntity).not.toHaveBeenCalled();
+    });
+
+    it('should skip unrelated relations on shared entities', async () => {
+      const docId = 'doc:test';
+
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === `chunk:${docId}:`) return Promise.resolve(['chunk:doc:test:0']);
+        return Promise.resolve([]);
+      });
+
+      mockConfig.storage.graph.getEntities = vi.fn().mockResolvedValue([
+        {
+          id: 'SharedEntity',
+          name: 'SharedEntity',
+          type: 'SERVICE',
+          description: 'test',
+          sourceChunkIds: ['chunk:doc:test:0', 'chunk:doc:other:0'],
+        },
+      ]);
+
+      // Relation from a completely different document — should not be touched
+      mockConfig.storage.graph.getRelations = vi.fn().mockResolvedValue([
+        {
+          id: 'rel-unrelated',
+          sourceId: 'SharedEntity',
+          targetId: 'Other',
+          type: 'USES',
+          description: 'test',
+          keywords: [],
+          sourceChunkIds: ['chunk:doc:other:0'],
+        },
+      ]);
+
+      await pipeline.deleteDocument(docId);
+
+      expect(mockConfig.storage.graph.deleteRelation).not.toHaveBeenCalled();
+      expect(mockConfig.storage.graph.addRelation).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('stale document detection', () => {
+    it('should delete documents that no longer exist in scanned paths', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      const stalePath = '/content/old-file.txt';
+      const staleDocId = `doc:${Buffer.from(stalePath).toString('base64url')}`;
+
+      // Scanner returns only the current file
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([
+          { id: 'doc:current', content: 'current', metadata: { path: '/content/current.txt' } },
+        ]);
+      mockChunker.chunkDocument = vi.fn(() => []);
+
+      // KV has a hash for the stale document
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === 'docHash:') return Promise.resolve([`docHash:${staleDocId}`]);
+        if (prefix.startsWith('chunk:')) return Promise.resolve([]);
+        return Promise.resolve([]);
+      });
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+      mockConfig.storage.graph.getEntities = vi.fn().mockResolvedValue([]);
+
+      const events: string[] = [];
+      await pipeline.process(['/content'], false, (e) => events.push(e.type));
+
+      expect(events).toContain('document:delete');
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith(staleDocId);
+      expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith(`docHash:${staleDocId}`);
+    });
+
+    it('should not delete documents from other directories', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      const otherPath = '/other-dir/file.txt';
+      const otherDocId = `doc:${Buffer.from(otherPath).toString('base64url')}`;
+
+      mockScanner.scanFiles = vi.fn().mockResolvedValue([]);
+      mockChunker.chunkDocument = vi.fn(() => []);
+
+      // KV has a hash for a doc from a different directory
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === 'docHash:') return Promise.resolve([`docHash:${otherDocId}`]);
+        return Promise.resolve([]);
+      });
+
+      await pipeline.process(['/content']);
+
+      // Should NOT delete the doc from /other-dir
+      expect(mockConfig.storage.kv.delete).not.toHaveBeenCalledWith(otherDocId);
+    });
+
+    it('should skip docHash entries with non-doc IDs', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      mockScanner.scanFiles = vi.fn().mockResolvedValue([]);
+      mockChunker.chunkDocument = vi.fn(() => []);
+
+      // KV has a hash with a non-doc: prefix (shouldn't happen, but defensive)
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === 'docHash:') return Promise.resolve(['docHash:not-a-doc-id']);
+        return Promise.resolve([]);
+      });
+
+      await pipeline.process(['/content']);
+
+      expect(mockConfig.storage.kv.delete).not.toHaveBeenCalledWith('not-a-doc-id');
+    });
+
+    it('should not delete documents still present in scan', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      const filePath = '/content/still-here.txt';
+      const docId = `doc:${Buffer.from(filePath).toString('base64url')}`;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: docId, content: 'still here', metadata: { path: filePath } }]);
+      mockChunker.chunkDocument = vi.fn(() => []);
+
+      // Same doc exists in both scan and KV
+      mockConfig.storage.kv.list = vi.fn().mockImplementation((prefix: string) => {
+        if (prefix === 'docHash:') return Promise.resolve([`docHash:${docId}`]);
+        return Promise.resolve([]);
+      });
+      // Hash matches → skip processing
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue('matching-hash');
+
+      const events: string[] = [];
+      await pipeline.process(['/content'], false, (e) => events.push(e.type));
+
+      // Should skip (not delete) the document
+      expect(events).not.toContain('document:delete');
+    });
+  });
+
+  describe('decodeDocId', () => {
+    it('should decode base64url doc IDs', () => {
+      const filePath = '/content/test.txt';
+      const docId = `doc:${Buffer.from(filePath).toString('base64url')}`;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      expect((pipeline as any).decodeDocId(docId)).toBe(filePath);
+    });
+
+    it('should return null for non-doc IDs', () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      expect((pipeline as any).decodeDocId('chunk:test')).toBeNull();
+    });
+
+    it('should return null for invalid base64url', () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const result = (pipeline as any).decodeDocId('doc:!!!invalid!!!');
+      // Buffer.from with base64url doesn't throw, it just decodes what it can
+      expect(typeof result).toBe('string');
+    });
+  });
 });

@@ -35,7 +35,10 @@ export class IndexingPipeline {
     progress.documentsTotal = documents.length;
     onProgress?.(progress);
 
-    // 2. Process documents with concurrency control
+    // 2. Delete stale documents (files that no longer exist in scanned paths)
+    await this.deleteStaleDocuments(documents, inputs, progress, onProgress);
+
+    // 3. Process documents with concurrency control
     const batches = this.createBatches(documents, this.options.maxParallelInsert);
 
     for (const batch of batches) {
@@ -167,6 +170,80 @@ export class IndexingPipeline {
   private async getKnownEntities(): Promise<string[]> {
     const entities = await this.config.storage.graph.getEntities();
     return entities.map((e) => e.name);
+  }
+
+  private async deleteStaleDocuments(
+    scannedDocs: Document[],
+    inputs: string[],
+    progress: IndexProgress,
+    onProgress?: (event: IndexProgress) => void,
+  ): Promise<void> {
+    const scannedIds = new Set(scannedDocs.map((d) => d.id));
+    const existingHashKeys = await this.config.storage.kv.list('docHash:');
+
+    for (const hashKey of existingHashKeys) {
+      const docId = hashKey.slice('docHash:'.length);
+      if (scannedIds.has(docId)) continue;
+
+      // Only delete if the document's file path is under one of the input paths
+      const filePath = this.decodeDocId(docId);
+      if (!filePath) continue;
+      if (!inputs.some((input) => filePath.startsWith(input))) continue;
+
+      await this.deleteDocument(docId);
+      onProgress?.({ ...progress, type: 'document:delete', documentId: docId });
+    }
+  }
+
+  async deleteDocument(docId: string): Promise<void> {
+    // 1. Find all chunks for this document
+    const chunkKeys = await this.config.storage.kv.list(`chunk:${docId}:`);
+
+    if (chunkKeys.length > 0) {
+      const chunkIdSet = new Set(chunkKeys);
+
+      // 2. Delete vectors
+      await this.config.storage.vector.delete(chunkKeys);
+
+      // 3. Clean up graph — delete entities/relations that only came from this document
+      const allEntities = await this.config.storage.graph.getEntities();
+
+      for (const entity of allEntities) {
+        const remaining = entity.sourceChunkIds.filter((id) => !chunkIdSet.has(id));
+        if (remaining.length === 0) {
+          // Entity only existed because of this document — deleteEntity cascades relations
+          await this.config.storage.graph.deleteEntity(entity.id);
+        } else if (remaining.length < entity.sourceChunkIds.length) {
+          // Entity is shared — update sourceChunkIds
+          await this.config.storage.graph.addEntity({ ...entity, sourceChunkIds: remaining });
+
+          // Check this entity's relations too
+          const relations = await this.config.storage.graph.getRelations(entity.id, 'both');
+          for (const rel of relations) {
+            const relRemaining = rel.sourceChunkIds.filter((id) => !chunkIdSet.has(id));
+            if (relRemaining.length === 0) {
+              await this.config.storage.graph.deleteRelation(rel.id);
+            } else if (relRemaining.length < rel.sourceChunkIds.length) {
+              await this.config.storage.graph.addRelation({ ...rel, sourceChunkIds: relRemaining });
+            }
+          }
+        }
+      }
+
+      // 4. Delete chunks from KV
+      await Promise.all(chunkKeys.map((key) => this.config.storage.kv.delete(key)));
+    }
+
+    // 5. Delete document and hash
+    await Promise.all([
+      this.config.storage.kv.delete(docId),
+      this.config.storage.kv.delete(`docHash:${docId}`),
+    ]);
+  }
+
+  private decodeDocId(docId: string): string | null {
+    if (!docId.startsWith('doc:')) return null;
+    return Buffer.from(docId.slice('doc:'.length), 'base64url').toString();
   }
 
   private hashDocument(content: string): string {

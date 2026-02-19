@@ -59,6 +59,7 @@ const relations: Relation[] = [
 function createMockRag(): FlowRAG {
   return {
     index: vi.fn(),
+    deleteDocument: vi.fn(),
     search: vi
       .fn()
       .mockResolvedValue([

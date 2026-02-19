@@ -62,7 +62,14 @@ export interface IndexOptions {
 }
 
 export interface IndexProgress {
-  type: 'scan' | 'document:skip' | 'document:start' | 'document:done' | 'chunk:done' | 'done';
+  type:
+    | 'scan'
+    | 'document:skip'
+    | 'document:start'
+    | 'document:done'
+    | 'document:delete'
+    | 'chunk:done'
+    | 'done';
   documentId?: string;
   chunkId?: string;
   documentsTotal: number;
@@ -73,6 +80,7 @@ export interface IndexProgress {
 
 export interface FlowRAG {
   index(input: string | string[], options?: IndexOptions): Promise<void>;
+  deleteDocument(documentId: string): Promise<void>;
   search(query: string, options?: { mode?: QueryMode; limit?: number }): Promise<SearchResult[]>;
   traceDataFlow(entityId: string, direction: 'upstream' | 'downstream'): Promise<Entity[]>;
   findPath(fromId: string, toId: string, maxDepth?: number): Promise<Relation[]>;

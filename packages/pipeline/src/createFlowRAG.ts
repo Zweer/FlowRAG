@@ -35,6 +35,10 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
       await indexingPipeline.process(inputs, options?.force, options?.onProgress);
     },
 
+    async deleteDocument(documentId: string): Promise<void> {
+      await indexingPipeline.deleteDocument(documentId);
+    },
+
     async search(query: string, options = {}) {
       const mode = options.mode ?? queryOptions.defaultMode;
       const limit = options.limit ?? queryOptions.maxResults;

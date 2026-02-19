@@ -142,6 +142,7 @@ describe('Types', () => {
     // This is more of a compile-time check, but we can verify the interface exists
     const mockFlowRAG: FlowRAG = {
       index: async () => {},
+      deleteDocument: async () => {},
       search: async () => [],
       traceDataFlow: async () => [],
       findPath: async () => [],

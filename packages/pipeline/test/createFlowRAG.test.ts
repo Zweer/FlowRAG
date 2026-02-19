@@ -39,11 +39,13 @@ describe('createFlowRAG', () => {
       kv: {
         get: vi.fn(),
         set: vi.fn(),
+        delete: vi.fn(),
         list: vi.fn(() => Promise.resolve([])),
       },
       vector: {
         upsert: vi.fn(),
         search: vi.fn(() => Promise.resolve([])),
+        delete: vi.fn(),
         count: vi.fn(() => Promise.resolve(0)),
       },
       graph: {
@@ -54,6 +56,8 @@ describe('createFlowRAG', () => {
         getRelations: vi.fn(() => Promise.resolve([])),
         traverse: vi.fn(() => Promise.resolve([])),
         findPath: vi.fn(() => Promise.resolve([])),
+        deleteEntity: vi.fn(),
+        deleteRelation: vi.fn(),
       },
     };
 
@@ -295,6 +299,23 @@ describe('createFlowRAG', () => {
     await rag.findPath('entity1', 'entity2', 10);
 
     expect(mockStorage.graph.findPath).toHaveBeenCalledWith('entity1', 'entity2', 10);
+  });
+
+  it('should expose deleteDocument', async () => {
+    const rag = createFlowRAG({
+      schema,
+      storage: mockStorage,
+      embedder: mockEmbedder,
+      extractor: mockExtractor,
+    });
+
+    mockStorage.kv.list = vi.fn().mockResolvedValue([]);
+    mockStorage.graph.getEntities = vi.fn().mockResolvedValue([]);
+
+    await rag.deleteDocument('doc:test');
+
+    expect(mockStorage.kv.delete).toHaveBeenCalledWith('doc:test');
+    expect(mockStorage.kv.delete).toHaveBeenCalledWith('docHash:doc:test');
   });
 
   it('should use custom indexing options', () => {
