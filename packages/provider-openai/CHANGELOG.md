@@ -1,6 +1,14 @@
 # Changelog
 
 
+
+## [0.1.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add observability hooks with token usage tracking
+- feat(provider-openai): :sparkles: add baseURL support for OpenAI-compatible endpoints
+
 ## [0.0.0] - 2026-02-18
 
 ### ✨ Features

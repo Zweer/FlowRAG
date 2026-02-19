@@ -34,6 +34,40 @@
 
 
 
+
+
+## [1.5.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat(pipeline): :sparkles: add entity merging for duplicate cleanup
+- feat: :sparkles: add DocumentParser interface for pluggable file parsing
+- feat(pipeline): :sparkles: add knowledge graph export (JSON, CSV, DOT)
+- feat: :sparkles: add observability hooks with token usage tracking
+- feat(pipeline): :sparkles: add citation / source attribution to search results
+- feat(pipeline): :sparkles: add document deletion and stale document cleanup
+
+### ### test
+
+- test(pipeline): :white_check_mark: reaching 100% coverage
+
+## [1.5.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat(pipeline): :sparkles: add entity merging for duplicate cleanup
+- feat: :sparkles: add DocumentParser interface for pluggable file parsing
+- feat(pipeline): :sparkles: add knowledge graph export (JSON, CSV, DOT)
+- feat: :sparkles: add observability hooks with token usage tracking
+- feat(pipeline): :sparkles: add citation / source attribution to search results
+- feat(pipeline): :sparkles: add document deletion and stale document cleanup
+
+### ### test
+
+- test(pipeline): :white_check_mark: reaching 100% coverage
+
 ## [1.4.0] - 2026-02-18
 
 ### ✨ Features

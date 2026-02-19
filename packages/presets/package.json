@@ -32,7 +32,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.5.0",
+    "@flowrag/core": "^1.6.0",
     "@flowrag/provider-bedrock": "^0.3.0",
     "@flowrag/provider-gemini": "^1.4.0",
     "@flowrag/provider-local": "^1.4.0",

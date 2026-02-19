@@ -39,6 +39,42 @@
 
 
 
+
+
+
+
+## [1.5.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat: :sparkles: add DocumentParser interface for pluggable file parsing
+- feat: :sparkles: add observability hooks with token usage tracking
+
+## [1.5.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat: :sparkles: add DocumentParser interface for pluggable file parsing
+- feat: :sparkles: add observability hooks with token usage tracking
+
+## [1.5.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat: :sparkles: add DocumentParser interface for pluggable file parsing
+- feat: :sparkles: add observability hooks with token usage tracking
+
+## [1.5.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat: :sparkles: add DocumentParser interface for pluggable file parsing
+- feat: :sparkles: add observability hooks with token usage tracking
+
 ## [1.4.0] - 2026-02-18
 
 ### ✨ Features

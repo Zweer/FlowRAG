@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/pipeline",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Core pipeline for FlowRAG - indexing and querying with dual retrieval (vector + graph)",
   "keywords": [
     "rag",
@@ -35,7 +35,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.5.0",
+    "@flowrag/core": "^1.6.0",
     "tiktoken": "^1.0.22"
   },
   "devDependencies": {

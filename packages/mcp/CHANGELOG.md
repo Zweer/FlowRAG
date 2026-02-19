@@ -4,6 +4,36 @@
 
 
 
+
+
+
+## [0.1.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat(pipeline): :sparkles: add entity merging for duplicate cleanup
+- feat(pipeline): :sparkles: add knowledge graph export (JSON, CSV, DOT)
+- feat(pipeline): :sparkles: add document deletion and stale document cleanup
+
+## [0.1.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat(pipeline): :sparkles: add entity merging for duplicate cleanup
+- feat(pipeline): :sparkles: add knowledge graph export (JSON, CSV, DOT)
+- feat(pipeline): :sparkles: add document deletion and stale document cleanup
+
+## [0.1.0] - 2026-02-19
+
+### ✨ Features
+
+- feat: :sparkles: add Evaluator interface for RAG quality metrics
+- feat(pipeline): :sparkles: add entity merging for duplicate cleanup
+- feat(pipeline): :sparkles: add knowledge graph export (JSON, CSV, DOT)
+- feat(pipeline): :sparkles: add document deletion and stale document cleanup
+
 ## [0.0.0] - 2026-02-18
 
 ### ✨ Features
