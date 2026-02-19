@@ -43,6 +43,12 @@ npm run build
 export OPENAI_API_KEY=your-key
 ```
 
+### Dependencies (for standalone use)
+
+```bash
+npm install @flowrag/pipeline @flowrag/presets @flowrag/provider-openai openai
+```
+
 ## Usage
 
 ### Step 1: Index the documentation
