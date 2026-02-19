@@ -1,3 +1,5 @@
+import type { Entity, Relation } from '@flowrag/core';
+
 import { IndexingPipeline } from './indexing/pipeline.js';
 import { QueryPipeline } from './querying/pipeline.js';
 import type {
@@ -6,6 +8,7 @@ import type {
   FlowRAGConfig,
   IndexingOptions,
   IndexOptions,
+  MergeEntitiesOptions,
   QueryOptions,
 } from './types.js';
 
@@ -39,6 +42,55 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
 
     async deleteDocument(documentId: string): Promise<void> {
       await indexingPipeline.deleteDocument(documentId);
+    },
+
+    async mergeEntities({ sources, target }: MergeEntitiesOptions): Promise<void> {
+      const graph = config.storage.graph;
+
+      // Find source entities
+      const allEntities = await graph.getEntities();
+      const sourceEntities = allEntities.filter((e) => sources.includes(e.name));
+      if (sourceEntities.length === 0) return;
+
+      // Collect all relations from source entities
+      const allRelations: Relation[] = [];
+      for (const entity of sourceEntities) {
+        const rels = await graph.getRelations(entity.id, 'both');
+        allRelations.push(...rels);
+      }
+
+      // Build merged entity
+      const sourceIds = new Set(sourceEntities.map((e) => e.id));
+      const targetEntity = sourceEntities.find((e) => e.name === target) ?? sourceEntities[0];
+      const merged: Entity = {
+        id: target,
+        name: target,
+        type: targetEntity.type,
+        description: sourceEntities.reduce((a, b) =>
+          a.description.length >= b.description.length ? a : b,
+        ).description,
+        sourceChunkIds: [...new Set(sourceEntities.flatMap((e) => e.sourceChunkIds))],
+      };
+
+      // Delete all source entities (cascades their relations)
+      for (const entity of sourceEntities) {
+        await graph.deleteEntity(entity.id);
+      }
+
+      // Add merged entity
+      await graph.addEntity(merged);
+
+      // Re-add redirected relations (deduplicated)
+      const seen = new Set<string>();
+      for (const rel of allRelations) {
+        const sourceId = sourceIds.has(rel.sourceId) ? target : rel.sourceId;
+        const targetId = sourceIds.has(rel.targetId) ? target : rel.targetId;
+        if (sourceId === targetId) continue; // skip self-relations
+        const key = `${sourceId}-${rel.type}-${targetId}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        await graph.addRelation({ ...rel, id: key, sourceId, targetId });
+      }
     },
 
     async search(query: string, options = {}) {

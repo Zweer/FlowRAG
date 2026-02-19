@@ -147,6 +147,7 @@ describe('Types', () => {
     const mockFlowRAG: FlowRAG = {
       index: async () => {},
       deleteDocument: async () => {},
+      mergeEntities: async () => {},
       search: async () => [],
       traceDataFlow: async () => [],
       findPath: async () => [],

@@ -370,6 +370,185 @@ describe('createFlowRAG', () => {
     expect(results[0].content).toBe('TestEntity implementation');
   });
 
+  describe('mergeEntities', () => {
+    it('should merge entities and redirect relations', async () => {
+      mockStorage.graph.getEntities.mockResolvedValue([
+        {
+          id: 'Auth Service',
+          name: 'Auth Service',
+          type: 'SERVICE',
+          description: 'Auth',
+          sourceChunkIds: ['c1'],
+        },
+        {
+          id: 'AuthService',
+          name: 'AuthService',
+          type: 'SERVICE',
+          description: 'Handles auth and tokens',
+          sourceChunkIds: ['c2'],
+        },
+        { id: 'DB', name: 'DB', type: 'DATABASE', description: 'Database', sourceChunkIds: [] },
+      ]);
+      mockStorage.graph.getRelations.mockImplementation((id: string) => {
+        if (id === 'Auth Service')
+          return Promise.resolve([
+            {
+              id: 'r1',
+              sourceId: 'Auth Service',
+              targetId: 'DB',
+              type: 'USES',
+              description: 'stores',
+              keywords: [],
+              sourceChunkIds: ['c1'],
+            },
+          ]);
+        if (id === 'AuthService')
+          return Promise.resolve([
+            {
+              id: 'r2',
+              sourceId: 'AuthService',
+              targetId: 'DB',
+              type: 'USES',
+              description: 'stores',
+              keywords: [],
+              sourceChunkIds: ['c2'],
+            },
+          ]);
+        return Promise.resolve([]);
+      });
+
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      await rag.mergeEntities({ sources: ['Auth Service', 'AuthService'], target: 'Auth Service' });
+
+      // Deletes both source entities
+      expect(mockStorage.graph.deleteEntity).toHaveBeenCalledWith('Auth Service');
+      expect(mockStorage.graph.deleteEntity).toHaveBeenCalledWith('AuthService');
+
+      // Adds merged entity with combined sourceChunkIds and longest description
+      expect(mockStorage.graph.addEntity).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: 'Auth Service',
+          name: 'Auth Service',
+          description: 'Handles auth and tokens',
+          sourceChunkIds: expect.arrayContaining(['c1', 'c2']),
+        }),
+      );
+
+      // Re-adds deduplicated relation
+      expect(mockStorage.graph.addRelation).toHaveBeenCalledTimes(1);
+      expect(mockStorage.graph.addRelation).toHaveBeenCalledWith(
+        expect.objectContaining({ sourceId: 'Auth Service', targetId: 'DB', type: 'USES' }),
+      );
+    });
+
+    it('should skip self-relations after merge', async () => {
+      mockStorage.graph.getEntities.mockResolvedValue([
+        { id: 'A', name: 'A', type: 'SERVICE', description: 'a', sourceChunkIds: [] },
+        { id: 'B', name: 'B', type: 'SERVICE', description: 'b', sourceChunkIds: [] },
+      ]);
+      mockStorage.graph.getRelations.mockImplementation((id: string) => {
+        if (id === 'A')
+          return Promise.resolve([
+            {
+              id: 'r1',
+              sourceId: 'A',
+              targetId: 'B',
+              type: 'USES',
+              description: '',
+              keywords: [],
+              sourceChunkIds: [],
+            },
+          ]);
+        return Promise.resolve([]);
+      });
+
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      await rag.mergeEntities({ sources: ['A', 'B'], target: 'A' });
+
+      // A->B becomes A->A which is a self-relation, should be skipped
+      expect(mockStorage.graph.addRelation).not.toHaveBeenCalled();
+    });
+
+    it('should do nothing when no source entities found', async () => {
+      mockStorage.graph.getEntities.mockResolvedValue([]);
+
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      await rag.mergeEntities({ sources: ['NonExistent'], target: 'NonExistent' });
+
+      expect(mockStorage.graph.deleteEntity).not.toHaveBeenCalled();
+      expect(mockStorage.graph.addEntity).not.toHaveBeenCalled();
+    });
+
+    it('should use first source when target name not in sources', async () => {
+      mockStorage.graph.getEntities.mockResolvedValue([
+        { id: 'A', name: 'A', type: 'SERVICE', description: 'desc', sourceChunkIds: [] },
+      ]);
+      mockStorage.graph.getRelations.mockResolvedValue([]);
+
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      await rag.mergeEntities({ sources: ['A'], target: 'Merged' });
+
+      expect(mockStorage.graph.addEntity).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'Merged', name: 'Merged', type: 'SERVICE' }),
+      );
+    });
+
+    it('should redirect incoming relations to target', async () => {
+      mockStorage.graph.getEntities.mockResolvedValue([
+        { id: 'A', name: 'A', type: 'SERVICE', description: 'a', sourceChunkIds: [] },
+        { id: 'B', name: 'B', type: 'SERVICE', description: 'b', sourceChunkIds: [] },
+        { id: 'C', name: 'C', type: 'DATABASE', description: 'c', sourceChunkIds: [] },
+      ]);
+      mockStorage.graph.getRelations.mockImplementation((id: string) => {
+        if (id === 'B')
+          return Promise.resolve([
+            {
+              id: 'r1',
+              sourceId: 'C',
+              targetId: 'B',
+              type: 'USES',
+              description: '',
+              keywords: [],
+              sourceChunkIds: [],
+            },
+          ]);
+        return Promise.resolve([]);
+      });
+
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      await rag.mergeEntities({ sources: ['A', 'B'], target: 'A' });
+
+      expect(mockStorage.graph.addRelation).toHaveBeenCalledWith(
+        expect.objectContaining({ sourceId: 'C', targetId: 'A' }),
+      );
+    });
+  });
+
   describe('export', () => {
     beforeEach(() => {
       mockStorage.graph.getEntities.mockResolvedValue([

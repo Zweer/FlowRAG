@@ -10,6 +10,7 @@ export type {
   IndexingOptions,
   IndexOptions,
   IndexProgress,
+  MergeEntitiesOptions,
   ObservabilityHooks,
   QueryMode,
   QueryOptions,

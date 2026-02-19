@@ -99,11 +99,17 @@ export type ExportFormat = 'json' | 'csv' | 'dot';
 export interface FlowRAG {
   index(input: string | string[], options?: IndexOptions): Promise<void>;
   deleteDocument(documentId: string): Promise<void>;
+  mergeEntities(options: MergeEntitiesOptions): Promise<void>;
   search(query: string, options?: { mode?: QueryMode; limit?: number }): Promise<SearchResult[]>;
   traceDataFlow(entityId: string, direction: 'upstream' | 'downstream'): Promise<Entity[]>;
   findPath(fromId: string, toId: string, maxDepth?: number): Promise<Relation[]>;
   export(format: ExportFormat): Promise<string>;
   stats(): Promise<IndexStats>;
+}
+
+export interface MergeEntitiesOptions {
+  sources: string[];
+  target: string;
 }
 
 export interface SearchResult {
