@@ -15,7 +15,10 @@ interface FlowRAGConfig {
   embedder: Embedder;
   extractor: LLMExtractor;
   reranker?: Reranker;
+  evaluator?: Evaluator;
+  parsers?: DocumentParser[];
   hooks?: FlowRAGHooks;
+  observability?: ObservabilityHooks;
   options?: {
     indexing?: IndexingOptions;
     querying?: QueryOptions;
@@ -32,6 +35,7 @@ interface IndexingOptions {
   maxParallelInsert?: number;  // Concurrent documents (default: 2)
   llmMaxAsync?: number;        // Concurrent LLM calls (default: 4)
   embeddingMaxAsync?: number;  // Concurrent embedding calls (default: 16)
+  extractionGleanings?: number; // Additional extraction passes (default: 0)
 }
 ```
 
@@ -72,6 +76,18 @@ interface ExtractionContext {
   content: string;
 }
 ```
+
+## Observability Hooks
+
+```typescript
+interface ObservabilityHooks {
+  onLLMCall?: (event: { model: string; duration: number; usage?: TokenUsage }) => void;
+  onEmbedding?: (event: { model: string; textsCount: number; duration: number }) => void;
+  onSearch?: (event: { query: string; mode: string; resultsCount: number; duration: number }) => void;
+}
+```
+
+Hooks are called from both indexing and querying pipelines with timing information. The `onLLMCall` hook includes token usage when the provider supports it (e.g., OpenAI extractor).
 
 ## Environment Variables
 

@@ -16,7 +16,14 @@ interface SearchResult {
   content: string;      // chunk text
   score: number;        // relevance score
   source: 'vector' | 'graph';
+  sources: Source[];    // citation / provenance
   metadata?: Record<string, unknown>;
+}
+
+interface Source {
+  documentId: string;
+  filePath?: string;
+  chunkIndex: number;
 }
 ```
 
@@ -92,3 +99,30 @@ await rag.search('query', { limit: 20 });
 const stats = await rag.stats();
 // { documents: 50, chunks: 320, entities: 85, relations: 120, vectors: 320 }
 ```
+
+## Export
+
+Export the knowledge graph in multiple formats:
+
+```typescript
+await rag.export('json'); // Entities + relations as JSON
+await rag.export('csv');  // Relation table (source, type, target, description)
+await rag.export('dot');  // Graphviz digraph
+```
+
+## Evaluation
+
+If an `Evaluator` is configured, run quality metrics on search results:
+
+```typescript
+const rag = createFlowRAG({
+  schema,
+  ...createLocalStorage('./data'),
+  evaluator: myEvaluator, // implements Evaluator interface
+});
+
+const result = await rag.evaluate('how does auth work', { reference: 'expected answer' });
+// result.scores: { precision: 0.85, recall: 0.72, faithfulness: 0.91 }
+```
+
+The `evaluate` method runs a search internally and passes results to the evaluator. See [Interfaces](/reference/interfaces#evaluator) for the `Evaluator` interface.

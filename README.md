@@ -151,6 +151,96 @@ await rag.index('./content');                  // Skips unchanged docs
 await rag.index('./content', { force: true }); // Re-index everything
 ```
 
+### Document Deletion
+
+Delete a document and automatically clean up orphaned entities and relations:
+
+```typescript
+await rag.deleteDocument('doc:readme');
+```
+
+### Document Parsers
+
+Pluggable file parsing for non-text documents (PDF, DOCX, images, etc.):
+
+```typescript
+const rag = createFlowRAG({
+  schema,
+  ...createLocalStorage('./data'),
+  parsers: [new PDFParser(), new DocxParser()],
+});
+```
+
+### Citation / Source Attribution
+
+Search results include source references for traceability:
+
+```typescript
+const results = await rag.search('how does auth work');
+// Each result includes: sources: [{ documentId, filePath, chunkIndex }]
+```
+
+### Entity Merging
+
+Merge duplicate entities extracted by the LLM:
+
+```typescript
+await rag.mergeEntities({
+  sources: ['Auth Service', 'AuthService', 'auth-service'],
+  target: 'Auth Service',
+});
+```
+
+### Observability Hooks
+
+Extension points for tracing, monitoring, and token tracking:
+
+```typescript
+const rag = createFlowRAG({
+  // ...
+  observability: {
+    onLLMCall: ({ model, duration, usage }) => console.log(model, usage),
+    onEmbedding: ({ model, textsCount, duration }) => console.log(model, textsCount),
+    onSearch: ({ query, mode, resultsCount, duration }) => console.log(query, duration),
+  },
+});
+```
+
+### Export
+
+Export the knowledge graph in multiple formats:
+
+```typescript
+await rag.export('json'); // Entities + relations as JSON
+await rag.export('csv');  // Relation table
+await rag.export('dot');  // Graphviz digraph
+```
+
+### Extraction Gleaning
+
+Multi-pass entity extraction for higher accuracy:
+
+```typescript
+const rag = createFlowRAG({
+  // ...
+  options: { indexing: { extractionGleanings: 2 } },
+});
+```
+
+### Evaluation
+
+Pluggable RAG quality evaluation:
+
+```typescript
+const rag = createFlowRAG({
+  // ...
+  evaluator: myEvaluator, // implements Evaluator interface
+});
+
+const result = await rag.evaluate('query', { reference: 'expected answer' });
+// result.scores: { precision: 0.85, recall: 0.72, faithfulness: 0.91 }
+```
+
 ### CLI
 
 Full-featured command-line interface for local usage:

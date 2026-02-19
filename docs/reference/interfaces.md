@@ -123,6 +123,45 @@ const storage = withNamespace({ kv, vector, graph }, 'tenant-123');
 
 KV keys and graph entity/relation IDs are transparently prefixed. Vector records get a `__ns` metadata field for filtered search. See [Multi-Tenancy guide](/guide/multi-tenancy) for details.
 
+## Document Parsing
+
+### DocumentParser
+
+```typescript
+interface DocumentParser {
+  readonly supportedExtensions: string[];
+  parse(filePath: string): Promise<ParsedDocument>;
+}
+
+interface ParsedDocument {
+  content: string;
+  metadata: Record<string, unknown>;
+}
+```
+
+Pluggable file parsing for non-text documents. Register parsers via `parsers: [...]` in the FlowRAG config. Files with matching extensions are parsed instead of read as plain text.
+
+## Evaluation
+
+### Evaluator
+
+```typescript
+interface Evaluator {
+  evaluate(query: string, documents: EvalDocument[], reference?: string): Promise<EvalResult>;
+}
+
+interface EvalDocument {
+  content: string;
+  score: number;
+}
+
+interface EvalResult {
+  scores: Record<string, number>;
+}
+```
+
+Pluggable RAG quality evaluation. Call `rag.evaluate(query, { reference })` to run a search and pass results to the evaluator.
+
 ## Core Types
 
 ```typescript

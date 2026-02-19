@@ -90,6 +90,63 @@ flowrag index ./content --interactive
 
 This shows each extracted entity and relation, letting you accept, reject, or edit them. See [CLI Reference](/reference/cli) for details.
 
+## Document Deletion
+
+Delete a document and automatically clean up its entities and relations from the knowledge graph:
+
+```typescript
+await rag.deleteDocument('doc:readme');
+```
+
+Entities shared with other documents are preserved (only their `sourceChunkIds` are updated). Orphaned entities and relations are removed automatically.
+
+During folder re-indexing, stale documents (files that no longer exist on disk) are detected and deleted automatically.
+
+## Document Parsers
+
+By default, FlowRAG reads text files (`.txt`, `.md`, `.json`, `.yaml`, etc.). For non-text documents, register custom parsers:
+
+```typescript
+const rag = createFlowRAG({
+  schema,
+  ...createLocalStorage('./data'),
+  parsers: [new PDFParser(), new DocxParser()],
+});
+```
+
+Parsers implement the `DocumentParser` interface — see [Interfaces](/reference/interfaces#documentparser) for details. Files with matching extensions are parsed instead of read as plain text.
+
+## Extraction Gleaning
+
+Run the LLM multiple times on the same chunk for higher extraction accuracy. Each additional pass receives previously found entities as context:
+
+```typescript
+const rag = createFlowRAG({
+  schema,
+  ...createLocalStorage('./data'),
+  options: {
+    indexing: {
+      extractionGleanings: 2, // 2 additional passes per chunk
+    },
+  },
+});
+```
+
+Results are deduplicated automatically. More passes improve recall at the cost of additional LLM calls.
+
+## Entity Merging
+
+Merge duplicate entities extracted by the LLM:
+
+```typescript
+await rag.mergeEntities({
+  sources: ['Auth Service', 'AuthService', 'auth-service'],
+  target: 'Auth Service',
+});
+```
+
+All relations are redirected to the target entity, duplicates are removed, and source entities are deleted. Self-relations created by the merge are automatically skipped.
+
 ## Pipeline Hooks
 
 For programmatic control, use the `onEntitiesExtracted` hook:

@@ -183,17 +183,17 @@ When deployed remotely, storage backends like Redis, S3, and OpenSearch make sen
 
 ## Priority Order
 
-| # | Feature | Impact | Effort |
-|---|---------|--------|--------|
-| 1 | OpenAI-compatible (`baseURL`) | 🔥 High — unlocks dozens of providers | Low |
-| 2 | Document deletion + KG cleanup | High — production essential | Medium |
-| 3 | Citation / source attribution | High — trust & traceability | Medium |
-| 4 | DocumentParser interface | High — multimodal support | Medium |
-| 5 | Entity merging | Medium — data quality | Medium |
-| 6 | Observability hooks | Medium — ops & cost control | Low |
-| 7 | Export | Medium — data portability | Low |
-| 8 | Extraction gleaning | Medium — accuracy boost | Low |
-| 9 | Evaluation interface | Medium — quality assurance | Medium |
+| # | Feature | Impact | Effort | Status |
+|---|---------|--------|--------|--------|
+| 1 | OpenAI-compatible (`baseURL`) | 🔥 High — unlocks dozens of providers | Low | ✅ Complete |
+| 2 | Document deletion + KG cleanup | High — production essential | Medium | ✅ Complete |
+| 3 | Citation / source attribution | High — trust & traceability | Medium | ✅ Complete |
+| 4 | DocumentParser interface | High — multimodal support | Medium | ✅ Complete |
+| 5 | Entity merging | Medium — data quality | Medium | ✅ Complete |
+| 6 | Observability hooks | Medium — ops & cost control | Low | ✅ Complete |
+| 7 | Export | Medium — data portability | Low | ✅ Complete |
+| 8 | Extraction gleaning | Medium — accuracy boost | Low | ✅ Complete |
+| 9 | Evaluation interface | Medium — quality assurance | Medium | ✅ Complete |
 
 ## Comparison with LightRAG
 
@@ -214,4 +214,4 @@ After v3, the feature gap with LightRAG will be largely closed, while maintainin
 ---
 
 *Created: 2026-02-18*
-*Status: Planning*
+*Status: Complete*

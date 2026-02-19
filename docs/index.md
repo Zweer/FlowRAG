@@ -25,10 +25,13 @@ features:
     details: File-based storage that you can commit to your repo. JSON, SQLite, and LanceDB — no external databases required.
   - icon: 🔌
     title: Pluggable Everything
-    details: Swap storage backends, embedders, extractors, and rerankers. Local ONNX, Gemini, or AWS Bedrock — your choice.
+    details: Swap storage backends, embedders, extractors, rerankers, parsers, and evaluators. Local ONNX, Gemini, OpenAI, or AWS Bedrock — your choice.
   - icon: 🚀
     title: Incremental Indexing
-    details: Only re-process changed documents. SHA-256 content hashing skips unchanged files automatically.
+    details: Only re-process changed documents. SHA-256 content hashing skips unchanged files automatically. Delete documents with automatic KG cleanup.
+  - icon: 📊
+    title: Observable & Evaluable
+    details: Built-in hooks for LLM calls, embeddings, and search. Plug in evaluators for precision, recall, and faithfulness metrics.
   - icon: 🛠️
     title: 10 Lines to Start
     details: npm install, define a schema, create an instance, index, search. That's it. No configuration hell.
