@@ -5,6 +5,7 @@ import { OpenAIEmbeddingModels } from './models.js';
 
 export interface OpenAIEmbedderOptions {
   apiKey?: string;
+  baseURL?: string;
   model?: string;
   dimensions?: number;
 }
@@ -17,7 +18,7 @@ export class OpenAIEmbedder implements Embedder {
   constructor(options: OpenAIEmbedderOptions = {}) {
     this.modelName = options.model ?? OpenAIEmbeddingModels.TEXT_EMBEDDING_3_SMALL;
     this.dimensions = options.dimensions ?? 1536;
-    this.client = new OpenAI({ apiKey: options.apiKey });
+    this.client = new OpenAI({ apiKey: options.apiKey, baseURL: options.baseURL });
   }
 
   async embed(text: string): Promise<number[]> {

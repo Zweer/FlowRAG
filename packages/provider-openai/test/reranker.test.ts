@@ -3,10 +3,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { OpenAIReranker } from '../src/reranker.js';
 
 const mockCreate = vi.fn();
+const mockConstructor = vi.fn();
 
 vi.mock('openai', () => ({
   default: class {
     chat = { completions: { create: mockCreate } };
+    constructor(opts: unknown) {
+      mockConstructor(opts);
+    }
   },
 }));
 
@@ -21,6 +25,14 @@ describe('OpenAIReranker', () => {
   it('should accept custom model', () => {
     const r = new OpenAIReranker({ model: 'gpt-5' });
     expect(r).toBeDefined();
+  });
+
+  it('should pass baseURL to OpenAI client', () => {
+    new OpenAIReranker({ apiKey: 'k', baseURL: 'http://localhost:11434/v1' });
+    expect(mockConstructor).toHaveBeenCalledWith({
+      apiKey: 'k',
+      baseURL: 'http://localhost:11434/v1',
+    });
   });
 
   it('should return empty for empty documents', async () => {

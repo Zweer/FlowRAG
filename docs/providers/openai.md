@@ -1,6 +1,6 @@
 # OpenAI Provider
 
-`@flowrag/provider-openai` provides embeddings, entity extraction, and reranking via the OpenAI API.
+`@flowrag/provider-openai` provides embeddings, entity extraction, and reranking via the OpenAI API — or any OpenAI-compatible endpoint.
 
 ## Installation
 
@@ -59,6 +59,42 @@ const reranker = new OpenAIReranker();
 ```
 
 LLM-based relevance scoring — each result is evaluated against the query.
+
+## OpenAI-Compatible Endpoints
+
+All classes accept a `baseURL` option, so you can point them at any OpenAI-compatible API:
+
+```typescript
+// Ollama (local, free)
+const embedder = new OpenAIEmbedder({
+  baseURL: 'http://localhost:11434/v1',
+  model: 'nomic-embed-text',
+  dimensions: 768,
+});
+
+// Azure OpenAI
+const extractor = new OpenAIExtractor({
+  baseURL: 'https://my-company.openai.azure.com',
+  apiKey: process.env.AZURE_OPENAI_KEY,
+  model: 'gpt-4o',
+});
+
+// Together, Groq, Mistral, vLLM, LiteLLM...
+const reranker = new OpenAIReranker({
+  baseURL: 'https://api.together.xyz/v1',
+  apiKey: process.env.TOGETHER_API_KEY,
+  model: 'meta-llama/Llama-3-70b',
+});
+```
+
+This works with any service that implements the OpenAI API format, including:
+- [Ollama](https://ollama.com) — local models, no API key needed
+- [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
+- [vLLM](https://docs.vllm.ai) — self-hosted inference
+- [LiteLLM](https://docs.litellm.ai) — unified proxy for 100+ providers
+- [Together AI](https://www.together.ai)
+- [Groq](https://groq.com)
+- [Mistral](https://mistral.ai)
 
 ## Model Constants
 

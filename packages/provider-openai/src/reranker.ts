@@ -5,6 +5,7 @@ import { OpenAILLMModels } from './models.js';
 
 export interface OpenAIRerankerOptions {
   apiKey?: string;
+  baseURL?: string;
   model?: string;
 }
 
@@ -14,7 +15,7 @@ export class OpenAIReranker implements Reranker {
 
   constructor(options: OpenAIRerankerOptions = {}) {
     this.model = options.model ?? OpenAILLMModels.GPT_5_MINI;
-    this.client = new OpenAI({ apiKey: options.apiKey });
+    this.client = new OpenAI({ apiKey: options.apiKey, baseURL: options.baseURL });
   }
 
   async rerank(

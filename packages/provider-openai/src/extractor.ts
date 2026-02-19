@@ -10,6 +10,7 @@ import { OpenAILLMModels } from './models.js';
 
 export interface OpenAIExtractorOptions {
   apiKey?: string;
+  baseURL?: string;
   model?: string;
   temperature?: number;
 }
@@ -22,7 +23,7 @@ export class OpenAIExtractor implements LLMExtractor {
   constructor(options: OpenAIExtractorOptions = {}) {
     this.modelName = options.model ?? OpenAILLMModels.GPT_5_MINI;
     this.temperature = options.temperature ?? 0.1;
-    this.client = new OpenAI({ apiKey: options.apiKey });
+    this.client = new OpenAI({ apiKey: options.apiKey, baseURL: options.baseURL });
   }
 
   async extractEntities(

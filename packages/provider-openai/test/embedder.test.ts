@@ -4,10 +4,14 @@ import { OpenAIEmbedder } from '../src/embedder.js';
 import { OpenAIEmbeddingModels } from '../src/models.js';
 
 const mockCreate = vi.fn();
+const mockConstructor = vi.fn();
 
 vi.mock('openai', () => ({
   default: class {
     embeddings = { create: mockCreate };
+    constructor(opts: unknown) {
+      mockConstructor(opts);
+    }
   },
 }));
 
@@ -33,6 +37,14 @@ describe('OpenAIEmbedder', () => {
       });
       expect(custom.modelName).toBe('text-embedding-3-large');
       expect(custom.dimensions).toBe(3072);
+    });
+
+    it('should pass baseURL to OpenAI client', () => {
+      new OpenAIEmbedder({ apiKey: 'k', baseURL: 'http://localhost:11434/v1' });
+      expect(mockConstructor).toHaveBeenCalledWith({
+        apiKey: 'k',
+        baseURL: 'http://localhost:11434/v1',
+      });
     });
   });
 

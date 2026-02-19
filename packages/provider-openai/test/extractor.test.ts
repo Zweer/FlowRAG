@@ -5,10 +5,14 @@ import { OpenAIExtractor } from '../src/extractor.js';
 import { OpenAILLMModels } from '../src/models.js';
 
 const mockCreate = vi.fn();
+const mockConstructor = vi.fn();
 
 vi.mock('openai', () => ({
   default: class {
     chat = { completions: { create: mockCreate } };
+    constructor(opts: unknown) {
+      mockConstructor(opts);
+    }
   },
 }));
 
@@ -39,6 +43,14 @@ describe('OpenAIExtractor', () => {
     it('should accept custom options', () => {
       const custom = new OpenAIExtractor({ model: 'gpt-5', temperature: 0.5 });
       expect(custom.modelName).toBe('gpt-5');
+    });
+
+    it('should pass baseURL to OpenAI client', () => {
+      new OpenAIExtractor({ apiKey: 'k', baseURL: 'http://localhost:11434/v1' });
+      expect(mockConstructor).toHaveBeenCalledWith({
+        apiKey: 'k',
+        baseURL: 'http://localhost:11434/v1',
+      });
     });
   });
 
