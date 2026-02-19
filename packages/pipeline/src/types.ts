@@ -92,7 +92,14 @@ export interface SearchResult {
   content: string;
   score: number;
   source: 'vector' | 'graph';
+  sources: Source[];
   metadata?: Record<string, unknown>;
+}
+
+export interface Source {
+  documentId: string;
+  filePath?: string;
+  chunkIndex: number;
 }
 
 export interface IndexStats {

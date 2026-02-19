@@ -120,8 +120,26 @@ describe('QueryPipeline', () => {
         content: 'test content 1',
         score: 0.9,
         source: 'vector',
+        sources: [{ documentId: '', chunkIndex: 1, filePath: undefined }],
         metadata: { content: 'test content 1' },
       });
+    });
+
+    it('should include filePath in sources when documentId is a doc: ID', async () => {
+      const filePath = '/content/test.md';
+      const docId = `doc:${Buffer.from(filePath).toString('base64url')}`;
+
+      mockConfig.storage.vector.search = vi
+        .fn()
+        .mockResolvedValue([
+          { id: `chunk:${docId}:3`, score: 0.9, metadata: { content: 'text', documentId: docId } },
+        ]);
+
+      const results = await pipeline.search('query', 'naive', 5);
+
+      expect(results[0].sources).toEqual([
+        { documentId: docId, filePath: '/content/test.md', chunkIndex: 3 },
+      ]);
     });
 
     it('should perform local search with entity boosting', async () => {

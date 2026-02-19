@@ -11,4 +11,5 @@ export type {
   IndexProgress,
   QueryMode,
   QueryOptions,
+  Source,
 } from './types.js';

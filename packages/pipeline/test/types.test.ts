@@ -49,6 +49,7 @@ describe('Types', () => {
       content: 'result content',
       score: 0.95,
       source: 'vector',
+      sources: [{ documentId: 'doc:test', filePath: '/test.txt', chunkIndex: 1 }],
       metadata: { extra: 'data' },
     };
 

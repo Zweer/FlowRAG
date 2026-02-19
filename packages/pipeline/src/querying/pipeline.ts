@@ -1,6 +1,13 @@
-import type { ExtractedEntity } from '@flowrag/core';
+import type { ExtractedEntity, SearchResult as VectorSearchResult } from '@flowrag/core';
 
-import type { Entity, FlowRAGConfig, QueryMode, QueryOptions, SearchResult } from '../types.js';
+import type {
+  Entity,
+  FlowRAGConfig,
+  QueryMode,
+  QueryOptions,
+  SearchResult,
+  Source,
+} from '../types.js';
 
 export class QueryPipeline {
   constructor(
@@ -69,13 +76,7 @@ export class QueryPipeline {
     const queryVector = await this.config.embedder.embed(query);
     const vectorResults = await this.config.storage.vector.search(queryVector, limit);
 
-    return vectorResults.map((result) => ({
-      id: result.id,
-      content: (result.metadata?.content as string) || '',
-      score: result.score,
-      source: 'vector' as const,
-      metadata: result.metadata,
-    }));
+    return vectorResults.map((result) => this.buildResult(result, result.score, 'vector'));
   }
 
   private async localSearch(query: string, limit: number): Promise<SearchResult[]> {
@@ -100,13 +101,7 @@ export class QueryPipeline {
         content.includes(name.toLowerCase()),
       ).length;
       const boost = entityHits > 0 ? 1 + entityHits * 0.1 : 0.5;
-      return {
-        id: result.id,
-        content: (result.metadata?.content as string) || '',
-        score: result.score * boost,
-        source: 'graph' as const,
-        metadata: result.metadata,
-      };
+      return this.buildResult(result, result.score * boost, 'graph');
     });
 
     return scored.sort((a, b) => b.score - a.score).slice(0, limit);
@@ -131,13 +126,7 @@ export class QueryPipeline {
     const queryVector = await this.config.embedder.embed(enrichedQuery);
     const vectorResults = await this.config.storage.vector.search(queryVector, limit);
 
-    return vectorResults.map((result) => ({
-      id: result.id,
-      content: (result.metadata?.content as string) || '',
-      score: result.score,
-      source: 'vector' as const,
-      metadata: result.metadata,
-    }));
+    return vectorResults.map((result) => this.buildResult(result, result.score, 'vector'));
   }
 
   private async hybridSearch(query: string, limit: number): Promise<SearchResult[]> {
@@ -179,5 +168,33 @@ export class QueryPipeline {
     }
 
     return merged.sort((a, b) => b.score - a.score);
+  }
+
+  private buildResult(
+    result: VectorSearchResult,
+    score: number,
+    source: 'vector' | 'graph',
+  ): SearchResult {
+    return {
+      id: result.id,
+      content: (result.metadata?.content as string) || '',
+      score,
+      source,
+      sources: this.parseSource(result.id, result.metadata),
+      metadata: result.metadata,
+    };
+  }
+
+  private parseSource(chunkId: string, metadata?: Record<string, unknown>): Source[] {
+    const documentId = (metadata?.documentId as string) || '';
+    const indexMatch = chunkId.match(/:(\d+)$/);
+    const chunkIndex = indexMatch ? Number.parseInt(indexMatch[1], 10) : 0;
+
+    let filePath: string | undefined;
+    if (documentId.startsWith('doc:')) {
+      filePath = Buffer.from(documentId.slice('doc:'.length), 'base64url').toString();
+    }
+
+    return [{ documentId, filePath, chunkIndex }];
   }
 }
