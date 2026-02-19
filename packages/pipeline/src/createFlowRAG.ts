@@ -15,6 +15,7 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
     maxParallelInsert: 2,
     llmMaxAsync: 4,
     embeddingMaxAsync: 16,
+    extractionGleanings: 0,
     ...config.options?.indexing,
   };
 

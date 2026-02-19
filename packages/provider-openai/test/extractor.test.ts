@@ -83,5 +83,19 @@ describe('OpenAIExtractor', () => {
         'Failed to parse LLM response',
       );
     });
+
+    it('should include token usage when available', async () => {
+      mockCreate.mockResolvedValue({
+        choices: [{ message: { content: JSON.stringify(extraction) } }],
+        usage: { prompt_tokens: 100, completion_tokens: 50, total_tokens: 150 },
+      });
+
+      const result = await extractor.extractEntities('content', [], schema);
+      expect(result.usage).toEqual({
+        promptTokens: 100,
+        completionTokens: 50,
+        totalTokens: 150,
+      });
+    });
   });
 });

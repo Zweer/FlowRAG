@@ -98,10 +98,18 @@ export interface ExtractedRelation {
   fields?: Record<string, unknown>;
 }
 
+/** Token usage from LLM/embedding calls */
+export interface TokenUsage {
+  promptTokens?: number;
+  completionTokens?: number;
+  totalTokens?: number;
+}
+
 /** Result of entity extraction */
 export interface ExtractionResult {
   entities: ExtractedEntity[];
   relations: ExtractedRelation[];
+  usage?: TokenUsage;
 }
 
 /** Query modes */

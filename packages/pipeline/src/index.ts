@@ -9,6 +9,7 @@ export type {
   IndexingOptions,
   IndexOptions,
   IndexProgress,
+  ObservabilityHooks,
   QueryMode,
   QueryOptions,
   Source,

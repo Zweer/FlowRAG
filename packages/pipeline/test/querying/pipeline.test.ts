@@ -490,4 +490,39 @@ describe('QueryPipeline', () => {
       expect(results[0].score).toBe(0.9);
     });
   });
+
+  describe('observability hooks', () => {
+    it('should call onSearch after search completes', async () => {
+      const onSearch = vi.fn();
+      const configWithObs = { ...mockConfig, observability: { onSearch } };
+      const p = new QueryPipeline(configWithObs, mockOptions);
+
+      await p.search('test', 'naive', 5);
+
+      expect(onSearch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          query: 'test',
+          mode: 'naive',
+          resultsCount: 2,
+          duration: expect.any(Number),
+        }),
+      );
+    });
+
+    it('should call onEmbedding for query embedding', async () => {
+      const onEmbedding = vi.fn();
+      const configWithObs = { ...mockConfig, observability: { onEmbedding } };
+      const p = new QueryPipeline(configWithObs, mockOptions);
+
+      await p.search('test', 'naive', 5);
+
+      expect(onEmbedding).toHaveBeenCalledWith(
+        expect.objectContaining({
+          model: 'test',
+          textsCount: 1,
+          duration: expect.any(Number),
+        }),
+      );
+    });
+  });
 });

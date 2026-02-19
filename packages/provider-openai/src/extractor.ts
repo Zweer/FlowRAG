@@ -43,7 +43,17 @@ export class OpenAIExtractor implements LLMExtractor {
     const text = response.choices[0]?.message?.content ?? '';
 
     try {
-      return JSON.parse(text);
+      const parsed = JSON.parse(text);
+      return {
+        ...parsed,
+        usage: response.usage
+          ? {
+              promptTokens: response.usage.prompt_tokens,
+              completionTokens: response.usage.completion_tokens,
+              totalTokens: response.usage.total_tokens,
+            }
+          : undefined,
+      };
     } catch (error) {
       throw new Error(`Failed to parse LLM response: ${error}`);
     }

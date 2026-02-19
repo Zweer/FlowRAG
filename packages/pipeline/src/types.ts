@@ -6,6 +6,7 @@ import type {
   LLMExtractor,
   Reranker,
   Schema,
+  TokenUsage,
   VectorStorage,
 } from '@flowrag/core';
 
@@ -33,10 +34,22 @@ export interface FlowRAGConfig {
   extractor: LLMExtractor;
   reranker?: Reranker;
   hooks?: FlowRAGHooks;
+  observability?: ObservabilityHooks;
   options?: {
     indexing?: IndexingOptions;
     querying?: QueryOptions;
   };
+}
+
+export interface ObservabilityHooks {
+  onLLMCall?: (event: { model: string; duration: number; usage?: TokenUsage }) => void;
+  onEmbedding?: (event: { model: string; textsCount: number; duration: number }) => void;
+  onSearch?: (event: {
+    query: string;
+    mode: string;
+    resultsCount: number;
+    duration: number;
+  }) => void;
 }
 
 export interface IndexingOptions {
@@ -45,6 +58,7 @@ export interface IndexingOptions {
   maxParallelInsert?: number;
   llmMaxAsync?: number;
   embeddingMaxAsync?: number;
+  extractionGleanings?: number;
 }
 
 export interface QueryOptions {

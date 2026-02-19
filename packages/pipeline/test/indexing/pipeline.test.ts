@@ -77,6 +77,7 @@ describe('IndexingPipeline', () => {
       maxParallelInsert: 1,
       llmMaxAsync: 1,
       embeddingMaxAsync: 1,
+      extractionGleanings: 0,
     };
 
     pipeline = new IndexingPipeline(mockConfig, mockOptions);
@@ -770,6 +771,146 @@ describe('IndexingPipeline', () => {
 
       // Should skip (not delete) the document
       expect(events).not.toContain('document:delete');
+    });
+  });
+
+  describe('extraction gleaning', () => {
+    it('should run additional extraction passes when extractionGleanings > 0', async () => {
+      const gleanPipeline = new IndexingPipeline(mockConfig, {
+        ...mockOptions,
+        extractionGleanings: 1,
+      });
+
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (gleanPipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (gleanPipeline as any).chunker;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+      mockChunker.chunkDocument = vi.fn(() => [
+        { id: 'chunk:1', content: 'test', documentId: 'doc:test', startToken: 0, endToken: 5 },
+      ]);
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+
+      // First call returns entity A, second (gleaning) returns entity B
+      mockConfig.extractor.extractEntities = vi
+        .fn()
+        .mockResolvedValueOnce({
+          entities: [{ name: 'A', type: 'SERVICE', description: 'first' }],
+          relations: [
+            { source: 'A', target: 'X', type: 'USES', description: 'uses', keywords: [] },
+          ],
+        })
+        .mockResolvedValueOnce({
+          entities: [
+            { name: 'A', type: 'SERVICE', description: 'dup' },
+            { name: 'B', type: 'DATABASE', description: 'gleaned' },
+          ],
+          relations: [
+            { source: 'A', target: 'X', type: 'USES', description: 'dup', keywords: [] },
+            { source: 'B', target: 'A', type: 'USES', description: 'new', keywords: [] },
+          ],
+        });
+
+      await gleanPipeline.process(['/test.txt']);
+
+      // Extractor called twice (1 initial + 1 gleaning)
+      expect(mockConfig.extractor.extractEntities).toHaveBeenCalledTimes(2);
+      // Second call should include entity A as known
+      expect(mockConfig.extractor.extractEntities).toHaveBeenLastCalledWith(
+        'test',
+        ['A'],
+        mockConfig.schema,
+      );
+      // Both entities stored (A from first pass, B from gleaning, duplicate A skipped)
+      expect(mockConfig.storage.graph.addEntity).toHaveBeenCalledTimes(2);
+      expect(mockConfig.storage.graph.addEntity).toHaveBeenCalledWith(
+        expect.objectContaining({ name: 'A' }),
+      );
+      expect(mockConfig.storage.graph.addEntity).toHaveBeenCalledWith(
+        expect.objectContaining({ name: 'B' }),
+      );
+      // Relations: A→X from first pass, B→A from gleaning (duplicate A→X skipped)
+      expect(mockConfig.storage.graph.addRelation).toHaveBeenCalledTimes(2);
+
+      gleanPipeline.dispose();
+    });
+  });
+
+  describe('observability hooks', () => {
+    it('should call onLLMCall when extracting entities', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+      mockChunker.chunkDocument = vi.fn(() => [
+        { id: 'chunk:1', content: 'test', documentId: 'doc:test', startToken: 0, endToken: 5 },
+      ]);
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+
+      const onLLMCall = vi.fn();
+      mockConfig.observability = { onLLMCall };
+
+      await pipeline.process(['/test.txt']);
+
+      expect(onLLMCall).toHaveBeenCalledWith(
+        expect.objectContaining({ model: 'extractor', duration: expect.any(Number) }),
+      );
+    });
+
+    it('should call onEmbedding when generating embeddings', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+      mockChunker.chunkDocument = vi.fn(() => [
+        { id: 'chunk:1', content: 'test', documentId: 'doc:test', startToken: 0, endToken: 5 },
+      ]);
+
+      const onEmbedding = vi.fn();
+      mockConfig.observability = { onEmbedding };
+
+      await pipeline.process(['/test.txt']);
+
+      expect(onEmbedding).toHaveBeenCalledWith(
+        expect.objectContaining({ model: 'test', textsCount: 1, duration: expect.any(Number) }),
+      );
+    });
+
+    it('should not call onLLMCall when extraction is cached', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+      mockChunker.chunkDocument = vi.fn(() => [
+        { id: 'chunk:1', content: 'test', documentId: 'doc:test', startToken: 0, endToken: 5 },
+      ]);
+      // Cache hit
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue({
+        entities: [],
+        relations: [],
+      });
+
+      const onLLMCall = vi.fn();
+      mockConfig.observability = { onLLMCall };
+
+      await pipeline.process(['/test.txt']);
+
+      expect(onLLMCall).not.toHaveBeenCalled();
     });
   });
 

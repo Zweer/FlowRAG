@@ -16,6 +16,7 @@ export class QueryPipeline {
   ) {}
 
   async search(query: string, mode: QueryMode, limit: number): Promise<SearchResult[]> {
+    const start = Date.now();
     let results: SearchResult[];
     switch (mode) {
       case 'naive':
@@ -46,6 +47,13 @@ export class QueryPipeline {
         .map((r) => ({ ...byId.get(r.id), score: r.score }) as SearchResult);
     }
 
+    this.config.observability?.onSearch?.({
+      query,
+      mode,
+      resultsCount: results.length,
+      duration: Date.now() - start,
+    });
+
     return results;
   }
 
@@ -73,7 +81,7 @@ export class QueryPipeline {
   }
 
   private async naiveSearch(query: string, limit: number): Promise<SearchResult[]> {
-    const queryVector = await this.config.embedder.embed(query);
+    const queryVector = await this.embedWithHook(query);
     const vectorResults = await this.config.storage.vector.search(queryVector, limit);
 
     return vectorResults.map((result) => this.buildResult(result, result.score, 'vector'));
@@ -91,7 +99,7 @@ export class QueryPipeline {
     const allNames = new Set([...entityNames, ...relatedEntities.flat().map((e) => e.name)]);
 
     // Vector search
-    const queryVector = await this.config.embedder.embed(query);
+    const queryVector = await this.embedWithHook(query);
     const vectorResults = await this.config.storage.vector.search(queryVector, limit * 3);
 
     // Score boost for results mentioning known entities
@@ -123,7 +131,7 @@ export class QueryPipeline {
     const topKeywords = Array.from(keywords).slice(0, 10).join(' ');
     const enrichedQuery = topKeywords ? `${query} ${topKeywords}` : query;
 
-    const queryVector = await this.config.embedder.embed(enrichedQuery);
+    const queryVector = await this.embedWithHook(enrichedQuery);
     const vectorResults = await this.config.storage.vector.search(queryVector, limit);
 
     return vectorResults.map((result) => this.buildResult(result, result.score, 'vector'));
@@ -168,6 +176,17 @@ export class QueryPipeline {
     }
 
     return merged.sort((a, b) => b.score - a.score);
+  }
+
+  private async embedWithHook(text: string): Promise<number[]> {
+    const start = Date.now();
+    const vector = await this.config.embedder.embed(text);
+    this.config.observability?.onEmbedding?.({
+      model: this.config.embedder.modelName,
+      textsCount: 1,
+      duration: Date.now() - start,
+    });
+    return vector;
   }
 
   private buildResult(

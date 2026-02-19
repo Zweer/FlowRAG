@@ -103,18 +103,42 @@ export class IndexingPipeline {
     if (!extraction) {
       // 3. Extractor: LLM extracts entities + relations
       const knownEntities = await this.getKnownEntities();
+      const llmStart = Date.now();
       extraction = await this.config.extractor.extractEntities(
         chunk.content,
         knownEntities,
         this.config.schema,
       );
 
+      // Gleaning: additional extraction passes for higher accuracy
+      for (let i = 0; i < this.options.extractionGleanings; i++) {
+        const gleanedNames = extraction.entities.map((e) => e.name);
+        const gleaned = await this.config.extractor.extractEntities(
+          chunk.content,
+          [...knownEntities, ...gleanedNames],
+          this.config.schema,
+        );
+        extraction = this.mergeExtractions(extraction, gleaned);
+      }
+
+      this.config.observability?.onLLMCall?.({
+        model: 'extractor',
+        duration: Date.now() - llmStart,
+        usage: extraction.usage,
+      });
+
       // Cache the extraction
       await this.config.storage.kv.set(cacheKey, extraction);
     }
 
     // 4. Embedder: Generate embeddings
+    const embedStart = Date.now();
     const embedding = await this.config.embedder.embed(chunk.content);
+    this.config.observability?.onEmbedding?.({
+      model: this.config.embedder.modelName,
+      textsCount: 1,
+      duration: Date.now() - embedStart,
+    });
 
     // Call hook if provided
     if (this.config.hooks?.onEntitiesExtracted) {
@@ -239,6 +263,20 @@ export class IndexingPipeline {
       this.config.storage.kv.delete(docId),
       this.config.storage.kv.delete(`docHash:${docId}`),
     ]);
+  }
+
+  private mergeExtractions(base: ExtractionResult, gleaned: ExtractionResult): ExtractionResult {
+    const entityNames = new Set(base.entities.map((e) => e.name));
+    const relationIds = new Set(base.relations.map((r) => `${r.source}-${r.type}-${r.target}`));
+
+    return {
+      entities: [...base.entities, ...gleaned.entities.filter((e) => !entityNames.has(e.name))],
+      relations: [
+        ...base.relations,
+        ...gleaned.relations.filter((r) => !relationIds.has(`${r.source}-${r.type}-${r.target}`)),
+      ],
+      usage: base.usage,
+    };
   }
 
   private decodeDocId(docId: string): string | null {
