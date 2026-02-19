@@ -439,6 +439,32 @@ describe('createFlowRAG', () => {
       expect(result).toContain('-> "PostgreSQL"');
       expect(result).toContain('[label="USES"]');
     });
+
+    it('should skip relations with missing entities in DOT export', async () => {
+      mockStorage.graph.getRelations.mockImplementation((id: string) => {
+        if (id === 'svc')
+          return Promise.resolve([
+            {
+              id: 'r1',
+              sourceId: 'svc',
+              targetId: 'missing',
+              type: 'USES',
+              description: '',
+              keywords: [],
+              sourceChunkIds: [],
+            },
+          ]);
+        return Promise.resolve([]);
+      });
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      const result = await rag.export('dot');
+      expect(result).not.toContain('->');
+    });
   });
 
   it('should handle stats with relations count', async () => {

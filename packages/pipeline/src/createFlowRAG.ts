@@ -82,12 +82,10 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
             lines.push(`  "${e.name}" [label="${e.name}\\n(${e.type})"];`);
           }
           for (const r of allRelations) {
+            const source = entities.find((e) => e.id === r.sourceId);
             const target = entities.find((e) => e.id === r.targetId);
-            if (target) {
-              const source = entities.find((e) => e.id === r.sourceId);
-              if (source) {
-                lines.push(`  "${source.name}" -> "${target.name}" [label="${r.type}"];`);
-              }
+            if (source && target) {
+              lines.push(`  "${source.name}" -> "${target.name}" [label="${r.type}"];`);
             }
           }
           lines.push('}');
