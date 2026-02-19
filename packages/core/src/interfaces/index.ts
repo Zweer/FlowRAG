@@ -1,4 +1,5 @@
 export * from './embedder.js';
+export * from './evaluator.js';
 export * from './extractor.js';
 export * from './parser.js';
 export * from './reranker.js';

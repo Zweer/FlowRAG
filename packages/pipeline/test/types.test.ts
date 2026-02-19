@@ -152,6 +152,7 @@ describe('Types', () => {
       traceDataFlow: async () => [],
       findPath: async () => [],
       export: async () => '',
+      evaluate: async () => ({ scores: {} }),
       stats: async () => ({
         documents: 0,
         chunks: 0,

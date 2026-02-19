@@ -549,6 +549,52 @@ describe('createFlowRAG', () => {
     });
   });
 
+  describe('evaluate', () => {
+    it('should run search and pass results to evaluator', async () => {
+      const mockEvaluator = {
+        evaluate: vi.fn(() => Promise.resolve({ scores: { precision: 0.9 } })),
+      };
+      mockStorage.vector.search.mockResolvedValue([
+        {
+          id: 'chunk:doc:test:0',
+          score: 0.8,
+          metadata: { content: 'result text', documentId: 'doc:test' },
+        },
+      ]);
+      mockStorage.kv.get.mockResolvedValue({
+        id: 'chunk:doc:test:0',
+        content: 'result text',
+        documentId: 'doc:test',
+      });
+
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+        evaluator: mockEvaluator,
+      });
+      const result = await rag.evaluate('test query', { reference: 'expected answer' });
+
+      expect(result.scores.precision).toBe(0.9);
+      expect(mockEvaluator.evaluate).toHaveBeenCalledWith(
+        'test query',
+        expect.arrayContaining([expect.objectContaining({ content: 'result text' })]),
+        'expected answer',
+      );
+    });
+
+    it('should throw when no evaluator configured', async () => {
+      const rag = createFlowRAG({
+        schema,
+        storage: mockStorage,
+        embedder: mockEmbedder,
+        extractor: mockExtractor,
+      });
+      await expect(rag.evaluate('test')).rejects.toThrow('No evaluator configured');
+    });
+  });
+
   describe('export', () => {
     beforeEach(() => {
       mockStorage.graph.getEntities.mockResolvedValue([

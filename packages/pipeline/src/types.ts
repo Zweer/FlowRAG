@@ -1,6 +1,8 @@
 import type {
   DocumentParser,
   Embedder,
+  EvalResult,
+  Evaluator,
   ExtractionResult,
   GraphStorage,
   KVStorage,
@@ -34,6 +36,7 @@ export interface FlowRAGConfig {
   embedder: Embedder;
   extractor: LLMExtractor;
   reranker?: Reranker;
+  evaluator?: Evaluator;
   parsers?: DocumentParser[];
   hooks?: FlowRAGHooks;
   observability?: ObservabilityHooks;
@@ -104,7 +107,14 @@ export interface FlowRAG {
   traceDataFlow(entityId: string, direction: 'upstream' | 'downstream'): Promise<Entity[]>;
   findPath(fromId: string, toId: string, maxDepth?: number): Promise<Relation[]>;
   export(format: ExportFormat): Promise<string>;
+  evaluate(query: string, options?: EvaluateOptions): Promise<EvalResult>;
   stats(): Promise<IndexStats>;
+}
+
+export interface EvaluateOptions {
+  reference?: string;
+  mode?: QueryMode;
+  limit?: number;
 }
 
 export interface MergeEntitiesOptions {

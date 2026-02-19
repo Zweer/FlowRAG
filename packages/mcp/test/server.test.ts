@@ -62,6 +62,7 @@ function createMockRag(): FlowRAG {
     deleteDocument: vi.fn(),
     mergeEntities: vi.fn(),
     export: vi.fn(),
+    evaluate: vi.fn(),
     search: vi
       .fn()
       .mockResolvedValue([

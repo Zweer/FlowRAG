@@ -3,6 +3,7 @@ import type { Entity, Relation } from '@flowrag/core';
 import { IndexingPipeline } from './indexing/pipeline.js';
 import { QueryPipeline } from './querying/pipeline.js';
 import type {
+  EvaluateOptions,
   ExportFormat,
   FlowRAG,
   FlowRAGConfig,
@@ -144,6 +145,20 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
           return lines.join('\n');
         }
       }
+    },
+
+    async evaluate(query: string, options: EvaluateOptions = {}) {
+      if (!config.evaluator) throw new Error('No evaluator configured');
+      const results = await queryPipeline.search(
+        query,
+        options.mode ?? queryOptions.defaultMode,
+        options.limit ?? queryOptions.maxResults,
+      );
+      return config.evaluator.evaluate(
+        query,
+        results.map((r) => ({ content: r.content, score: r.score })),
+        options.reference,
+      );
     },
 
     async stats() {
