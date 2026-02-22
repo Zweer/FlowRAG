@@ -32,7 +32,7 @@
     "dist"
   ],
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.992.0",
+    "@aws-sdk/client-s3": "^3.995.0",
     "@flowrag/core": "^1.6.0"
   },
   "engines": {
