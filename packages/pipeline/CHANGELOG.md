@@ -36,6 +36,17 @@
 
 
 
+
+## [1.6.0] - 2026-02-22
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: add include/exclude glob filtering to IndexOptions
+
+### ### chore
+
+- chore(deps): :arrow_up: update dependencies across packages
+
 ## [1.5.0] - 2026-02-19
 
 ### ✨ Features

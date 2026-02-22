@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@flowrag/core": "^1.6.0",
-    "@flowrag/pipeline": "^1.6.0",
+    "@flowrag/pipeline": "^1.7.0",
     "@flowrag/presets": "^1.4.1",
     "@flowrag/provider-anthropic": "^0.1.0",
     "@flowrag/provider-bedrock": "^0.3.0",
