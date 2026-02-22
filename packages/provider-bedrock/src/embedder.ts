@@ -1,5 +1,5 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
-import type { Embedder } from '@flowrag/core';
+import { type Embedder, type RetryOptions, withRetry } from '@flowrag/core';
 
 import { BedrockEmbeddingModels } from './models.js';
 
@@ -7,12 +7,14 @@ export interface BedrockEmbedderOptions {
   model?: string;
   dimensions?: number;
   region?: string;
+  retry?: RetryOptions;
 }
 
 export class BedrockEmbedder implements Embedder {
   readonly modelName: string;
   readonly dimensions: number;
   private readonly client: BedrockRuntimeClient;
+  private readonly retry: RetryOptions;
 
   constructor(options: BedrockEmbedderOptions = {}) {
     this.modelName = options.model ?? BedrockEmbeddingModels.TITAN_EMBED_V2;
@@ -20,6 +22,7 @@ export class BedrockEmbedder implements Embedder {
     this.client = new BedrockRuntimeClient({
       region: options.region ?? process.env.AWS_REGION ?? 'us-east-1',
     });
+    this.retry = options.retry ?? {};
   }
 
   async embed(text: string): Promise<number[]> {
@@ -28,8 +31,16 @@ export class BedrockEmbedder implements Embedder {
       dimensions: this.dimensions,
     });
 
-    const response = await this.client.send(
-      new InvokeModelCommand({ modelId: this.modelName, body, contentType: 'application/json' }),
+    const response = await withRetry(
+      () =>
+        this.client.send(
+          new InvokeModelCommand({
+            modelId: this.modelName,
+            body,
+            contentType: 'application/json',
+          }),
+        ),
+      this.retry,
     );
 
     const result = JSON.parse(new TextDecoder().decode(response.body));

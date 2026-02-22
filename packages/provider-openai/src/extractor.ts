@@ -2,7 +2,9 @@ import {
   buildExtractionPrompt,
   type ExtractionResult,
   type LLMExtractor,
+  type RetryOptions,
   type Schema,
+  withRetry,
 } from '@flowrag/core';
 import OpenAI from 'openai';
 
@@ -13,17 +15,20 @@ export interface OpenAIExtractorOptions {
   baseURL?: string;
   model?: string;
   temperature?: number;
+  retry?: RetryOptions;
 }
 
 export class OpenAIExtractor implements LLMExtractor {
   readonly modelName: string;
   private readonly client: OpenAI;
   private readonly temperature: number;
+  private readonly retry: RetryOptions;
 
   constructor(options: OpenAIExtractorOptions = {}) {
     this.modelName = options.model ?? OpenAILLMModels.GPT_5_MINI;
     this.temperature = options.temperature ?? 0.1;
     this.client = new OpenAI({ apiKey: options.apiKey, baseURL: options.baseURL });
+    this.retry = options.retry ?? {};
   }
 
   async extractEntities(
@@ -33,12 +38,16 @@ export class OpenAIExtractor implements LLMExtractor {
   ): Promise<ExtractionResult> {
     const prompt = buildExtractionPrompt(content, knownEntities, schema);
 
-    const response = await this.client.chat.completions.create({
-      model: this.modelName,
-      messages: [{ role: 'user', content: prompt }],
-      temperature: this.temperature,
-      response_format: { type: 'json_object' },
-    });
+    const response = await withRetry(
+      () =>
+        this.client.chat.completions.create({
+          model: this.modelName,
+          messages: [{ role: 'user', content: prompt }],
+          temperature: this.temperature,
+          response_format: { type: 'json_object' },
+        }),
+      this.retry,
+    );
 
     const text = response.choices[0]?.message?.content ?? '';
 

@@ -1,4 +1,4 @@
-import type { Embedder } from '@flowrag/core';
+import { type Embedder, type RetryOptions, withRetry } from '@flowrag/core';
 import { GoogleGenAI } from '@google/genai';
 
 import { GeminiEmbeddingModels } from './models.js';
@@ -6,12 +6,14 @@ import { GeminiEmbeddingModels } from './models.js';
 export interface GeminiEmbedderOptions {
   apiKey?: string;
   model?: string;
+  retry?: RetryOptions;
 }
 
 export class GeminiEmbedder implements Embedder {
   readonly modelName: string;
   readonly dimensions: number = 3072; // gemini-embedding-001 default
   private readonly client: GoogleGenAI;
+  private readonly retry: RetryOptions;
 
   constructor(options: GeminiEmbedderOptions = {}) {
     const apiKey = options.apiKey || process.env.GEMINI_API_KEY;
@@ -23,13 +25,18 @@ export class GeminiEmbedder implements Embedder {
 
     this.modelName = options.model || GeminiEmbeddingModels.GEMINI_EMBEDDING_001;
     this.client = new GoogleGenAI({ apiKey });
+    this.retry = options.retry ?? {};
   }
 
   async embed(text: string): Promise<number[]> {
-    const response = await this.client.models.embedContent({
-      model: this.modelName,
-      contents: { parts: [{ text }] },
-    });
+    const response = await withRetry(
+      () =>
+        this.client.models.embedContent({
+          model: this.modelName,
+          contents: { parts: [{ text }] },
+        }),
+      this.retry,
+    );
     return response.embeddings?.[0]?.values ?? [];
   }
 
@@ -38,10 +45,14 @@ export class GeminiEmbedder implements Embedder {
 
     const results = await Promise.all(
       texts.map((text) =>
-        this.client.models.embedContent({
-          model: this.modelName,
-          contents: { parts: [{ text }] },
-        }),
+        withRetry(
+          () =>
+            this.client.models.embedContent({
+              model: this.modelName,
+              contents: { parts: [{ text }] },
+            }),
+          this.retry,
+        ),
       ),
     );
 

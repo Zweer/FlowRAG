@@ -1,22 +1,31 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
-import type { RerankDocument, Reranker, RerankResult } from '@flowrag/core';
+import {
+  type RerankDocument,
+  type Reranker,
+  type RerankResult,
+  type RetryOptions,
+  withRetry,
+} from '@flowrag/core';
 
 import { BedrockRerankerModels } from './models.js';
 
 export interface BedrockRerankerOptions {
   model?: string;
   region?: string;
+  retry?: RetryOptions;
 }
 
 export class BedrockReranker implements Reranker {
   private readonly client: BedrockRuntimeClient;
   private readonly model: string;
+  private readonly retry: RetryOptions;
 
   constructor(options: BedrockRerankerOptions = {}) {
     this.model = options.model ?? BedrockRerankerModels.RERANK_V1;
     this.client = new BedrockRuntimeClient({
       region: options.region ?? process.env.AWS_REGION ?? 'us-east-1',
     });
+    this.retry = options.retry ?? {};
   }
 
   async rerank(
@@ -32,8 +41,12 @@ export class BedrockReranker implements Reranker {
       topN: limit ?? documents.length,
     });
 
-    const response = await this.client.send(
-      new InvokeModelCommand({ modelId: this.model, body, contentType: 'application/json' }),
+    const response = await withRetry(
+      () =>
+        this.client.send(
+          new InvokeModelCommand({ modelId: this.model, body, contentType: 'application/json' }),
+        ),
+      this.retry,
     );
 
     const result = JSON.parse(new TextDecoder().decode(response.body));
