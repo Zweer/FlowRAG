@@ -115,7 +115,7 @@ describe('IndexingPipeline', () => {
 
     await pipeline.process(['/test.txt']);
 
-    expect(mockScanner.scanFiles).toHaveBeenCalledWith(['/test.txt']);
+    expect(mockScanner.scanFiles).toHaveBeenCalledWith(['/test.txt'], undefined);
     expect(mockConfig.storage.kv.set).toHaveBeenCalledWith('doc:test', expect.any(Object));
     expect(mockConfig.embedder.embed).toHaveBeenCalledWith('test content');
     expect(mockConfig.storage.vector.upsert).toHaveBeenCalled();

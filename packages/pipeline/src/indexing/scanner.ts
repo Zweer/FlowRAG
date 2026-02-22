@@ -1,7 +1,8 @@
 import { readdir, readFile, stat } from 'node:fs/promises';
-import { extname, join } from 'node:path';
+import { extname, join, relative } from 'node:path';
 
 import type { DocumentParser } from '@flowrag/core';
+import picomatch from 'picomatch';
 
 import type { Document } from '../types.js';
 
@@ -21,6 +22,11 @@ const TEXT_EXTENSIONS = new Set([
   '.adoc',
 ]);
 
+export interface ScanOptions {
+  include?: string[];
+  exclude?: string[];
+}
+
 export class Scanner {
   private parserMap = new Map<string, DocumentParser>();
 
@@ -32,11 +38,12 @@ export class Scanner {
     }
   }
 
-  async scanFiles(paths: string[]): Promise<Document[]> {
+  async scanFiles(paths: string[], options?: ScanOptions): Promise<Document[]> {
     const filePaths = await this.resolvePaths(paths);
+    const filtered = this.filterPaths(filePaths, paths, options);
     const documents: Document[] = [];
 
-    for (const filePath of filePaths) {
+    for (const filePath of filtered) {
       try {
         const ext = extname(filePath).toLowerCase();
         const parser = this.parserMap.get(ext);
@@ -68,6 +75,30 @@ export class Scanner {
     }
 
     return documents;
+  }
+
+  private filterPaths(filePaths: string[], roots: string[], options?: ScanOptions): string[] {
+    if (!options?.include && !options?.exclude) return filePaths;
+
+    const normalize = (patterns: string[]) =>
+      patterns.map((p) => (p.includes('/') ? p : `**/${p}`));
+
+    const isIncluded = options.include ? picomatch(normalize(options.include)) : null;
+    const isExcluded = options.exclude ? picomatch(normalize(options.exclude)) : null;
+
+    return filePaths.filter((filePath) => {
+      let rel = filePath;
+      for (const root of roots) {
+        if (filePath.startsWith(root)) {
+          rel = relative(root, filePath);
+          break;
+        }
+      }
+
+      if (isExcluded?.(rel)) return false;
+      if (isIncluded && !isIncluded(rel)) return false;
+      return true;
+    });
   }
 
   private isSupportedFile(path: string): boolean {

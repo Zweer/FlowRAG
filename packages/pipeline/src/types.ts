@@ -77,6 +77,8 @@ export type QueryMode = 'local' | 'global' | 'hybrid' | 'naive';
 
 export interface IndexOptions {
   force?: boolean;
+  include?: string[];
+  exclude?: string[];
   onProgress?: (event: IndexProgress) => void;
 }
 

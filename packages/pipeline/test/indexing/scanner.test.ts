@@ -134,6 +134,97 @@ describe('Scanner', () => {
     expect(documents).toHaveLength(0);
   });
 
+  describe('include/exclude', () => {
+    beforeEach(() => {
+      mockStat.mockResolvedValue(dirStat());
+      mockReaddir.mockResolvedValue([
+        dirent('readme.md', false),
+        dirent('config.yaml', false),
+        dirent('data.json', false),
+        dirent('notes.txt', false),
+      ]);
+      mockReadFile.mockResolvedValue('content');
+    });
+
+    it('should include only matching files', async () => {
+      const documents = await scanner.scanFiles(['/docs'], { include: ['*.md'] });
+
+      expect(documents).toHaveLength(1);
+      expect(documents[0].metadata?.extension).toBe('.md');
+    });
+
+    it('should include multiple patterns', async () => {
+      const documents = await scanner.scanFiles(['/docs'], {
+        include: ['*.md', '*.yaml'],
+      });
+
+      expect(documents).toHaveLength(2);
+    });
+
+    it('should exclude matching files', async () => {
+      const documents = await scanner.scanFiles(['/docs'], {
+        exclude: ['*.json'],
+      });
+
+      expect(documents).toHaveLength(3);
+    });
+
+    it('should apply both include and exclude', async () => {
+      const documents = await scanner.scanFiles(['/docs'], {
+        include: ['*.md', '*.yaml'],
+        exclude: ['config.*'],
+      });
+
+      expect(documents).toHaveLength(1);
+      expect(documents[0].metadata?.extension).toBe('.md');
+    });
+
+    it('should match nested paths with **', async () => {
+      mockReaddir.mockReset();
+      mockReaddir.mockResolvedValueOnce([dirent('sub', true), dirent('root.md', false)]);
+      mockReaddir.mockResolvedValueOnce([dirent('nested.md', false), dirent('data.json', false)]);
+
+      const documents = await scanner.scanFiles(['/docs'], {
+        include: ['**/*.md'],
+      });
+
+      expect(documents).toHaveLength(2);
+    });
+
+    it('should exclude directories with glob', async () => {
+      mockReaddir.mockReset();
+      mockReaddir.mockResolvedValueOnce([dirent('keep', true), dirent('skip', true)]);
+      mockReaddir.mockResolvedValueOnce([dirent('a.md', false)]);
+      mockReaddir.mockResolvedValueOnce([dirent('b.md', false)]);
+
+      const documents = await scanner.scanFiles(['/docs'], {
+        exclude: ['skip/**'],
+      });
+
+      expect(documents).toHaveLength(1);
+    });
+
+    it('should return all files when no include/exclude', async () => {
+      const documents = await scanner.scanFiles(['/docs']);
+
+      expect(documents).toHaveLength(4);
+    });
+
+    it('should filter with multiple input roots', async () => {
+      mockStat.mockResolvedValueOnce(dirStat()).mockResolvedValueOnce(dirStat());
+      mockReaddir.mockResolvedValueOnce([dirent('a.md', false)]);
+      mockReaddir.mockResolvedValueOnce([dirent('b.txt', false)]);
+      mockReadFile.mockResolvedValue('content');
+
+      const documents = await scanner.scanFiles(['/docs', '/other'], {
+        include: ['*.md'],
+      });
+
+      expect(documents).toHaveLength(1);
+      expect(documents[0].metadata?.extension).toBe('.md');
+    });
+  });
+
   describe('with parsers', () => {
     let mockParser: DocumentParser;
 

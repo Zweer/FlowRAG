@@ -4,6 +4,7 @@ import type { ExtractionResult } from '@flowrag/core';
 
 import type { Chunk, Document, FlowRAGConfig, IndexingOptions, IndexProgress } from '../types.js';
 import { Chunker } from './chunker.js';
+import type { ScanOptions } from './scanner.js';
 import { Scanner } from './scanner.js';
 
 export class IndexingPipeline {
@@ -22,6 +23,7 @@ export class IndexingPipeline {
     inputs: string[],
     force = false,
     onProgress?: (event: IndexProgress) => void,
+    scanOptions?: ScanOptions,
   ): Promise<void> {
     const progress: IndexProgress = {
       type: 'scan',
@@ -32,7 +34,7 @@ export class IndexingPipeline {
     };
 
     // 1. Scanner: Parse files
-    const documents = await this.scanner.scanFiles(inputs);
+    const documents = await this.scanner.scanFiles(inputs, scanOptions);
     progress.documentsTotal = documents.length;
     onProgress?.(progress);
 
