@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server for FlowRAG - expose your knowledge base to AI assistants",
   "keywords": [
     "rag",
@@ -41,7 +41,7 @@
     "@flowrag/presets": "^1.4.1",
     "@flowrag/provider-anthropic": "^0.1.0",
     "@flowrag/provider-bedrock": "^0.3.0",
-    "@flowrag/provider-gemini": "^1.4.0",
+    "@flowrag/provider-gemini": "^1.4.1",
     "@flowrag/provider-local": "^1.4.0",
     "@flowrag/provider-openai": "^0.2.0",
     "@modelcontextprotocol/sdk": "^1.27.0",

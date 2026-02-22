@@ -7,6 +7,20 @@
 
 
 
+
+
+## [0.2.0] - 2026-02-22
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :bug: migrate to gemini-embedding-001
+
+## [0.2.0] - 2026-02-22
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :bug: migrate to gemini-embedding-001
+
 ## [0.1.0] - 2026-02-19
 
 ### ✨ Features

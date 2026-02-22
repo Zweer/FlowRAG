@@ -21,6 +21,13 @@
 
 
 
+
+## [1.4.0] - 2026-02-22
+
+### 🐛 Bug Fixes
+
+- fix(provider-gemini): :bug: migrate to gemini-embedding-001
+
 ## [1.3.0] - 2026-02-16
 
 ### ✨ Features
