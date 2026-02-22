@@ -3,5 +3,6 @@
 export * from './interfaces/index.js';
 export * from './namespace.js';
 export * from './prompt.js';
+export * from './retry.js';
 export * from './schema.js';
 export * from './types.js';
