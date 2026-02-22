@@ -23,8 +23,8 @@ describe('GeminiEmbedder', () => {
 
   describe('constructor', () => {
     it('should create with API key', () => {
-      expect(embedder.modelName).toBe('text-embedding-004');
-      expect(embedder.dimensions).toBe(768);
+      expect(embedder.modelName).toBe('gemini-embedding-001');
+      expect(embedder.dimensions).toBe(3072);
     });
 
     it('should throw without API key', () => {

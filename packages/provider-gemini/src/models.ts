@@ -1,6 +1,6 @@
 /** Well-known Gemini embedding model IDs */
 export const GeminiEmbeddingModels = {
-  TEXT_EMBEDDING_004: 'text-embedding-004',
+  GEMINI_EMBEDDING_001: 'gemini-embedding-001',
 } as const;
 
 /** Well-known Gemini LLM model IDs for entity extraction and reranking */

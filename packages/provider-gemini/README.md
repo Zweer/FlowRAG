@@ -17,7 +17,7 @@ import { GeminiEmbedder } from '@flowrag/provider-gemini';
 
 const embedder = new GeminiEmbedder({
   apiKey: 'your-gemini-api-key', // or set GEMINI_API_KEY env var
-  model: 'text-embedding-004', // optional, default
+  model: 'gemini-embedding-001', // optional, default
 });
 
 // Single embedding

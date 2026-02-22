@@ -10,7 +10,7 @@ export interface GeminiEmbedderOptions {
 
 export class GeminiEmbedder implements Embedder {
   readonly modelName: string;
-  readonly dimensions: number = 768; // text-embedding-004 default
+  readonly dimensions: number = 3072; // gemini-embedding-001 default
   private readonly client: GoogleGenAI;
 
   constructor(options: GeminiEmbedderOptions = {}) {
@@ -21,7 +21,7 @@ export class GeminiEmbedder implements Embedder {
       );
     }
 
-    this.modelName = options.model || GeminiEmbeddingModels.TEXT_EMBEDDING_004;
+    this.modelName = options.model || GeminiEmbeddingModels.GEMINI_EMBEDDING_001;
     this.client = new GoogleGenAI({ apiKey });
   }
 

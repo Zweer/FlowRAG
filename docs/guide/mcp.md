@@ -56,7 +56,7 @@ npx @flowrag/mcp --data ./data --docs ./content
 | Provider | Embedder Model | Extractor Model |
 |----------|---------------|-----------------|
 | `local` | `Xenova/e5-small-v2` | — (not available) |
-| `gemini` | `text-embedding-004` | `gemini-3-flash-preview` |
+| `gemini` | `gemini-embedding-001` | `gemini-3-flash-preview` |
 | `bedrock` | `amazon.titan-embed-text-v2:0` | `anthropic.claude-haiku-4-5-20251001-v1:0` |
 
 ::: tip

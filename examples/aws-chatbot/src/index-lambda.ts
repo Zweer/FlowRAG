@@ -1,4 +1,3 @@
-import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import { defineSchema } from '@flowrag/core';
@@ -27,11 +26,13 @@ const schema = defineSchema({
 
 function createRag() {
   const osClient = new Client({ node: process.env.OPENSEARCH_URL });
+  const dataBucket = process.env.DATA_BUCKET;
+  if (!dataBucket) throw new Error('DATA_BUCKET env var required');
 
   return createFlowRAG({
     schema,
     ...createAWSStorage({
-      bucket: process.env.DATA_BUCKET!,
+      bucket: dataBucket,
       opensearchClient: osClient,
       region: process.env.AWS_REGION,
     }),
@@ -52,7 +53,9 @@ export async function handler(_event: unknown, _context: Context) {
   // Download docs from S3 source bucket to /tmp
   // (In production, use a proper S3 sync or list+get approach)
   const docsPath = '/tmp/docs';
-  await downloadDocs(process.env.DOCS_BUCKET!, docsPath);
+  const docsBucket = process.env.DOCS_BUCKET;
+  if (!docsBucket) throw new Error('DOCS_BUCKET env var required');
+  await downloadDocs(docsBucket, docsPath);
 
   // Index all documents — unchanged ones are skipped automatically
   await rag.index(docsPath, {

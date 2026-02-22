@@ -22,10 +22,10 @@ export GEMINI_API_KEY=your-key
 import { GeminiEmbedder } from '@flowrag/provider-gemini';
 
 const embedder = new GeminiEmbedder({
-  model: 'text-embedding-004', // default
+  model: 'gemini-embedding-001', // default
 });
 
-embedder.dimensions; // 768
+embedder.dimensions; // 3072
 ```
 
 ## Extractor

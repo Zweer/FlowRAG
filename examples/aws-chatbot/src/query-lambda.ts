@@ -24,11 +24,13 @@ const schema = defineSchema({
 // Initialize once (reused across Lambda invocations)
 const osClient = new Client({ node: process.env.OPENSEARCH_URL });
 const bedrock = new BedrockRuntimeClient({});
+const dataBucket = process.env.DATA_BUCKET;
+if (!dataBucket) throw new Error('DATA_BUCKET env var required');
 
 const rag = createFlowRAG({
   schema,
   ...createAWSStorage({
-    bucket: process.env.DATA_BUCKET!,
+    bucket: dataBucket,
     opensearchClient: osClient,
     region: process.env.AWS_REGION,
   }),

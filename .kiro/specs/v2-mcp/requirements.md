@@ -74,7 +74,7 @@ All configuration lives in `flowrag.config.json`:
 | Provider | Embedder Model | Dimensions | Extractor Model |
 |----------|---------------|------------|-----------------|
 | `local` | `Xenova/e5-small-v2` | 384 | — (not available) |
-| `gemini` | `text-embedding-004` | 768 | `gemini-3-flash-preview` |
+| `gemini` | `gemini-embedding-001` | 3072 | `gemini-3-flash-preview` |
 | `bedrock` | `amazon.titan-embed-text-v2:0` | 1024 | `anthropic.claude-haiku-4-5-20251001-v1:0` |
 
 Note: `local` has no extractor — if `embedder.provider` is `"local"`, the `extractor` must be `"gemini"` or `"bedrock"`.
@@ -154,8 +154,8 @@ After each indexing run, the server saves `flowrag.meta.json` in the data direct
   "configHash": "a1b2c3d4",
   "embedder": {
     "provider": "gemini",
-    "model": "text-embedding-004",
-    "dimensions": 768
+    "model": "gemini-embedding-001",
+    "dimensions": 3072
   },
   "extractor": {
     "provider": "gemini",

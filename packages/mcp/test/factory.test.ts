@@ -10,7 +10,7 @@ class MockLocalEmbedder {
 }
 
 class MockGeminiEmbedder {
-  dimensions = 768;
+  dimensions = 3072;
   modelName = 'mock-gemini';
   embed = vi.fn();
   embedBatch = vi.fn();
