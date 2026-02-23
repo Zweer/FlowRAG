@@ -158,9 +158,8 @@ export class IndexingPipeline {
       });
     }
 
-    // 5. Storage: Save to all stores
+    // 5. Storage: Save vectors and entities first, then relations
     await Promise.all([
-      // Vector storage
       this.config.storage.vector.upsert([
         {
           id: chunk.id,
@@ -168,8 +167,6 @@ export class IndexingPipeline {
           metadata: { documentId: chunk.documentId, content: chunk.content },
         },
       ]),
-
-      // Graph storage - entities
       ...extraction.entities.map((entity) =>
         this.config.storage.graph.addEntity({
           id: entity.name,
@@ -180,9 +177,10 @@ export class IndexingPipeline {
           ...(entity.fields ? { fields: entity.fields } : {}),
         }),
       ),
+    ]);
 
-      // Graph storage - relations
-      ...extraction.relations.map((relation) =>
+    await Promise.all(
+      extraction.relations.map((relation) =>
         this.config.storage.graph.addRelation({
           id: `${relation.source}-${relation.type}-${relation.target}`,
           sourceId: relation.source,
@@ -194,7 +192,7 @@ export class IndexingPipeline {
           ...(relation.fields ? { fields: relation.fields } : {}),
         }),
       ),
-    ]);
+    );
 
     progress.chunksProcessed++;
     onProgress?.({ ...progress, type: 'chunk:done', chunkId: chunk.id });

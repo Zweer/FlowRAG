@@ -42,6 +42,11 @@ export class SQLiteGraphStorage implements GraphStorage {
   }
 
   private init(): void {
+    // Disable foreign keys — the pipeline controls data integrity,
+    // and parallel chunk processing can insert relations before their
+    // target entities exist in another chunk.
+    this.db.pragma('foreign_keys = OFF');
+
     // Create entities table
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS entities (
