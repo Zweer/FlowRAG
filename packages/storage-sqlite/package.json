@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-sqlite",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "🕸️ Graph storage implementation based on SQLite. Stores the knowledge graph (entities and relations) and provides traversal algorithms like BFS/DFS, path finding between entities, and queries to find connected entities. SQLite is embedded, fast, and the .db file is easily versionable.",
   "keywords": [
     "storage",

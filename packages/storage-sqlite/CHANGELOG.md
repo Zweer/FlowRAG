@@ -3,6 +3,13 @@
 
 
 
+
+## [1.4.0] - 2026-02-23
+
+### 🐛 Bug Fixes
+
+- fix(pipeline,storage-sqlite): :bug: prevent FK constraint failure during parallel indexing
+
 ## [1.3.0] - 2026-02-16
 
 ### ✨ Features
