@@ -189,7 +189,7 @@ export class IndexingPipeline {
           targetId: relation.target,
           type: relation.type,
           description: relation.description,
-          keywords: relation.keywords,
+          keywords: relation.keywords ?? [],
           sourceChunkIds: [chunk.id],
           ...(relation.fields ? { fields: relation.fields } : {}),
         }),

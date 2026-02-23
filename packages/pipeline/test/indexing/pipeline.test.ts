@@ -828,6 +828,31 @@ describe('IndexingPipeline', () => {
 
       gleanPipeline.dispose();
     });
+
+    it('should default missing keywords to empty array', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+      mockChunker.chunkDocument = vi.fn(() => [
+        { id: 'chunk:test:0', documentId: 'doc:test', content: 'test content', index: 0 },
+      ]);
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+      mockConfig.extractor.extractEntities = vi.fn().mockResolvedValue({
+        entities: [],
+        relations: [{ source: 'A', target: 'B', type: 'USES', description: 'd' }],
+      });
+
+      await pipeline.process(['/test.txt']);
+
+      expect(mockConfig.storage.graph.addRelation).toHaveBeenCalledWith(
+        expect.objectContaining({ keywords: [] }),
+      );
+    });
   });
 
   describe('extraction gleaning', () => {
