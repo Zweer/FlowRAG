@@ -51,6 +51,11 @@ jobs:
           path: ~/.cache/huggingface
           key: hf-models-${{ hashFiles('packages/provider-local/package.json') }}
 
+      - name: Download models
+        run: npx -y tsx scripts/download-models.ts
+        env:
+          HF_HOME: ~/.cache/huggingface
+
       - name: E2E testing
         run: npm run test:e2e
         env:
