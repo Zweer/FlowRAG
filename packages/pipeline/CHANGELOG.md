@@ -38,6 +38,13 @@
 
 
 
+
+## [1.7.1] - 2026-02-23
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: default missing relation keywords to empty array
+
 ## [1.7.0] - 2026-02-23
 
 ### 🐛 Bug Fixes

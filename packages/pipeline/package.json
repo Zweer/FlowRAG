@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/pipeline",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "Core pipeline for FlowRAG - indexing and querying with dual retrieval (vector + graph)",
   "keywords": [
     "rag",
