@@ -2,6 +2,13 @@
 
 
 
+
+## [0.2.0] - 2026-02-23
+
+### ✨ Features
+
+- feat(providers): :sparkles: integrate retry in all provider API calls
+
 ## [0.1.0] - 2026-02-19
 
 ### ✨ Features

@@ -36,14 +36,14 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.6.0",
+    "@flowrag/core": "^1.7.0",
     "@flowrag/pipeline": "^1.7.0",
     "@flowrag/presets": "^1.4.1",
-    "@flowrag/provider-anthropic": "^0.1.0",
-    "@flowrag/provider-bedrock": "^0.3.0",
-    "@flowrag/provider-gemini": "^1.4.1",
+    "@flowrag/provider-anthropic": "^0.2.0",
+    "@flowrag/provider-bedrock": "^0.4.0",
+    "@flowrag/provider-gemini": "^1.5.0",
     "@flowrag/provider-local": "^1.4.0",
-    "@flowrag/provider-openai": "^0.2.0",
+    "@flowrag/provider-openai": "^0.3.0",
     "@modelcontextprotocol/sdk": "^1.27.0",
     "dotenv": "^17.3.1"
   },

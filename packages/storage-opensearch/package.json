@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.6.0",
+    "@flowrag/core": "^1.7.0",
     "@opensearch-project/opensearch": "^3.5.1"
   },
   "engines": {

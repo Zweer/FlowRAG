@@ -43,6 +43,41 @@
 
 
 
+
+
+
+
+
+## [1.6.0] - 2026-02-23
+
+### ✨ Features
+
+- feat(core): :sparkles: add withRetry utility with exponential backoff
+
+## [1.6.0] - 2026-02-23
+
+### ✨ Features
+
+- feat(core): :sparkles: add withRetry utility with exponential backoff
+
+## [1.6.0] - 2026-02-23
+
+### ✨ Features
+
+- feat(core): :sparkles: add withRetry utility with exponential backoff
+
+## [1.6.0] - 2026-02-23
+
+### ✨ Features
+
+- feat(core): :sparkles: add withRetry utility with exponential backoff
+
+## [1.6.0] - 2026-02-23
+
+### ✨ Features
+
+- feat(core): :sparkles: add withRetry utility with exponential backoff
+
 ## [1.5.0] - 2026-02-19
 
 ### ✨ Features

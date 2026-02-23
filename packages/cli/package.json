@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@commander-js/extra-typings": "^14.0.0",
-    "@flowrag/core": "^1.6.0",
+    "@flowrag/core": "^1.7.0",
     "@flowrag/pipeline": "^1.7.0",
     "@flowrag/presets": "^1.4.1",
     "@inquirer/prompts": "^8.2.1",

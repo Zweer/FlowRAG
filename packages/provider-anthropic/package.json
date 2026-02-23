@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-anthropic",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Anthropic provider for FlowRAG - entity extraction and reranking via Claude",
   "keywords": [
     "flowrag",
@@ -34,7 +34,7 @@
   ],
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
-    "@flowrag/core": "^1.6.0"
+    "@flowrag/core": "^1.7.0"
   },
   "engines": {
     "node": ">=20.3"

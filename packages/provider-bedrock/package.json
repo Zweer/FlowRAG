@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-bedrock",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "AWS Bedrock provider for FlowRAG - embeddings and entity extraction",
   "keywords": [
     "flowrag",
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.995.0",
-    "@flowrag/core": "^1.6.0"
+    "@flowrag/core": "^1.7.0"
   },
   "engines": {
     "node": ">=20.3"
