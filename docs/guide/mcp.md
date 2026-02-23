@@ -191,3 +191,35 @@ Tools that accept entity names (`flowrag_relations`, `flowrag_trace`, `flowrag_p
 4. Error if no match found
 
 This means you can type `auth` and it will find `AuthService`.
+
+## Remote / HTTP Mode
+
+The MCP server can also run as a centralized HTTP server for team use:
+
+```json
+{
+  "transport": "http",
+  "port": 3000,
+  "auth": { "token": "${FLOWRAG_AUTH_TOKEN}" },
+  "storage": {
+    "kv": { "provider": "redis", "url": "redis://redis.internal:6379" },
+    "vector": { "provider": "opensearch", "node": "https://os:9200", "dimensions": 1024 },
+    "graph": { "provider": "opensearch", "node": "https://os:9200" }
+  }
+}
+```
+
+Clients connect via URL instead of spawning a local process:
+
+```json
+{
+  "mcpServers": {
+    "flowrag": {
+      "url": "https://flowrag.company.com/mcp",
+      "headers": { "Authorization": "Bearer ${FLOWRAG_TOKEN}" }
+    }
+  }
+}
+```
+
+See [Remote MCP Server](/deployment/remote-mcp) for full deployment guide including Docker and Fargate.

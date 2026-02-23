@@ -15,12 +15,58 @@ class MockMcpServer {
   connect = mockConnect;
 }
 
+class MockStdioTransport {
+  close = vi.fn();
+}
+
 vi.mock('@modelcontextprotocol/sdk/server/mcp.js', () => ({
   McpServer: MockMcpServer,
 }));
 
 vi.mock('@modelcontextprotocol/sdk/server/stdio.js', () => ({
-  StdioServerTransport: class {},
+  StdioServerTransport: MockStdioTransport,
+}));
+
+let lastTransportInstance: { onclose?: () => void; sessionId: string } | null = null;
+
+vi.mock('@modelcontextprotocol/sdk/server/streamableHttp.js', () => ({
+  StreamableHTTPServerTransport: class {
+    sessionId = 'test-session';
+    onclose: (() => void) | undefined;
+    handleRequest: ReturnType<typeof vi.fn>;
+    close = vi.fn();
+    constructor(opts?: {
+      sessionIdGenerator?: () => string;
+      onsessioninitialized?: (sid: string) => void;
+    }) {
+      lastTransportInstance = this;
+      this.handleRequest = vi.fn(async () => {
+        this.sessionId = opts?.sessionIdGenerator?.() ?? 'test-session';
+        opts?.onsessioninitialized?.(this.sessionId);
+      });
+    }
+  },
+}));
+
+const mockListen = vi.fn((_port: number, cb: () => void) => {
+  cb();
+  return { close: vi.fn((cb: () => void) => cb()) };
+});
+const mockGet = vi.fn();
+const mockPost = vi.fn();
+const mockDelete = vi.fn();
+
+vi.mock('@modelcontextprotocol/sdk/server/express.js', () => ({
+  createMcpExpressApp: vi.fn(() => ({
+    get: mockGet,
+    post: mockPost,
+    delete: mockDelete,
+    listen: mockListen,
+  })),
+}));
+
+vi.mock('@modelcontextprotocol/sdk/types.js', () => ({
+  isInitializeRequest: vi.fn(() => true),
 }));
 
 vi.mock('../src/metadata.js', () => ({
@@ -28,6 +74,7 @@ vi.mock('../src/metadata.js', () => ({
 }));
 
 const { createServer } = await import('../src/server.js');
+const { isInitializeRequest } = await import('@modelcontextprotocol/sdk/types.js');
 
 const baseConfig: FlowRAGMcpConfig = {
   data: './data',
@@ -308,5 +355,268 @@ describe('resource handlers', () => {
     expect(result.contents[0].uri).toBe('flowrag://schema');
     expect(result.contents[0].mimeType).toBe('application/json');
     expect(JSON.parse(result.contents[0].text)).toEqual(baseConfig.schema);
+  });
+});
+
+describe('stdio transport', () => {
+  it('returns a handle with close()', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), baseConfig);
+    expect(handle).toHaveProperty('close');
+    await handle.close();
+  });
+});
+
+describe('HTTP transport', () => {
+  const httpConfig: FlowRAGMcpConfig = { ...baseConfig, transport: 'http', port: 0 };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  function getRouteHandler(mockFn: ReturnType<typeof vi.fn>, path: string) {
+    const call = mockFn.mock.calls.find((c: unknown[]) => c[0] === path);
+    if (!call) throw new Error(`Route "${path}" not found`);
+    return call[call.length - 1]; // last arg is always the handler
+  }
+
+  function mockReq(headers: Record<string, string> = {}, body?: unknown) {
+    return { headers, body } as unknown as import('express').Request;
+  }
+
+  function mockRes() {
+    const res = {
+      headersSent: false,
+      json: vi.fn().mockReturnThis(),
+      status: vi.fn().mockReturnThis(),
+      send: vi.fn().mockReturnThis(),
+    } as unknown as import('express').Response & {
+      headersSent: boolean;
+      json: ReturnType<typeof vi.fn>;
+      status: ReturnType<typeof vi.fn>;
+      send: ReturnType<typeof vi.fn>;
+    };
+    return res;
+  }
+
+  it('starts HTTP server and registers routes', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+
+    // health + GET /mcp
+    expect(mockGet).toHaveBeenCalledTimes(2);
+    expect(mockPost).toHaveBeenCalledTimes(1);
+    expect(mockDelete).toHaveBeenCalledTimes(1);
+    expect(mockListen).toHaveBeenCalledWith(0, expect.any(Function));
+
+    await handle.close();
+  });
+
+  it('registers health endpoint', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+
+    const healthCall = mockGet.mock.calls.find((c: unknown[]) => c[0] === '/health');
+    expect(healthCall).toBeDefined();
+
+    const res = mockRes();
+    healthCall?.[1]({}, res);
+    expect(res.json).toHaveBeenCalledWith({ status: 'ok' });
+
+    await handle.close();
+  });
+
+  it('applies auth middleware when auth is configured', async () => {
+    const authConfig = { ...httpConfig, auth: { token: 'secret' } };
+    const handle = await createServer(createMockRag(), createMockGraph(), authConfig);
+
+    // POST /mcp should have 3 args (path, authMiddleware, handler)
+    const postCall = mockPost.mock.calls.find((c: unknown[]) => c[0] === '/mcp');
+    expect(postCall).toHaveLength(3);
+
+    await handle.close();
+  });
+
+  it('skips auth middleware when no auth configured', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+
+    // POST /mcp should have 2 args (path, handler)
+    const postCall = mockPost.mock.calls.find((c: unknown[]) => c[0] === '/mcp');
+    expect(postCall).toHaveLength(2);
+
+    await handle.close();
+  });
+
+  it('POST /mcp creates transport for initialize request', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const handler = getRouteHandler(mockPost, '/mcp');
+
+    const req = mockReq({}, { method: 'initialize' });
+    const res = mockRes();
+    await handler(req, res);
+
+    // Should have created a transport and called handleRequest
+    await handle.close();
+  });
+
+  it('POST /mcp returns 400 for non-init request without session', async () => {
+    vi.mocked(isInitializeRequest).mockReturnValueOnce(false);
+
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const handler = getRouteHandler(mockPost, '/mcp');
+
+    const req = mockReq({}, { method: 'tools/list' });
+    const res = mockRes();
+    await handler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({ error: expect.objectContaining({ code: -32000 }) }),
+    );
+
+    await handle.close();
+  });
+
+  it('POST /mcp returns 500 on internal error', async () => {
+    vi.mocked(isInitializeRequest).mockImplementationOnce(() => {
+      throw new Error('boom');
+    });
+
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const handler = getRouteHandler(mockPost, '/mcp');
+
+    const req = mockReq({}, {});
+    const res = mockRes();
+    await handler(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+
+    await handle.close();
+  });
+
+  it('GET /mcp returns 400 for missing session', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const handler = getRouteHandler(mockGet, '/mcp');
+
+    const res = mockRes();
+    await handler(mockReq({}), res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith('Invalid or missing session ID');
+
+    await handle.close();
+  });
+
+  it('DELETE /mcp returns 400 for missing session', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const handler = getRouteHandler(mockDelete, '/mcp');
+
+    const res = mockRes();
+    await handler(mockReq({}), res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+
+    await handle.close();
+  });
+
+  it('POST /mcp does not send 500 if headers already sent', async () => {
+    vi.mocked(isInitializeRequest).mockImplementationOnce(() => {
+      throw new Error('boom');
+    });
+
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const handler = getRouteHandler(mockPost, '/mcp');
+
+    const res = mockRes();
+    res.headersSent = true;
+    await handler(mockReq({}, {}), res);
+
+    expect(res.status).not.toHaveBeenCalled();
+
+    await handle.close();
+  });
+
+  it('POST /mcp reuses existing transport for known session', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const handler = getRouteHandler(mockPost, '/mcp');
+
+    // First: initialize to create session
+    await handler(mockReq({}, { method: 'initialize' }), mockRes());
+    const sid = lastTransportInstance?.sessionId ?? '';
+
+    // Second: reuse session
+    const res = mockRes();
+    await handler(mockReq({ 'mcp-session-id': sid }, { method: 'tools/list' }), res);
+
+    // Should not return 400
+    expect(res.status).not.toHaveBeenCalled();
+
+    await handle.close();
+  });
+
+  it('GET /mcp delegates to transport for valid session', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const postHandler = getRouteHandler(mockPost, '/mcp');
+    const getHandler = getRouteHandler(mockGet, '/mcp');
+
+    // Initialize session
+    await postHandler(mockReq({}, { method: 'initialize' }), mockRes());
+    const sid = lastTransportInstance?.sessionId ?? '';
+
+    // GET with valid session
+    const res = mockRes();
+    await getHandler(mockReq({ 'mcp-session-id': sid }), res);
+
+    expect(res.status).not.toHaveBeenCalled();
+
+    await handle.close();
+  });
+
+  it('DELETE /mcp delegates to transport for valid session', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const postHandler = getRouteHandler(mockPost, '/mcp');
+    const deleteHandler = getRouteHandler(mockDelete, '/mcp');
+
+    // Initialize session
+    await postHandler(mockReq({}, { method: 'initialize' }), mockRes());
+    const sid = lastTransportInstance?.sessionId ?? '';
+
+    // DELETE with valid session
+    const res = mockRes();
+    await deleteHandler(mockReq({ 'mcp-session-id': sid }), res);
+
+    expect(res.status).not.toHaveBeenCalled();
+
+    await handle.close();
+  });
+
+  it('onclose cleans up session from transports map', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const postHandler = getRouteHandler(mockPost, '/mcp');
+
+    // Initialize session (stores transport in map)
+    await postHandler(mockReq({}, { method: 'initialize' }), mockRes());
+
+    // Trigger onclose
+    lastTransportInstance?.onclose?.();
+
+    // Session should be removed — next request with that session should fail
+    const sid = lastTransportInstance?.sessionId ?? '';
+    const res = mockRes();
+    const getHandler = getRouteHandler(mockGet, '/mcp');
+    await getHandler(mockReq({ 'mcp-session-id': sid }), res);
+    expect(res.status).toHaveBeenCalledWith(400);
+
+    await handle.close();
+  });
+
+  it('onclose is safe when sessionId is undefined', async () => {
+    const handle = await createServer(createMockRag(), createMockGraph(), httpConfig);
+    const postHandler = getRouteHandler(mockPost, '/mcp');
+
+    await postHandler(mockReq({}, { method: 'initialize' }), mockRes());
+
+    // Clear sessionId before triggering onclose
+    if (lastTransportInstance) lastTransportInstance.sessionId = undefined as unknown as string;
+    lastTransportInstance?.onclose?.();
+
+    await handle.close();
   });
 });

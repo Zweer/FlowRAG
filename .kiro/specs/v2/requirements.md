@@ -47,4 +47,4 @@ npx @flowrag/mcp --config ./flowrag.config.json
 ---
 
 *Created: 2026-02-16*
-*Status: Planning*
+*Status: Complete*

@@ -17,7 +17,7 @@ export async function main(): Promise<void> {
   });
 
   const config = await loadConfig(values as CliFlags);
-  const { rag, graph } = createRagFromConfig(config);
+  const { rag, graph } = await createRagFromConfig(config);
 
   // Check for config changes
   const metadata = await readMetadata(config.data);
@@ -29,5 +29,15 @@ export async function main(): Promise<void> {
     }
   }
 
-  await createServer(rag, graph, config);
+  const handle = await createServer(rag, graph, config);
+
+  if (config.transport === 'http') {
+    const shutdown = async () => {
+      console.error('Shutting down...');
+      await handle.close();
+      process.exit(0);
+    };
+    process.on('SIGINT', shutdown);
+    process.on('SIGTERM', shutdown);
+  }
 }

@@ -1,25 +1,156 @@
+import { randomUUID } from 'node:crypto';
+import type { Server } from 'node:http';
+
 import type { GraphStorage } from '@flowrag/core';
 import type { FlowRAG } from '@flowrag/pipeline';
+import { createMcpExpressApp } from '@modelcontextprotocol/sdk/server/express.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
+import type { Request, Response } from 'express';
 import { z } from 'zod';
 
+import { createBearerAuthMiddleware } from './auth.js';
 import type { FlowRAGMcpConfig } from './config.js';
 import { writeMetadata } from './metadata.js';
 import { resolveEntity } from './resolve.js';
+
+export interface ServerHandle {
+  close(): Promise<void>;
+}
 
 export async function createServer(
   rag: FlowRAG,
   graph: GraphStorage,
   config: FlowRAGMcpConfig,
-): Promise<void> {
-  const server = new McpServer({ name: 'flowrag', version: '0.1.0' });
+): Promise<ServerHandle> {
+  if (config.transport === 'http') {
+    return startHttpServer(rag, graph, config);
+  }
+  return startStdioServer(rag, graph, config);
+}
 
+function createMcpServerInstance(
+  rag: FlowRAG,
+  graph: GraphStorage,
+  config: FlowRAGMcpConfig,
+): McpServer {
+  const server = new McpServer({ name: 'flowrag', version: '0.1.0' });
   registerTools(server, rag, graph, config);
   registerResources(server, config);
+  return server;
+}
 
+async function startStdioServer(
+  rag: FlowRAG,
+  graph: GraphStorage,
+  config: FlowRAGMcpConfig,
+): Promise<ServerHandle> {
+  const server = createMcpServerInstance(rag, graph, config);
   const transport = new StdioServerTransport();
   await server.connect(transport);
+  return { close: () => transport.close() };
+}
+
+function startHttpServer(
+  rag: FlowRAG,
+  graph: GraphStorage,
+  config: FlowRAGMcpConfig,
+): Promise<ServerHandle> {
+  const app = createMcpExpressApp({ host: '0.0.0.0' });
+  const transports: Record<string, StreamableHTTPServerTransport> = {};
+
+  app.get('/health', (_req: Request, res: Response) => {
+    res.json({ status: 'ok' });
+  });
+
+  const authMiddleware = config.auth?.token ? createBearerAuthMiddleware(config.auth.token) : null;
+
+  const postHandler = async (req: Request, res: Response) => {
+    try {
+      const sessionId = req.headers['mcp-session-id'] as string | undefined;
+
+      if (sessionId && transports[sessionId]) {
+        await transports[sessionId].handleRequest(req, res, req.body);
+        return;
+      }
+
+      if (!sessionId && isInitializeRequest(req.body)) {
+        const transport = new StreamableHTTPServerTransport({
+          sessionIdGenerator: () => randomUUID(),
+          onsessioninitialized: (sid) => {
+            transports[sid] = transport;
+          },
+        });
+        transport.onclose = () => {
+          const sid = transport.sessionId;
+          if (sid) delete transports[sid];
+        };
+        const server = createMcpServerInstance(rag, graph, config);
+        await server.connect(transport);
+        await transport.handleRequest(req, res, req.body);
+        return;
+      }
+
+      res.status(400).json({
+        jsonrpc: '2.0',
+        error: { code: -32000, message: 'Bad Request: No valid session ID provided' },
+        id: null,
+      });
+    } catch {
+      if (!res.headersSent) {
+        res.status(500).json({
+          jsonrpc: '2.0',
+          error: { code: -32603, message: 'Internal server error' },
+          id: null,
+        });
+      }
+    }
+  };
+
+  const getHandler = async (req: Request, res: Response) => {
+    const sessionId = req.headers['mcp-session-id'] as string | undefined;
+    if (!sessionId || !transports[sessionId]) {
+      res.status(400).send('Invalid or missing session ID');
+      return;
+    }
+    await transports[sessionId].handleRequest(req, res);
+  };
+
+  const deleteHandler = async (req: Request, res: Response) => {
+    const sessionId = req.headers['mcp-session-id'] as string | undefined;
+    if (!sessionId || !transports[sessionId]) {
+      res.status(400).send('Invalid or missing session ID');
+      return;
+    }
+    await transports[sessionId].handleRequest(req, res);
+  };
+
+  if (authMiddleware) {
+    app.post('/mcp', authMiddleware, postHandler);
+    app.get('/mcp', authMiddleware, getHandler);
+    app.delete('/mcp', authMiddleware, deleteHandler);
+  } else {
+    app.post('/mcp', postHandler);
+    app.get('/mcp', getHandler);
+    app.delete('/mcp', deleteHandler);
+  }
+
+  return new Promise<ServerHandle>((resolve) => {
+    const httpServer: Server = app.listen(config.port, () => {
+      console.error(`FlowRAG MCP HTTP server listening on port ${config.port}`);
+      resolve({
+        close: async () => {
+          for (const sid of Object.keys(transports)) {
+            await transports[sid].close();
+            delete transports[sid];
+          }
+          await new Promise<void>((r) => httpServer.close(() => r()));
+        },
+      });
+    });
+  });
 }
 
 function registerTools(

@@ -89,6 +89,38 @@ After indexing, a `flowrag.meta.json` is saved in the data directory. On startup
 - **Breaking**: Embedder changed → re-index required
 - **Minor**: Schema or extractor changed → new types apply on next index
 
+## Remote / HTTP Mode
+
+Run as a centralized HTTP server for team use:
+
+```json
+{
+  "transport": "http",
+  "port": 3000,
+  "auth": { "token": "${FLOWRAG_AUTH_TOKEN}" },
+  "storage": {
+    "kv": { "provider": "redis", "url": "redis://redis.internal:6379" },
+    "vector": { "provider": "opensearch", "node": "https://os:9200", "dimensions": 1024 },
+    "graph": { "provider": "opensearch", "node": "https://os:9200" }
+  }
+}
+```
+
+Clients connect via URL:
+
+```json
+{
+  "mcpServers": {
+    "flowrag": {
+      "url": "https://flowrag.company.com/mcp",
+      "headers": { "Authorization": "Bearer ${FLOWRAG_TOKEN}" }
+    }
+  }
+}
+```
+
+A Dockerfile is included for Fargate/ECS deployment. See the [deployment guide](https://zweer.github.io/FlowRAG/deployment/remote-mcp) for details.
+
 ## License
 
 MIT

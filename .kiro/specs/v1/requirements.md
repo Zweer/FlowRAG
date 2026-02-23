@@ -567,8 +567,8 @@ export const handler = async (event: { query: string }) => {
 - **Built-in server**: Use as library, not service
 - **Python support**: TypeScript only
 - **Neo4j integration**: SQLite/OpenSearch sufficient for our scale
-- **Multi-tenancy**: Single workspace per instance
-- **MCP server**: Planned for v2
+- ~~**Multi-tenancy**: Single workspace per instance~~ → Implemented in v2 via `withNamespace`
+- ~~**MCP server**: Planned for v2~~ → Implemented in v2 as `@flowrag/mcp`
 
 ## 11. Success Criteria
 

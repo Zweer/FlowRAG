@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { loadConfig } from '../src/config.js';
+import { loadConfig, resolveEnvVars } from '../src/config.js';
 
 describe('loadConfig', () => {
   let tempDir: string;
@@ -122,5 +122,92 @@ describe('loadConfig', () => {
     const config = await loadConfig({});
     expect(config.data).toBe('./data');
     expect(config.embedder.provider).toBe('local');
+  });
+
+  it('loads storage config from file', async () => {
+    const configFile = join(tempDir, 'flowrag.config.json');
+    await writeFile(
+      configFile,
+      JSON.stringify({
+        storage: {
+          kv: { provider: 'redis', url: 'redis://localhost:6379' },
+          vector: { provider: 'opensearch', node: 'https://os:9200', dimensions: 1024 },
+          graph: { provider: 'opensearch', node: 'https://os:9200' },
+        },
+      }),
+    );
+
+    const config = await loadConfig({ config: configFile });
+
+    expect(config.storage?.kv?.provider).toBe('redis');
+    expect(config.storage?.kv?.url).toBe('redis://localhost:6379');
+    expect(config.storage?.vector?.provider).toBe('opensearch');
+    expect(config.storage?.vector?.dimensions).toBe(1024);
+    expect(config.storage?.graph?.provider).toBe('opensearch');
+  });
+
+  it('loads auth config with env var interpolation', async () => {
+    process.env.TEST_AUTH_TOKEN = 'my-secret';
+    const configFile = join(tempDir, 'flowrag.config.json');
+    await writeFile(
+      configFile,
+      JSON.stringify({
+        // biome-ignore lint/suspicious/noTemplateCurlyInString: testing env var interpolation
+        auth: { token: '${TEST_AUTH_TOKEN}' },
+      }),
+    );
+
+    const config = await loadConfig({ config: configFile });
+
+    expect(config.auth?.token).toBe('my-secret');
+    delete process.env.TEST_AUTH_TOKEN;
+  });
+
+  it('resolves missing env var to empty string', async () => {
+    delete process.env.NONEXISTENT_VAR;
+    const configFile = join(tempDir, 'flowrag.config.json');
+    await writeFile(
+      configFile,
+      JSON.stringify({
+        // biome-ignore lint/suspicious/noTemplateCurlyInString: testing env var interpolation
+        auth: { token: '${NONEXISTENT_VAR}' },
+      }),
+    );
+
+    const config = await loadConfig({ config: configFile });
+
+    expect(config.auth?.token).toBe('');
+  });
+
+  it('does not set storage or auth when not in config file', async () => {
+    const configFile = join(tempDir, 'flowrag.config.json');
+    await writeFile(configFile, JSON.stringify({}));
+
+    const config = await loadConfig({ config: configFile });
+
+    expect(config.storage).toBeUndefined();
+    expect(config.auth).toBeUndefined();
+  });
+});
+
+describe('resolveEnvVars', () => {
+  it('replaces env var with value', () => {
+    process.env.MY_VAR = 'hello';
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: testing env var interpolation
+    expect(resolveEnvVars('prefix-${MY_VAR}-suffix')).toBe('prefix-hello-suffix');
+    delete process.env.MY_VAR;
+  });
+
+  it('replaces multiple vars', () => {
+    process.env.A = '1';
+    process.env.B = '2';
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: testing env var interpolation
+    expect(resolveEnvVars('${A}-${B}')).toBe('1-2');
+    delete process.env.A;
+    delete process.env.B;
+  });
+
+  it('returns string unchanged when no vars', () => {
+    expect(resolveEnvVars('plain-token')).toBe('plain-token');
   });
 });

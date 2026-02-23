@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../src/config.js', () => ({
   loadConfig: vi.fn().mockResolvedValue({
@@ -21,7 +21,7 @@ const mockRag = {
 const mockGraph = { getEntity: vi.fn(), getEntities: vi.fn() };
 
 vi.mock('../src/factory.js', () => ({
-  createRagFromConfig: vi.fn().mockReturnValue({ rag: mockRag, graph: mockGraph }),
+  createRagFromConfig: vi.fn().mockResolvedValue({ rag: mockRag, graph: mockGraph }),
 }));
 
 vi.mock('../src/metadata.js', () => ({
@@ -29,8 +29,9 @@ vi.mock('../src/metadata.js', () => ({
   detectConfigChanges: vi.fn().mockReturnValue([]),
 }));
 
+const mockClose = vi.fn();
 vi.mock('../src/server.js', () => ({
-  createServer: vi.fn(),
+  createServer: vi.fn().mockResolvedValue({ close: mockClose }),
 }));
 
 vi.mock('node:util', () => ({
@@ -38,12 +39,18 @@ vi.mock('node:util', () => ({
 }));
 
 const { main } = await import('../src/main.js');
+const { loadConfig } = await import('../src/config.js');
 const { readMetadata, detectConfigChanges } = await import('../src/metadata.js');
 const { createServer } = await import('../src/server.js');
 
 describe('main', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    process.removeAllListeners('SIGINT');
+    process.removeAllListeners('SIGTERM');
   });
 
   it('starts server with config', async () => {
@@ -76,5 +83,64 @@ describe('main', () => {
     (readMetadata as ReturnType<typeof vi.fn>).mockResolvedValue(null);
     await main();
     expect(detectConfigChanges).not.toHaveBeenCalled();
+  });
+
+  it('registers shutdown handlers for HTTP transport', async () => {
+    (loadConfig as ReturnType<typeof vi.fn>).mockResolvedValue({
+      data: './data',
+      schema: { entityTypes: ['SERVICE'], relationTypes: ['USES'] },
+      embedder: { provider: 'local' },
+      extractor: { provider: 'gemini' },
+      transport: 'http',
+      port: 3000,
+    });
+
+    await main();
+
+    expect(process.listenerCount('SIGINT')).toBeGreaterThan(0);
+    expect(process.listenerCount('SIGTERM')).toBeGreaterThan(0);
+  });
+
+  it('does not register shutdown handlers for stdio transport', async () => {
+    (loadConfig as ReturnType<typeof vi.fn>).mockResolvedValue({
+      data: './data',
+      schema: { entityTypes: ['SERVICE'], relationTypes: ['USES'] },
+      embedder: { provider: 'local' },
+      extractor: { provider: 'gemini' },
+      transport: 'stdio',
+      port: 3000,
+    });
+
+    const sigintBefore = process.listenerCount('SIGINT');
+    await main();
+
+    expect(process.listenerCount('SIGINT')).toBe(sigintBefore);
+  });
+
+  it('shutdown handler calls close and exits', async () => {
+    (loadConfig as ReturnType<typeof vi.fn>).mockResolvedValue({
+      data: './data',
+      schema: { entityTypes: ['SERVICE'], relationTypes: ['USES'] },
+      embedder: { provider: 'local' },
+      extractor: { provider: 'gemini' },
+      transport: 'http',
+      port: 3000,
+    });
+
+    const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    await main();
+
+    // Trigger SIGINT handler
+    process.emit('SIGINT');
+    // Wait for async handler
+    await new Promise((r) => setTimeout(r, 10));
+
+    expect(mockClose).toHaveBeenCalled();
+    expect(exitSpy).toHaveBeenCalledWith(0);
+
+    exitSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 });

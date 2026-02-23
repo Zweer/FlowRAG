@@ -47,8 +47,33 @@
     "@modelcontextprotocol/sdk": "^1.27.0",
     "dotenv": "^17.3.1"
   },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  },
   "peerDependencies": {
+    "@flowrag/storage-opensearch": "*",
+    "@flowrag/storage-redis": "*",
+    "@flowrag/storage-s3": "*",
+    "@opensearch-project/opensearch": "^2.0.0 || ^3.0.0",
+    "redis": "^5.0.0",
     "zod": "^3.25.0"
+  },
+  "peerDependenciesMeta": {
+    "@flowrag/storage-opensearch": {
+      "optional": true
+    },
+    "@flowrag/storage-redis": {
+      "optional": true
+    },
+    "@flowrag/storage-s3": {
+      "optional": true
+    },
+    "@opensearch-project/opensearch": {
+      "optional": true
+    },
+    "redis": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">= 20.17"

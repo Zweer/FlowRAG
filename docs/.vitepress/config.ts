@@ -45,6 +45,7 @@ export default defineConfig({
           { text: 'Local Development', link: '/deployment/local' },
           { text: 'AWS Lambda', link: '/deployment/aws-lambda' },
           { text: 'Redis', link: '/deployment/redis' },
+          { text: 'Remote MCP Server', link: '/deployment/remote-mcp' },
         ],
       },
       {

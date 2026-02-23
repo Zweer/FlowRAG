@@ -8,10 +8,42 @@ export interface FlowRAGMcpConfig {
   docs?: string;
   schema: SchemaConfig;
   namespace?: string;
+  storage?: StorageConfig;
   embedder: ProviderConfig;
   extractor: ProviderConfig;
   transport: 'stdio' | 'http';
   port: number;
+  auth?: AuthConfig;
+}
+
+export interface StorageConfig {
+  kv?: KVStorageConfig;
+  vector?: VectorStorageConfig;
+  graph?: GraphStorageConfig;
+}
+
+export interface KVStorageConfig {
+  provider: 'json' | 's3' | 'redis';
+  url?: string;
+  bucket?: string;
+  prefix?: string;
+  region?: string;
+}
+
+export interface VectorStorageConfig {
+  provider: 'lancedb' | 'opensearch' | 'redis';
+  node?: string;
+  dimensions?: number;
+  url?: string;
+}
+
+export interface GraphStorageConfig {
+  provider: 'sqlite' | 'opensearch';
+  node?: string;
+}
+
+export interface AuthConfig {
+  token: string;
 }
 
 export interface SchemaConfig {
@@ -80,7 +112,19 @@ export async function loadConfig(flags: CliFlags = {}): Promise<FlowRAGMcpConfig
     merged.docs = flags.docs;
   }
 
+  if (fileConfig?.storage) {
+    merged.storage = fileConfig.storage;
+  }
+
+  if (fileConfig?.auth) {
+    merged.auth = { token: resolveEnvVars(fileConfig.auth.token) };
+  }
+
   return merged;
+}
+
+export function resolveEnvVars(value: string): string {
+  return value.replace(/\$\{(\w+)\}/g, (_, name) => process.env[name] ?? '');
 }
 
 async function loadConfigFile(path: string): Promise<Partial<FlowRAGMcpConfig> | null> {
