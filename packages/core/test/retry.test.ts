@@ -117,6 +117,39 @@ describe('withRetry', () => {
       expect(fn).toHaveBeenCalledTimes(1);
     });
 
+    it.each([
+      [
+        'timeout in cause',
+        Object.assign(new TypeError('fetch failed'), {
+          cause: new Error('Headers Timeout Error'),
+        }),
+      ],
+      [
+        'econnreset in cause',
+        Object.assign(new TypeError('fetch failed'), { cause: new Error('ECONNRESET') }),
+      ],
+      [
+        'status 503 in cause',
+        Object.assign(new TypeError('fetch failed'), {
+          cause: Object.assign(new Error('unavailable'), { status: 503 }),
+        }),
+      ],
+      [
+        'deeply nested timeout',
+        Object.assign(new TypeError('fetch failed'), {
+          cause: Object.assign(new Error('wrapper'), {
+            cause: new Error('UND_ERR_HEADERS_TIMEOUT: timeout'),
+          }),
+        }),
+      ],
+    ])('should retry on %s (cause chain)', async (_, error) => {
+      const fn = vi.fn().mockRejectedValueOnce(error).mockResolvedValueOnce('ok');
+      const promise = withRetry(fn, { retries: 1, backoff: 10 });
+      await vi.advanceTimersByTimeAsync(10);
+      await expect(promise).resolves.toBe('ok');
+      expect(fn).toHaveBeenCalledTimes(2);
+    });
+
     it('should not retry on non-Error', async () => {
       const fn = vi.fn().mockRejectedValue('string error');
       await expect(withRetry(fn, { retries: 3 })).rejects.toBe('string error');

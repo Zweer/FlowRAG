@@ -10,16 +10,19 @@ const DEFAULT_BACKOFF = 1000;
 const DEFAULT_MAX_BACKOFF = 30000;
 
 function isTransientError(error: unknown): boolean {
-  if (error instanceof Error) {
-    const msg = error.message.toLowerCase();
+  let current: unknown = error;
+  while (current instanceof Error) {
+    const msg = current.message.toLowerCase();
     if (msg.includes('timeout') || msg.includes('econnreset') || msg.includes('econnrefused'))
       return true;
 
     // HTTP status codes in error messages or properties
     const status =
-      (error as { status?: number }).status ?? (error as { statusCode?: number }).statusCode;
+      (current as { status?: number }).status ?? (current as { statusCode?: number }).statusCode;
     if (status === 429 || status === 500 || status === 502 || status === 503 || status === 504)
       return true;
+
+    current = current.cause;
   }
   return false;
 }
