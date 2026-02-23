@@ -32,10 +32,10 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.7.0",
+    "@flowrag/core": "^1.7.1",
     "@flowrag/provider-bedrock": "^0.4.0",
     "@flowrag/provider-gemini": "^1.5.0",
-    "@flowrag/provider-local": "^1.4.0",
+    "@flowrag/provider-local": "^1.5.0",
     "@flowrag/storage-json": "^1.1.3",
     "@flowrag/storage-lancedb": "^1.1.3",
     "@flowrag/storage-opensearch": "^0.3.0",

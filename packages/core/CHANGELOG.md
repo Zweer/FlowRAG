@@ -48,6 +48,20 @@
 
 
 
+
+
+## [1.7.0] - 2026-02-23
+
+### 🐛 Bug Fixes
+
+- fix(core): :bug: walk cause chain in isTransientError for Node.js fetch errors
+
+## [1.7.0] - 2026-02-23
+
+### 🐛 Bug Fixes
+
+- fix(core): :bug: walk cause chain in isTransientError for Node.js fetch errors
+
 ## [1.6.0] - 2026-02-23
 
 ### ✨ Features

@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.995.0",
-    "@flowrag/core": "^1.7.0"
+    "@flowrag/core": "^1.7.1"
   },
   "engines": {
     "node": ">=20.3"

@@ -18,6 +18,13 @@
 
 
 
+
+## [1.4.0] - 2026-02-23
+
+### ✨ Features
+
+- feat(provider-local): :arrow_up: upgrade @huggingface/transformers to 3.8.1
+
 ## [1.3.0] - 2026-02-16
 
 ### ✨ Features

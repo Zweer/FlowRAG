@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.7.0",
+    "@flowrag/core": "^1.7.1",
     "@google/genai": "^1.42.0"
   },
   "engines": {
