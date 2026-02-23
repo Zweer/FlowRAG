@@ -64,7 +64,8 @@ export class LocalEmbedder implements Embedder {
 
   private async getPipeline(): Promise<unknown> {
     if (!this.pipeline) {
-      const { pipeline } = await import('@huggingface/transformers');
+      const { env, pipeline } = await import('@huggingface/transformers');
+      if (process.env.HF_HOME) env.cacheDir = process.env.HF_HOME;
       this.pipeline = await pipeline('feature-extraction', this.modelName, {
         dtype: this.dtype as 'fp32' | 'q8' | 'q4',
         device: this.device as 'auto' | 'cpu' | 'gpu',

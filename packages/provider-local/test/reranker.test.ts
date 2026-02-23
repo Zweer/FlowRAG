@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LocalReranker } from '../src/reranker.js';
 
 vi.mock('@huggingface/transformers', () => ({
+  env: { cacheDir: null },
   pipeline: vi
     .fn()
     .mockResolvedValue(
@@ -76,5 +77,14 @@ describe('LocalReranker', () => {
     await reranker.rerank('q2', docs);
 
     expect(pipeline).toHaveBeenCalledTimes(1);
+  });
+
+  it('should set cacheDir from HF_HOME env var', async () => {
+    const { env } = await import('@huggingface/transformers');
+    process.env.HF_HOME = '/tmp/hf-cache';
+    reranker = new LocalReranker({ dtype: 'fp32' });
+    await reranker.rerank('q', [{ id: 'd1', content: 'test', score: 0 }]);
+    expect(env.cacheDir).toBe('/tmp/hf-cache');
+    delete process.env.HF_HOME;
   });
 });

@@ -4,6 +4,7 @@ import { LocalEmbedder } from '../src/embedder.js';
 
 // Mock @huggingface/transformers
 vi.mock('@huggingface/transformers', () => ({
+  env: { cacheDir: null },
   pipeline: vi.fn().mockResolvedValue(
     // Mock pipeline function that returns embeddings
     vi.fn().mockResolvedValue({
@@ -78,6 +79,17 @@ describe('LocalEmbedder', () => {
     it('should handle empty batch', async () => {
       const embeddings = await embedder.embedBatch([]);
       expect(embeddings).toEqual([]);
+    });
+  });
+
+  describe('HF_HOME', () => {
+    it('should set cacheDir from HF_HOME env var', async () => {
+      const { env } = await import('@huggingface/transformers');
+      process.env.HF_HOME = '/tmp/hf-cache';
+      embedder = new LocalEmbedder({ dtype: 'fp32' });
+      await embedder.embed('test');
+      expect(env.cacheDir).toBe('/tmp/hf-cache');
+      delete process.env.HF_HOME;
     });
   });
 });

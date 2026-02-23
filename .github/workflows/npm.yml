@@ -48,11 +48,13 @@ jobs:
       - name: Cache HuggingFace models
         uses: actions/cache@v4
         with:
-          path: node_modules/@huggingface/transformers/.cache
+          path: ~/.cache/huggingface
           key: hf-models-${{ hashFiles('packages/provider-local/package.json') }}
 
       - name: E2E testing
         run: npm run test:e2e
+        env:
+          HF_HOME: ~/.cache/huggingface
 
   lint:
     # Skip if commit is from release-please (version bump / changelog only)
