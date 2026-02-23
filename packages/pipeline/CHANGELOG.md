@@ -37,6 +37,13 @@
 
 
 
+
+## [1.7.0] - 2026-02-23
+
+### 🐛 Bug Fixes
+
+- fix(pipeline): :bug: handle malformed LLM extraction results in processChunk
+
 ## [1.6.0] - 2026-02-22
 
 ### ✨ Features

@@ -9,6 +9,20 @@
 
 
 
+
+
+## [0.2.1] - 2026-02-23
+
+### ✨ Features
+
+- feat(mcp): :globe_with_meridians: add HTTP transport, auth, and remote storage support
+
+## [0.2.1] - 2026-02-23
+
+### ✨ Features
+
+- feat(mcp): :globe_with_meridians: add HTTP transport, auth, and remote storage support
+
 ## [0.2.0] - 2026-02-22
 
 ### 🐛 Bug Fixes
