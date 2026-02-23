@@ -371,6 +371,7 @@ describe('HTTP transport', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   function getRouteHandler(mockFn: ReturnType<typeof vi.fn>, path: string) {

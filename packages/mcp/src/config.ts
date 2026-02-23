@@ -90,8 +90,8 @@ export async function loadConfig(flags: CliFlags = {}): Promise<FlowRAGMcpConfig
 
   // Load .env from config file directory, then cwd
   const envDir = fileConfig ? dirname(resolve(configPath)) : process.cwd();
-  loadDotenv({ path: resolve(envDir, '.env') });
-  loadDotenv({ path: resolve(process.cwd(), '.env') });
+  loadDotenv({ path: resolve(envDir, '.env'), quiet: true });
+  loadDotenv({ path: resolve(process.cwd(), '.env'), quiet: true });
 
   // Merge: defaults < config file < CLI flags
   const merged: FlowRAGMcpConfig = {
