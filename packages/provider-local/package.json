@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-local",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Local AI provider for FlowRAG - ONNX embeddings and future local extraction",
   "keywords": [
     "flowrag",

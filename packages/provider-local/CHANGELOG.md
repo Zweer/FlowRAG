@@ -19,6 +19,13 @@
 
 
 
+
+## [1.5.0] - 2026-02-23
+
+### 🐛 Bug Fixes
+
+- fix(provider-local): :bug: respect HF_HOME env var for model cache directory
+
 ## [1.4.0] - 2026-02-23
 
 ### ✨ Features
