@@ -97,3 +97,4 @@ Hooks are called from both indexing and querying pipelines with timing informati
 | `OPENAI_API_KEY` | OpenAI API key | For OpenAI provider |
 | `ANTHROPIC_API_KEY` | Anthropic API key | For Anthropic provider |
 | `AWS_REGION` | AWS region | For Bedrock/S3/OpenSearch |
+| `HF_HOME` | Custom cache directory for ONNX models | For Local provider (optional) |

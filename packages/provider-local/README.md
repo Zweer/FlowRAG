@@ -36,6 +36,21 @@ const embeddings = await embedder.embedBatch(['Hello', 'World']);
 - `Xenova/all-MiniLM-L6-v2` (384 dims) - Compact
 - `Xenova/all-mpnet-base-v2` (768 dims) - Good balance
 
+## Reranker
+
+```typescript
+import { LocalReranker } from '@flowrag/provider-local';
+
+const reranker = new LocalReranker();
+// Uses Xenova/ms-marco-MiniLM-L-6-v2 cross-encoder
+```
+
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `HF_HOME` | Custom cache directory for downloaded models | `node_modules/@huggingface/transformers/.cache/` |
+
 ## License
 
 MIT

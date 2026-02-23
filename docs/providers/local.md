@@ -39,3 +39,4 @@ const reranker = new LocalReranker();
 - Subsequent runs use cached models
 - `q8` quantization offers a good balance of speed and accuracy
 - No LLM extractor available locally — pair with Gemini or Bedrock for extraction
+- Set `HF_HOME` to customize the model cache directory (defaults to inside `node_modules`)
