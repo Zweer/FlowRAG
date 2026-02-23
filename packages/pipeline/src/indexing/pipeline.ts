@@ -112,6 +112,8 @@ export class IndexingPipeline {
         knownEntities,
         this.config.schema,
       );
+      extraction.entities ??= [];
+      extraction.relations ??= [];
 
       // Gleaning: additional extraction passes for higher accuracy
       for (let i = 0; i < this.options.extractionGleanings; i++) {
@@ -133,6 +135,10 @@ export class IndexingPipeline {
       // Cache the extraction
       await this.config.storage.kv.set(cacheKey, extraction);
     }
+
+    // Ensure extraction has valid arrays (LLM may return partial results)
+    extraction.entities ??= [];
+    extraction.relations ??= [];
 
     // 4. Embedder: Generate embeddings
     const embedStart = Date.now();
@@ -269,14 +275,16 @@ export class IndexingPipeline {
   }
 
   private mergeExtractions(base: ExtractionResult, gleaned: ExtractionResult): ExtractionResult {
+    const entities = gleaned.entities ?? [];
+    const relations = gleaned.relations ?? [];
     const entityNames = new Set(base.entities.map((e) => e.name));
     const relationIds = new Set(base.relations.map((r) => `${r.source}-${r.type}-${r.target}`));
 
     return {
-      entities: [...base.entities, ...gleaned.entities.filter((e) => !entityNames.has(e.name))],
+      entities: [...base.entities, ...entities.filter((e) => !entityNames.has(e.name))],
       relations: [
         ...base.relations,
-        ...gleaned.relations.filter((r) => !relationIds.has(`${r.source}-${r.type}-${r.target}`)),
+        ...relations.filter((r) => !relationIds.has(`${r.source}-${r.type}-${r.target}`)),
       ],
       usage: base.usage,
     };

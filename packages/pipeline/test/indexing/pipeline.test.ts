@@ -774,6 +774,62 @@ describe('IndexingPipeline', () => {
     });
   });
 
+  describe('malformed extraction results', () => {
+    it('should handle extraction with missing entities and relations', async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (pipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (pipeline as any).chunker;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+      mockChunker.chunkDocument = vi.fn(() => [
+        { id: 'chunk:test:0', documentId: 'doc:test', content: 'test content', index: 0 },
+      ]);
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+      mockConfig.extractor.extractEntities = vi.fn().mockResolvedValue({} as never);
+
+      await pipeline.process(['/test.txt']);
+
+      expect(mockConfig.storage.graph.addEntity).not.toHaveBeenCalled();
+      expect(mockConfig.storage.graph.addRelation).not.toHaveBeenCalled();
+    });
+
+    it('should handle gleaning with malformed result', async () => {
+      const gleanPipeline = new IndexingPipeline(mockConfig, {
+        ...mockOptions,
+        extractionGleanings: 1,
+      });
+
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockScanner = (gleanPipeline as any).scanner;
+      // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+      const mockChunker = (gleanPipeline as any).chunker;
+
+      mockScanner.scanFiles = vi
+        .fn()
+        .mockResolvedValue([{ id: 'doc:test', content: 'test', metadata: { path: '/test.txt' } }]);
+      mockChunker.chunkDocument = vi.fn(() => [
+        { id: 'chunk:test:0', documentId: 'doc:test', content: 'test content', index: 0 },
+      ]);
+      mockConfig.storage.kv.get = vi.fn().mockResolvedValue(null);
+      mockConfig.extractor.extractEntities = vi
+        .fn()
+        .mockResolvedValueOnce({
+          entities: [{ name: 'A', type: 'SERVICE', description: 'd', keywords: [] }],
+          relations: [],
+        })
+        .mockResolvedValueOnce({} as never);
+
+      await gleanPipeline.process(['/test.txt']);
+
+      expect(mockConfig.storage.graph.addEntity).toHaveBeenCalledTimes(1);
+
+      gleanPipeline.dispose();
+    });
+  });
+
   describe('extraction gleaning', () => {
     it('should run additional extraction passes when extractionGleanings > 0', async () => {
       const gleanPipeline = new IndexingPipeline(mockConfig, {
