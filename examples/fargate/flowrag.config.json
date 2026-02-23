@@ -1,0 +1,21 @@
+{
+  "data": "./data",
+  "docs": "./content",
+  "schema": {
+    "entityTypes": ["SERVICE", "DATABASE", "PROTOCOL"],
+    "relationTypes": ["USES", "PRODUCES", "CONSUMES"]
+  },
+  "storage": {
+    "kv": { "provider": "redis", "url": "redis://redis.internal:6379" },
+    "vector": { "provider": "opensearch", "node": "https://os.internal:9200", "dimensions": 1024 },
+    "graph": { "provider": "opensearch", "node": "https://os.internal:9200" }
+  },
+  "embedder": { "provider": "bedrock" },
+  "extractor": { "provider": "bedrock" },
+  "namespace": "team-docs",
+  "transport": "http",
+  "port": 3000,
+  "auth": {
+    "token": "${FLOWRAG_AUTH_TOKEN}"
+  }
+}

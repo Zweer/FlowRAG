@@ -1,0 +1,12 @@
+{
+  "name": "flowrag-mcp-fargate",
+  "private": true,
+  "dependencies": {
+    "@flowrag/mcp": "*",
+    "@flowrag/storage-redis": "*",
+    "@flowrag/storage-opensearch": "*",
+    "@flowrag/provider-bedrock": "*",
+    "@opensearch-project/opensearch": "^3.0.0",
+    "redis": "^5.0.0"
+  }
+}

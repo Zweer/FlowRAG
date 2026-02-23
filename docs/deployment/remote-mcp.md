@@ -141,28 +141,47 @@ For a team-internal server behind a VPC, a bearer token is sufficient. The MCP S
 
 ## Docker
 
+A complete example is available in [`examples/fargate/`](https://github.com/Zweer/FlowRAG/tree/main/examples/fargate).
+
+### Dockerfile
+
+Multi-stage build, no secrets in the image:
+
 ```dockerfile
+FROM node:24-slim AS build
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci --omit=dev
+
 FROM node:24-slim
 WORKDIR /app
-RUN npm install --no-save \
-  @flowrag/mcp \
-  @flowrag/storage-redis \
-  @flowrag/storage-opensearch \
-  @flowrag/provider-bedrock
+
+COPY --from=build /app/node_modules ./node_modules
 COPY flowrag.config.json .
-COPY .env .
+
+ENV NODE_ENV=production
 EXPOSE 3000
+
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD node -e "fetch('http://localhost:3000/health').then(r=>{if(!r.ok)throw r})" || exit 1
-CMD ["npx", "@flowrag/mcp", "--config", "flowrag.config.json"]
+
+ENTRYPOINT ["node", "node_modules/@flowrag/mcp/dist/index.mjs"]
+CMD ["--config", "flowrag.config.json"]
 ```
 
-Build and run:
+### Build and run
 
 ```bash
 docker build -t flowrag-mcp .
-docker run -p 3000:3000 flowrag-mcp
+docker run -p 3000:3000 \
+  -e FLOWRAG_AUTH_TOKEN=my-secret \
+  -e AWS_REGION=eu-central-1 \
+  flowrag-mcp
 ```
+
+::: warning
+Never `COPY .env` into the image — pass secrets as environment variables at runtime. In ECS/Fargate, use the task definition environment or reference Secrets Manager / SSM Parameter Store.
+:::
 
 ## Fargate Deployment
 
