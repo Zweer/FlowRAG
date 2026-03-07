@@ -39,7 +39,7 @@
     "@types/better-sqlite3": "^7.6.13"
   },
   "peerDependencies": {
-    "@flowrag/core": "^1.7.1"
+    "@flowrag/core": "^1.8.0"
   },
   "engines": {
     "node": ">=20"

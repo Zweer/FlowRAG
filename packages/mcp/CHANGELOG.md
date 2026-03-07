@@ -11,6 +11,28 @@
 
 
 
+
+
+## [0.3.0] - 2026-03-07
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: entity embeddings and semantic entity search
+
+### ### chore
+
+- chore(deps): bump the production-dependencies group with 5 updates (#34)
+
+## [0.3.0] - 2026-03-07
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: entity embeddings and semantic entity search
+
+### ### chore
+
+- chore(deps): bump the production-dependencies group with 5 updates (#34)
+
 ## [0.2.1] - 2026-02-23
 
 ### ✨ Features

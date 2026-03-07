@@ -42,6 +42,34 @@
 
 
 
+
+
+
+
+## [0.3.1] - 2026-03-07
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: entity embeddings and semantic entity search
+
+## [0.3.1] - 2026-03-07
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: entity embeddings and semantic entity search
+
+## [0.3.1] - 2026-03-07
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: entity embeddings and semantic entity search
+
+## [0.3.1] - 2026-03-07
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: entity embeddings and semantic entity search
+
 ## [0.3.0] - 2026-02-18
 
 ### 🐛 Bug Fixes
