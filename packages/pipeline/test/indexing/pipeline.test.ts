@@ -121,6 +121,89 @@ describe('IndexingPipeline', () => {
     expect(mockConfig.storage.vector.upsert).toHaveBeenCalled();
   });
 
+  it('should propagate document metadata fields to vector records', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+
+    mockScanner.scanFiles = vi.fn(() =>
+      Promise.resolve([
+        {
+          id: 'doc:test',
+          content: 'test content',
+          metadata: {
+            path: '/test.txt',
+            fields: { author: 'Alice', episode: 1, location: 'Rome' },
+          },
+        },
+      ]),
+    );
+
+    mockChunker.chunkDocument = vi.fn(() => [
+      {
+        id: 'doc:test:chunk:0',
+        content: 'test content',
+        documentId: 'doc:test',
+        startToken: 0,
+        endToken: 10,
+      },
+    ]);
+
+    await pipeline.process(['/test.txt']);
+
+    expect(mockConfig.storage.vector.upsert).toHaveBeenCalledWith([
+      {
+        id: 'doc:test:chunk:0',
+        vector: [0.1, 0.2, 0.3],
+        metadata: {
+          author: 'Alice',
+          episode: 1,
+          location: 'Rome',
+          documentId: 'doc:test',
+          content: 'test content',
+        },
+      },
+    ]);
+  });
+
+  it('should not break vector metadata when document has no fields', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+
+    mockScanner.scanFiles = vi.fn(() =>
+      Promise.resolve([
+        {
+          id: 'doc:test',
+          content: 'test content',
+          metadata: { path: '/test.txt' },
+        },
+      ]),
+    );
+
+    mockChunker.chunkDocument = vi.fn(() => [
+      {
+        id: 'doc:test:chunk:0',
+        content: 'test content',
+        documentId: 'doc:test',
+        startToken: 0,
+        endToken: 10,
+      },
+    ]);
+
+    await pipeline.process(['/test.txt']);
+
+    expect(mockConfig.storage.vector.upsert).toHaveBeenCalledWith([
+      {
+        id: 'doc:test:chunk:0',
+        vector: [0.1, 0.2, 0.3],
+        metadata: { documentId: 'doc:test', content: 'test content' },
+      },
+    ]);
+  });
+
   it('should process multiple input files', async () => {
     // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
     const mockScanner = (pipeline as any).scanner;

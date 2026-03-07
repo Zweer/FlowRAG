@@ -79,9 +79,12 @@ export class IndexingPipeline {
 
     // Process chunks with LLM concurrency control
     const chunkBatches = this.createBatches(chunks, this.options.llmMaxAsync);
+    const documentFields = (document.metadata as Record<string, Record<string, unknown>>)?.fields;
 
     for (const chunkBatch of chunkBatches) {
-      await Promise.all(chunkBatch.map((chunk) => this.processChunk(chunk, progress, onProgress)));
+      await Promise.all(
+        chunkBatch.map((chunk) => this.processChunk(chunk, documentFields, progress, onProgress)),
+      );
     }
 
     // Save hash after successful processing
@@ -93,6 +96,7 @@ export class IndexingPipeline {
 
   private async processChunk(
     chunk: Chunk,
+    documentFields: Record<string, unknown> | undefined,
     progress: IndexProgress,
     onProgress?: (event: IndexProgress) => void,
   ): Promise<void> {
@@ -164,7 +168,7 @@ export class IndexingPipeline {
         {
           id: chunk.id,
           vector: embedding,
-          metadata: { documentId: chunk.documentId, content: chunk.content },
+          metadata: { ...documentFields, documentId: chunk.documentId, content: chunk.content },
         },
       ]),
       ...extraction.entities.map((entity) =>
