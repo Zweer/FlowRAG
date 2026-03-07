@@ -5,6 +5,20 @@
 
 
 
+
+
+## [0.3.0] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [0.3.0] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
 ## [0.2.0] - 2026-02-16
 
 ### ✨ Features

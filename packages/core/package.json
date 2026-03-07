@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/core",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "📐 Core interfaces, types, and schema definition for FlowRAG",
   "keywords": [
     "interfaces",

@@ -20,6 +20,62 @@
 
 
 
+
+
+
+
+
+
+
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
+## [1.5.1] - 2026-03-07
+
+### ### chore
+
+- chore: :lipstick: add emoji and normalize package descriptions
+
 ## [1.5.0] - 2026-02-23
 
 ### 🐛 Bug Fixes

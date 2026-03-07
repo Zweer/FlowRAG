@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-sqlite",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "🗃️ SQLite graph storage for FlowRAG - knowledge graph with traversal and path finding",
   "keywords": [
     "storage",
@@ -39,7 +39,7 @@
     "@types/better-sqlite3": "^7.6.13"
   },
   "peerDependencies": {
-    "@flowrag/core": "^1.8.0"
+    "@flowrag/core": "^1.8.1"
   },
   "engines": {
     "node": ">=20"
