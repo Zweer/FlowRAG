@@ -34,7 +34,15 @@
   ],
   "toolsSettings": {
     "write": {
-      "allowedPaths": [".kiro/**", "packages/**", "README.md", "package.json"]
+      "allowedPaths": [
+        ".kiro/**",
+        "docs/**",
+        "examples/**",
+        "packages/**",
+        "test/**",
+        "README.md",
+        "package.json"
+      ]
     },
     "shell": {
       "autoAllowReadonly": true,
