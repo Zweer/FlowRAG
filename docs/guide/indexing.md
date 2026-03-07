@@ -57,7 +57,7 @@ Generates vector embeddings for each chunk, enabling semantic search.
 
 Saves everything to three stores:
 - **KV**: documents, chunks, extraction cache, document hashes
-- **Vector**: chunk embeddings for semantic search
+- **Vector**: chunk embeddings for semantic search — document metadata fields (from `DocumentMetadata.fields`) are automatically included in vector records, so they're available in search results without additional lookups
 - **Graph**: entities and relations for knowledge graph traversal
 
 ## Concurrency Control

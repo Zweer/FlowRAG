@@ -59,7 +59,7 @@ const schema = defineSchema({
 | `string` | Free-form text | `filterable`, `default` |
 | `enum` | One of predefined values | `values` (required), `filterable`, `default` |
 
-Custom fields are passed to the LLM extractor, which populates them during entity extraction. They're stored alongside entities and relations in the graph storage.
+Custom fields are passed to the LLM extractor, which populates them during entity extraction. They're stored alongside entities and relations in the graph storage. Document-level custom fields (`documentFields`) are also propagated to vector records during indexing, so they appear in search result metadata without extra lookups.
 
 ## Schema Design Tips
 

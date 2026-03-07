@@ -178,6 +178,7 @@ Search results include source references for traceability:
 ```typescript
 const results = await rag.search('how does auth work');
 // Each result includes: sources: [{ documentId, filePath, chunkIndex }]
+// Plus document metadata fields in result.metadata (e.g., author, domain, version)
 ```
 
 ### Entity Merging

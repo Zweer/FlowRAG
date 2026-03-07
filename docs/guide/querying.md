@@ -17,7 +17,7 @@ interface SearchResult {
   score: number;        // relevance score
   source: 'vector' | 'graph';
   sources: Source[];    // citation / provenance
-  metadata?: Record<string, unknown>;
+  metadata?: Record<string, unknown>; // includes document metadata fields
 }
 
 interface Source {
