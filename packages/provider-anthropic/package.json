@@ -1,7 +1,7 @@
 {
   "name": "@flowrag/provider-anthropic",
   "version": "0.2.0",
-  "description": "Anthropic provider for FlowRAG - entity extraction and reranking via Claude",
+  "description": "🎭 Anthropic provider for FlowRAG - entity extraction and reranking via Claude",
   "keywords": [
     "flowrag",
     "provider",

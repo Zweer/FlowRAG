@@ -1,7 +1,7 @@
 {
   "name": "@flowrag/core",
   "version": "1.8.0",
-  "description": "📐 The heart of FlowRAG. Defines all TypeScript interfaces (Storage, Embedder, LLMExtractor), the Zod-based schema system for defining entity/relation types, and the orchestration pipeline that coordinates indexing and querying. This package contains only contracts and types, no concrete implementations.",
+  "description": "📐 Core interfaces, types, and schema definition for FlowRAG",
   "keywords": [
     "interfaces",
     "schema",

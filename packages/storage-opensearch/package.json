@@ -1,7 +1,7 @@
 {
   "name": "@flowrag/storage-opensearch",
   "version": "0.3.0",
-  "description": "OpenSearch storage for FlowRAG - vector search and knowledge graph on OpenSearch",
+  "description": "🔎 OpenSearch storage for FlowRAG - vector search and knowledge graph on OpenSearch",
   "keywords": [
     "flowrag",
     "storage",

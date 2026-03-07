@@ -1,7 +1,7 @@
 {
   "name": "@flowrag/presets",
   "version": "1.4.1",
-  "description": "Opinionated presets for FlowRAG",
+  "description": "📦 Opinionated presets for FlowRAG - local and AWS storage setups in one call",
   "keywords": [
     "rag",
     "typescript",

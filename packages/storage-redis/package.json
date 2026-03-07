@@ -1,7 +1,7 @@
 {
   "name": "@flowrag/storage-redis",
   "version": "0.4.0",
-  "description": "Redis storage for FlowRAG - KV and vector storage on Redis Stack",
+  "description": "⚡ Redis storage for FlowRAG - KV and vector storage on Redis Stack",
   "keywords": [
     "flowrag",
     "storage",

@@ -1,7 +1,7 @@
 {
   "name": "@flowrag/cli",
   "version": "0.4.0",
-  "description": "Command-line interface for FlowRAG - index documents and search from your terminal",
+  "description": "💻 Command-line interface for FlowRAG - index documents and search from your terminal",
   "keywords": [
     "rag",
     "cli",

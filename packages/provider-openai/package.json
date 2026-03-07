@@ -1,7 +1,7 @@
 {
   "name": "@flowrag/provider-openai",
   "version": "0.3.0",
-  "description": "OpenAI provider for FlowRAG - embeddings, entity extraction, and reranking",
+  "description": "🧠 OpenAI provider for FlowRAG - embeddings, entity extraction, and reranking",
   "keywords": [
     "flowrag",
     "provider",
