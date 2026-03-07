@@ -41,6 +41,13 @@
 
 
 
+
+## [1.7.3] - 2026-03-07
+
+### ✨ Features
+
+- feat(pipeline): :sparkles: propagate document metadata fields to vector records
+
 ## [1.7.2] - 2026-02-23
 
 ### 🐛 Bug Fixes
