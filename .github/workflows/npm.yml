@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   contents: read
@@ -11,7 +21,7 @@ permissions:
 jobs:
   test:
     # Skip if commit is from release-please (version bump / changelog only)
-    if: "!startsWith(github.event.head_commit.message, 'chore: release packages')"
+    if: "!startsWith(github.event.head_commit.message || '', 'chore: release packages')"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -33,7 +43,7 @@ jobs:
         run: npm test
 
   e2e:
-    if: "!startsWith(github.event.head_commit.message, 'chore: release packages')"
+    if: "!startsWith(github.event.head_commit.message || '', 'chore: release packages')"
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -66,7 +76,7 @@ jobs:
 
   lint:
     # Skip if commit is from release-please (version bump / changelog only)
-    if: "!startsWith(github.event.head_commit.message, 'chore: release packages')"
+    if: "!startsWith(github.event.head_commit.message || '', 'chore: release packages')"
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -123,7 +133,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
 
       - name: Release
-        run: npx bonvoy shipit
+        run: npx bonvoy shipit ${{ github.event.inputs.bump }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
