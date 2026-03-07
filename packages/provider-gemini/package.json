@@ -34,7 +34,7 @@
   ],
   "dependencies": {
     "@flowrag/core": "^1.7.1",
-    "@google/genai": "^1.42.0"
+    "@google/genai": "^1.43.0"
   },
   "engines": {
     "node": ">=20.3"
