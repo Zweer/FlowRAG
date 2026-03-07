@@ -28,6 +28,7 @@ const mockRelations = [
 const mockRag = {
   index: vi.fn(),
   search: vi.fn(),
+  searchEntities: vi.fn(() => Promise.resolve([{ entity: mockEntities[0], score: 0.92 }])),
   stats: vi.fn(() => Promise.resolve(mockStats)),
   traceDataFlow: vi.fn(),
   findPath: vi.fn(),
@@ -136,13 +137,13 @@ describe('search command', () => {
   it('should search entities with --type entities', async () => {
     await searchCommand.parseAsync(['ServiceA', '--type', 'entities'], { from: 'user' });
 
-    expect(mockConfig.storage.graph.getEntities).toHaveBeenCalled();
+    expect(mockRag.searchEntities).toHaveBeenCalledWith('ServiceA', { limit: 5 });
     expect(console.log).toHaveBeenCalledWith('🔍 1 entity(ies) matching "ServiceA":\n');
-    expect(console.log).toHaveBeenCalledWith('  [SERVICE] ServiceA');
+    expect(console.log).toHaveBeenCalledWith('  [SERVICE] ServiceA (score: 0.9200)');
   });
 
   it('should print no entities found', async () => {
-    mockConfig.storage.graph.getEntities.mockResolvedValueOnce([]);
+    mockRag.searchEntities.mockResolvedValueOnce([]);
 
     await searchCommand.parseAsync(['Unknown', '--type', 'entities'], { from: 'user' });
 

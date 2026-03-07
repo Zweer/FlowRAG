@@ -149,6 +149,7 @@ describe('Types', () => {
       deleteDocument: async () => {},
       mergeEntities: async () => {},
       search: async () => [],
+      searchEntities: async () => [],
       traceDataFlow: async () => [],
       findPath: async () => [],
       export: async () => '',

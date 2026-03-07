@@ -25,7 +25,7 @@ await rag.index('./content', { force: true });
 ## Pipeline Stages
 
 ```
-Files → Scanner → Chunker → Extractor (LLM) → Embedder → Storage
+Files → Scanner → Chunker → Extractor (LLM) → Embedder → Storage → Entity Embedding
 ```
 
 ### 1. Scanner
@@ -59,6 +59,10 @@ Saves everything to three stores:
 - **KV**: documents, chunks, extraction cache, document hashes
 - **Vector**: chunk embeddings for semantic search — document metadata fields (from `DocumentMetadata.fields`) are automatically included in vector records, so they're available in search results without additional lookups
 - **Graph**: entities and relations for knowledge graph traversal
+
+### 6. Entity Embedding
+
+After all chunks are processed, every entity in the knowledge graph is embedded and stored in vector storage. This enables semantic entity search via `searchEntities()` — find entities by meaning rather than exact name.
 
 ## Concurrency Control
 

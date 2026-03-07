@@ -1,4 +1,8 @@
-import type { ExtractedEntity, SearchResult as VectorSearchResult } from '@flowrag/core';
+import type {
+  EntitySearchResult,
+  ExtractedEntity,
+  SearchResult as VectorSearchResult,
+} from '@flowrag/core';
 
 import type {
   Entity,
@@ -80,9 +84,27 @@ export class QueryPipeline {
     return result;
   }
 
+  async searchEntities(query: string, limit: number, type?: string): Promise<EntitySearchResult[]> {
+    const queryVector = await this.embedWithHook(query);
+    const filter: Record<string, unknown> = { _kind: 'entity' };
+    if (type) filter.type = type;
+
+    const results = await this.config.storage.vector.search(queryVector, limit, filter);
+    const hydrated: EntitySearchResult[] = [];
+
+    for (const r of results) {
+      const entity = await this.config.storage.graph.getEntity(r.metadata.entityId as string);
+      if (entity) hydrated.push({ entity, score: r.score });
+    }
+
+    return hydrated;
+  }
+
   private async naiveSearch(query: string, limit: number): Promise<SearchResult[]> {
     const queryVector = await this.embedWithHook(query);
-    const vectorResults = await this.config.storage.vector.search(queryVector, limit);
+    const vectorResults = await this.config.storage.vector.search(queryVector, limit, {
+      _kind: 'chunk',
+    });
 
     return vectorResults.map((result) => this.buildResult(result, result.score, 'vector'));
   }
@@ -100,7 +122,9 @@ export class QueryPipeline {
 
     // Vector search
     const queryVector = await this.embedWithHook(query);
-    const vectorResults = await this.config.storage.vector.search(queryVector, limit * 3);
+    const vectorResults = await this.config.storage.vector.search(queryVector, limit * 3, {
+      _kind: 'chunk',
+    });
 
     // Score boost for results mentioning known entities
     const scored = vectorResults.map((result) => {
@@ -132,7 +156,9 @@ export class QueryPipeline {
     const enrichedQuery = topKeywords ? `${query} ${topKeywords}` : query;
 
     const queryVector = await this.embedWithHook(enrichedQuery);
-    const vectorResults = await this.config.storage.vector.search(queryVector, limit);
+    const vectorResults = await this.config.storage.vector.search(queryVector, limit, {
+      _kind: 'chunk',
+    });
 
     return vectorResults.map((result) => this.buildResult(result, result.score, 'vector'));
   }

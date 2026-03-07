@@ -48,6 +48,9 @@ export class IndexingPipeline {
       await Promise.all(batch.map((doc) => this.processDocument(doc, force, progress, onProgress)));
     }
 
+    // 4. Embed all entities and store in vector storage
+    await this.embedEntities();
+
     onProgress?.({ ...progress, type: 'done' });
   }
 
@@ -168,7 +171,12 @@ export class IndexingPipeline {
         {
           id: chunk.id,
           vector: embedding,
-          metadata: { ...documentFields, documentId: chunk.documentId, content: chunk.content },
+          metadata: {
+            ...documentFields,
+            _kind: 'chunk',
+            documentId: chunk.documentId,
+            content: chunk.content,
+          },
         },
       ]),
       ...extraction.entities.map((entity) =>
@@ -205,6 +213,28 @@ export class IndexingPipeline {
   private async getKnownEntities(): Promise<string[]> {
     const entities = await this.config.storage.graph.getEntities();
     return entities.map((e) => e.name);
+  }
+
+  private async embedEntities(): Promise<void> {
+    const entities = await this.config.storage.graph.getEntities();
+    if (entities.length === 0) return;
+
+    const texts = entities.map((e) => `[${e.type}] ${e.name}: ${e.description}`);
+    const vectors = await this.config.embedder.embedBatch(texts);
+
+    await this.config.storage.vector.upsert(
+      entities.map((e, i) => ({
+        id: `entity:${e.id}`,
+        vector: vectors[i],
+        metadata: {
+          _kind: 'entity',
+          entityId: e.id,
+          name: e.name,
+          type: e.type,
+          description: e.description,
+        },
+      })),
+    );
   }
 
   private async deleteStaleDocuments(
@@ -248,6 +278,7 @@ export class IndexingPipeline {
         if (remaining.length === 0) {
           // Entity only existed because of this document — deleteEntity cascades relations
           await this.config.storage.graph.deleteEntity(entity.id);
+          await this.config.storage.vector.delete([`entity:${entity.id}`]);
         } else if (remaining.length < entity.sourceChunkIds.length) {
           // Entity is shared — update sourceChunkIds
           await this.config.storage.graph.addEntity({ ...entity, sourceChunkIds: remaining });

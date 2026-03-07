@@ -87,6 +87,21 @@ const path = await rag.findPath('ServiceA', 'ServiceB');
 // ServiceA → Kafka → ServiceB
 ```
 
+## Entity Search
+
+Search entities semantically by description similarity, rather than exact name matching:
+
+```typescript
+const results = await rag.searchEntities('the service that handles login');
+// Returns: [{ entity: { name: 'Auth Service', type: 'SERVICE', ... }, score: 0.92 }]
+```
+
+Filter by entity type:
+
+```typescript
+const services = await rag.searchEntities('payment processing', { type: 'SERVICE', limit: 5 });
+```
+
 ## Limiting Results
 
 ```typescript

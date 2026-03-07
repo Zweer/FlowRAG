@@ -97,7 +97,7 @@ Add to your project's `mcp.json`:
 
 ## Tools
 
-The MCP server exposes 7 tools that AI assistants can call:
+The MCP server exposes 8 tools that AI assistants can call:
 
 ### `flowrag_index`
 
@@ -118,6 +118,18 @@ Search with dual retrieval (vector + graph).
 | `query` | `string` | Search query (required) |
 | `mode` | `string?` | `hybrid`, `local`, `global`, `naive` (default: `hybrid`) |
 | `limit` | `number?` | Max results (default: 5) |
+
+### `flowrag_search_entities`
+
+Semantic search for entities in the knowledge graph by description similarity.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `query` | `string` | Search query (required) |
+| `limit` | `number?` | Max results (default: 10) |
+| `type` | `string?` | Filter by entity type |
+
+Unlike `flowrag_entities` (which does exact/substring matching), this tool uses vector similarity to find entities by meaning. For example, "the service that handles login" can find an entity named "Auth Service".
 
 ### `flowrag_entities`
 

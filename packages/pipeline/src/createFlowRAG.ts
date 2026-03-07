@@ -81,8 +81,29 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
         await graph.deleteEntity(entity.id);
       }
 
+      // Delete old entity vectors
+      await config.storage.vector.delete(sourceEntities.map((e) => `entity:${e.id}`));
+
       // Add merged entity
       await graph.addEntity(merged);
+
+      // Embed and upsert merged entity vector
+      const embedding = await config.embedder.embed(
+        `[${merged.type}] ${merged.name}: ${merged.description}`,
+      );
+      await config.storage.vector.upsert([
+        {
+          id: `entity:${merged.id}`,
+          vector: embedding,
+          metadata: {
+            _kind: 'entity',
+            entityId: merged.id,
+            name: merged.name,
+            type: merged.type,
+            description: merged.description,
+          },
+        },
+      ]);
 
       // Re-add redirected relations (deduplicated)
       const seen = new Set<string>();
@@ -101,6 +122,10 @@ export function createFlowRAG(config: FlowRAGConfig): FlowRAG {
       const mode = options.mode ?? queryOptions.defaultMode;
       const limit = options.limit ?? queryOptions.maxResults;
       return queryPipeline.search(query, mode, limit);
+    },
+
+    async searchEntities(query: string, options: { limit?: number; type?: string } = {}) {
+      return queryPipeline.searchEntities(query, options.limit ?? 10, options.type);
     },
 
     async traceDataFlow(entityId: string, direction: 'upstream' | 'downstream') {

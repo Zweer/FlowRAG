@@ -13,21 +13,17 @@ export const searchCommand = new Command('search')
     const { rag, config } = getFlowRAG(options.data);
 
     if (options.type === 'entities') {
-      const entities = await config.storage.graph.getEntities();
-      const matches = entities.filter(
-        (e) =>
-          e.name.toLowerCase().includes(query.toLowerCase()) ||
-          e.description.toLowerCase().includes(query.toLowerCase()),
-      );
+      const limit = Number.parseInt(options.limit, 10);
+      const results = await rag.searchEntities(query, { limit });
 
-      if (matches.length === 0) {
+      if (results.length === 0) {
         console.log('No entities found.');
         return;
       }
 
-      console.log(`🔍 ${matches.length} entity(ies) matching "${query}":\n`);
-      for (const entity of matches) {
-        console.log(`  [${entity.type}] ${entity.name}`);
+      console.log(`🔍 ${results.length} entity(ies) matching "${query}":\n`);
+      for (const { entity, score } of results) {
+        console.log(`  [${entity.type}] ${entity.name} (score: ${score.toFixed(4)})`);
         console.log(`    ${entity.description}\n`);
       }
       return;

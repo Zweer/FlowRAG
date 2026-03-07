@@ -184,4 +184,9 @@ interface Relation {
   sourceChunkIds: string[];
   fields?: Record<string, unknown>;
 }
+
+interface EntitySearchResult {
+  entity: Entity;
+  score: number;
+}
 ```

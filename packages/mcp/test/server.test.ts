@@ -115,6 +115,18 @@ function createMockRag(): FlowRAG {
       .mockResolvedValue([
         { id: 'c1', content: 'Auth handles login', score: 0.95, source: 'vector' },
       ]),
+    searchEntities: vi.fn().mockResolvedValue([
+      {
+        entity: {
+          id: 'Auth',
+          name: 'Auth',
+          type: 'SERVICE',
+          description: 'Auth service',
+          sourceChunkIds: [],
+        },
+        score: 0.92,
+      },
+    ]),
     traceDataFlow: vi.fn().mockResolvedValue(entities),
     findPath: vi.fn().mockResolvedValue(relations),
     stats: vi.fn().mockResolvedValue({
@@ -148,10 +160,10 @@ describe('createServer', () => {
     vi.clearAllMocks();
   });
 
-  it('registers 7 tools and 1 resource', async () => {
+  it('registers 8 tools and 1 resource', async () => {
     await createServer(createMockRag(), createMockGraph(), baseConfig);
 
-    expect(mockTool).toHaveBeenCalledTimes(7);
+    expect(mockTool).toHaveBeenCalledTimes(8);
     expect(mockResource).toHaveBeenCalledTimes(1);
     expect(mockConnect).toHaveBeenCalledTimes(1);
   });
@@ -163,6 +175,7 @@ describe('createServer', () => {
     expect(toolNames).toEqual([
       'flowrag_index',
       'flowrag_search',
+      'flowrag_search_entities',
       'flowrag_entities',
       'flowrag_relations',
       'flowrag_trace',
@@ -233,6 +246,27 @@ describe('tool handlers', () => {
     const result = await handler({ query: 'nothing' });
     expect(result).toEqual({
       content: [{ type: 'text', text: 'No results found.' }],
+    });
+  });
+
+  it('flowrag_search_entities returns formatted results', async () => {
+    const handler = getToolHandler('flowrag_search_entities');
+    const result = await handler({ query: 'authentication' });
+    expect(result).toEqual({
+      content: [{ type: 'text', text: expect.stringContaining('Found 1 entities') }],
+    });
+  });
+
+  it('flowrag_search_entities returns no results message', async () => {
+    vi.clearAllMocks();
+    const rag = createMockRag();
+    (rag.searchEntities as ReturnType<typeof vi.fn>).mockResolvedValue([]);
+    await createServer(rag, createMockGraph(), baseConfig);
+
+    const handler = getToolHandler('flowrag_search_entities');
+    const result = await handler({ query: 'nothing' });
+    expect(result).toEqual({
+      content: [{ type: 'text', text: 'No entities found.' }],
     });
   });
 

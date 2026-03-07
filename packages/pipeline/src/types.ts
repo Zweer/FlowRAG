@@ -1,6 +1,7 @@
 import type {
   DocumentParser,
   Embedder,
+  EntitySearchResult,
   EvalResult,
   Evaluator,
   ExtractionResult,
@@ -106,6 +107,10 @@ export interface FlowRAG {
   deleteDocument(documentId: string): Promise<void>;
   mergeEntities(options: MergeEntitiesOptions): Promise<void>;
   search(query: string, options?: { mode?: QueryMode; limit?: number }): Promise<SearchResult[]>;
+  searchEntities(
+    query: string,
+    options?: { limit?: number; type?: string },
+  ): Promise<EntitySearchResult[]>;
   traceDataFlow(entityId: string, direction: 'upstream' | 'downstream'): Promise<Entity[]>;
   findPath(fromId: string, toId: string, maxDepth?: number): Promise<Relation[]>;
   export(format: ExportFormat): Promise<string>;

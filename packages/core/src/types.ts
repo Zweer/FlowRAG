@@ -66,6 +66,12 @@ export interface SearchResult {
   metadata: Record<string, unknown>;
 }
 
+/** Search result for entity semantic search */
+export interface EntitySearchResult {
+  entity: Entity;
+  score: number;
+}
+
 /** Filter for vector search */
 export interface VectorFilter {
   [field: string]: unknown;

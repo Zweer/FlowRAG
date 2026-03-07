@@ -110,6 +110,34 @@ describe('createFlowRAG', () => {
     expect(mockEmbedder.embed).toHaveBeenCalledWith('test query');
   });
 
+  it('should search entities semantically', async () => {
+    const rag = createFlowRAG({
+      schema,
+      storage: mockStorage,
+      embedder: mockEmbedder,
+      extractor: mockExtractor,
+    });
+
+    const entity = {
+      id: 'Auth',
+      name: 'Auth',
+      type: 'SERVICE',
+      description: 'Auth service',
+      sourceChunkIds: [],
+    };
+    mockStorage.vector.search.mockResolvedValue([
+      { id: 'entity:Auth', score: 0.92, metadata: { _kind: 'entity', entityId: 'Auth' } },
+    ]);
+    mockStorage.graph.getEntity.mockResolvedValue(entity);
+
+    const results = await rag.searchEntities('authentication');
+
+    expect(results).toEqual([{ entity, score: 0.92 }]);
+    expect(mockStorage.vector.search).toHaveBeenCalledWith([0.1, 0.2, 0.3], 10, {
+      _kind: 'entity',
+    });
+  });
+
   it('should return stats', async () => {
     const rag = createFlowRAG({
       schema,

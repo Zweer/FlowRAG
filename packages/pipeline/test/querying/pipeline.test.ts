@@ -113,7 +113,9 @@ describe('QueryPipeline', () => {
       const results = await pipeline.search('test query', 'naive', 5);
 
       expect(mockConfig.embedder.embed).toHaveBeenCalledWith('test query');
-      expect(mockConfig.storage.vector.search).toHaveBeenCalledWith([0.1, 0.2, 0.3], 5);
+      expect(mockConfig.storage.vector.search).toHaveBeenCalledWith([0.1, 0.2, 0.3], 5, {
+        _kind: 'chunk',
+      });
       expect(results).toHaveLength(2);
       expect(results[0]).toEqual({
         id: 'chunk:1',
@@ -523,6 +525,55 @@ describe('QueryPipeline', () => {
           duration: expect.any(Number),
         }),
       );
+    });
+  });
+
+  describe('searchEntities', () => {
+    it('should search entities by semantic similarity', async () => {
+      const entity = {
+        id: 'Auth',
+        name: 'Auth',
+        type: 'SERVICE',
+        description: 'Auth service',
+        sourceChunkIds: ['c:1'],
+      };
+      vi.mocked(mockConfig.storage.vector.search).mockResolvedValue([
+        {
+          id: 'entity:Auth',
+          score: 0.95,
+          metadata: { _kind: 'entity', entityId: 'Auth', name: 'Auth', type: 'SERVICE' },
+        },
+      ]);
+      vi.mocked(mockConfig.storage.graph.getEntity).mockResolvedValue(entity);
+
+      const results = await pipeline.searchEntities('authentication service', 5);
+
+      expect(mockConfig.storage.vector.search).toHaveBeenCalledWith([0.1, 0.2, 0.3], 5, {
+        _kind: 'entity',
+      });
+      expect(results).toEqual([{ entity, score: 0.95 }]);
+    });
+
+    it('should filter entities by type', async () => {
+      vi.mocked(mockConfig.storage.vector.search).mockResolvedValue([]);
+
+      await pipeline.searchEntities('query', 5, 'SERVICE');
+
+      expect(mockConfig.storage.vector.search).toHaveBeenCalledWith([0.1, 0.2, 0.3], 5, {
+        _kind: 'entity',
+        type: 'SERVICE',
+      });
+    });
+
+    it('should skip results when entity not found in graph', async () => {
+      vi.mocked(mockConfig.storage.vector.search).mockResolvedValue([
+        { id: 'entity:Gone', score: 0.8, metadata: { _kind: 'entity', entityId: 'Gone' } },
+      ]);
+      vi.mocked(mockConfig.storage.graph.getEntity).mockResolvedValue(null);
+
+      const results = await pipeline.searchEntities('query', 5);
+
+      expect(results).toEqual([]);
     });
   });
 });

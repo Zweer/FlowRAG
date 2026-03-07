@@ -52,7 +52,7 @@ flowrag search <query> [options]
 
 | Option | Description |
 |--------|-------------|
-| `--type <type>` | Search type: `chunks`, `entities`, `relations` |
+| `--type <type>` | Search type: `chunks`, `entities` (semantic), `relations` |
 | `--mode <mode>` | Query mode: `hybrid`, `local`, `global`, `naive` |
 | `--limit <n>` | Max results (default: 10) |
 | `-d, --data <path>` | Data storage path (default: `./data`) |

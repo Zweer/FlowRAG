@@ -160,6 +160,7 @@ describe('IndexingPipeline', () => {
           author: 'Alice',
           episode: 1,
           location: 'Rome',
+          _kind: 'chunk',
           documentId: 'doc:test',
           content: 'test content',
         },
@@ -199,9 +200,111 @@ describe('IndexingPipeline', () => {
       {
         id: 'doc:test:chunk:0',
         vector: [0.1, 0.2, 0.3],
-        metadata: { documentId: 'doc:test', content: 'test content' },
+        metadata: { _kind: 'chunk', documentId: 'doc:test', content: 'test content' },
       },
     ]);
+  });
+
+  it('should embed entities after processing all chunks', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+
+    mockScanner.scanFiles = vi.fn(() =>
+      Promise.resolve([
+        { id: 'doc:test', content: 'test content', metadata: { path: '/test.txt' } },
+      ]),
+    );
+    mockChunker.chunkDocument = vi.fn(() => [
+      {
+        id: 'doc:test:chunk:0',
+        content: 'test content',
+        documentId: 'doc:test',
+        startToken: 0,
+        endToken: 10,
+      },
+    ]);
+
+    const entities = [
+      {
+        id: 'Auth',
+        name: 'Auth',
+        type: 'SERVICE',
+        description: 'Auth service',
+        sourceChunkIds: ['c:1'],
+      },
+      {
+        id: 'DB',
+        name: 'DB',
+        type: 'DATABASE',
+        description: 'Main database',
+        sourceChunkIds: ['c:1'],
+      },
+    ];
+    vi.mocked(mockConfig.storage.graph.getEntities).mockResolvedValue(entities);
+    vi.mocked(mockConfig.embedder.embedBatch).mockResolvedValue([
+      [0.4, 0.5, 0.6],
+      [0.7, 0.8, 0.9],
+    ]);
+
+    await pipeline.process(['/test.txt']);
+
+    expect(mockConfig.embedder.embedBatch).toHaveBeenCalledWith([
+      '[SERVICE] Auth: Auth service',
+      '[DATABASE] DB: Main database',
+    ]);
+    expect(mockConfig.storage.vector.upsert).toHaveBeenCalledWith([
+      {
+        id: 'entity:Auth',
+        vector: [0.4, 0.5, 0.6],
+        metadata: {
+          _kind: 'entity',
+          entityId: 'Auth',
+          name: 'Auth',
+          type: 'SERVICE',
+          description: 'Auth service',
+        },
+      },
+      {
+        id: 'entity:DB',
+        vector: [0.7, 0.8, 0.9],
+        metadata: {
+          _kind: 'entity',
+          entityId: 'DB',
+          name: 'DB',
+          type: 'DATABASE',
+          description: 'Main database',
+        },
+      },
+    ]);
+  });
+
+  it('should skip entity embedding when no entities exist', async () => {
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockScanner = (pipeline as any).scanner;
+    // biome-ignore lint/suspicious/noExplicitAny: need to access private methods
+    const mockChunker = (pipeline as any).chunker;
+
+    mockScanner.scanFiles = vi.fn(() =>
+      Promise.resolve([
+        { id: 'doc:test', content: 'test content', metadata: { path: '/test.txt' } },
+      ]),
+    );
+    mockChunker.chunkDocument = vi.fn(() => [
+      {
+        id: 'doc:test:chunk:0',
+        content: 'test content',
+        documentId: 'doc:test',
+        startToken: 0,
+        endToken: 10,
+      },
+    ]);
+    vi.mocked(mockConfig.storage.graph.getEntities).mockResolvedValue([]);
+
+    await pipeline.process(['/test.txt']);
+
+    expect(mockConfig.embedder.embedBatch).not.toHaveBeenCalled();
   });
 
   it('should process multiple input files', async () => {
@@ -560,6 +663,7 @@ describe('IndexingPipeline', () => {
 
       expect(mockConfig.storage.vector.delete).toHaveBeenCalledWith(chunkIds);
       expect(mockConfig.storage.graph.deleteEntity).toHaveBeenCalledWith('OrphanEntity');
+      expect(mockConfig.storage.vector.delete).toHaveBeenCalledWith(['entity:OrphanEntity']);
       expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith('chunk:doc:test:0');
       expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith('chunk:doc:test:1');
       expect(mockConfig.storage.kv.delete).toHaveBeenCalledWith(docId);

@@ -196,6 +196,25 @@ function registerTools(
   );
 
   server.tool(
+    'flowrag_search_entities',
+    'Semantic search for entities in the knowledge graph by description similarity',
+    {
+      query: z.string().describe('Search query'),
+      limit: z.number().optional().describe('Max results'),
+      type: z.string().optional().describe('Filter by entity type'),
+    },
+    async ({ query, limit, type }) => {
+      const results = await rag.searchEntities(query, { limit: limit ?? 10, type });
+      if (results.length === 0) return text('No entities found.');
+      const lines = results.map(
+        (r, i) =>
+          `${i + 1}. [${r.entity.type}] ${r.entity.name} (score: ${r.score.toFixed(4)})\n   ${r.entity.description}`,
+      );
+      return text(`Found ${results.length} entities:\n\n${lines.join('\n\n')}`);
+    },
+  );
+
+  server.tool(
     'flowrag_entities',
     'List or filter entities in the knowledge graph',
     {

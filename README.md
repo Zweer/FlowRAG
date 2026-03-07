@@ -123,6 +123,15 @@ Combines vector search with graph traversal:
 2. **Graph expansion**: Follow entity relationships
 3. **Merge & dedupe**: Combine results
 
+### Entity Search
+
+Search entities semantically by description, not just exact name:
+
+```typescript
+const results = await rag.searchEntities('the service that handles login');
+// [{ entity: { name: 'Auth Service', type: 'SERVICE', ... }, score: 0.92 }]
+```
+
 ### Reranker (Optional)
 
 Improve result quality with a post-retrieval reranking step:
