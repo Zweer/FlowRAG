@@ -5,7 +5,15 @@ export default defineConfig({
   description: 'TypeScript RAG library with knowledge graph support',
   base: '/FlowRAG/',
   head: [
-    ['link', { rel: 'icon', href: '/FlowRAG/favicon.ico' }],
+    [
+      'link',
+      { rel: 'icon', type: 'image/png', href: '/FlowRAG/favicon-96x96.png', sizes: '96x96' },
+    ],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/FlowRAG/favicon.svg' }],
+    ['link', { rel: 'shortcut icon', href: '/FlowRAG/favicon.ico' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/FlowRAG/apple-touch-icon.png' }],
+    ['meta', { name: 'apple-mobile-web-app-title', content: 'FlowRAG' }],
+    ['link', { rel: 'manifest', href: '/FlowRAG/site.webmanifest' }],
     ['meta', { property: 'og:title', content: 'FlowRAG' }],
     [
       'meta',
@@ -17,7 +25,9 @@ export default defineConfig({
     ],
     ['meta', { property: 'og:url', content: 'https://zweer.github.io/FlowRAG/' }],
     ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:image', content: 'https://zweer.github.io/FlowRAG/og-image.png' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: 'https://zweer.github.io/FlowRAG/og-image.png' }],
     ['meta', { name: 'twitter:title', content: 'FlowRAG' }],
     [
       'meta',

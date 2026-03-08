@@ -1,10 +1,18 @@
-# FlowRAG 🌊
+<p align="center">
+  <img src="docs/public/logo.svg" alt="FlowRAG" width="200" />
+</p>
 
-[![CI](https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml/badge.svg)](https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Coverage Badge](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat)
+<h1 align="center">FlowRAG 🌊</h1>
 
-TypeScript RAG library with knowledge graph support.
+<p align="center">
+  <strong>TypeScript RAG library with knowledge graph support.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml"><img src="https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml/badge.svg" alt="CI" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+  <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat" alt="Coverage Badge" />
+</p>
 
 ## Table of Contents
 
