@@ -3,11 +3,12 @@
   "version": "1.8.1",
   "description": "📐 Core interfaces, types, and schema definition for FlowRAG",
   "keywords": [
+    "flowrag",
+    "rag",
+    "typescript",
+    "knowledge-graph",
     "interfaces",
-    "schema",
-    "pipeline",
-    "types",
-    "zod"
+    "schema"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {

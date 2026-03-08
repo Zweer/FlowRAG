@@ -3,11 +3,12 @@
   "version": "1.4.2",
   "description": "🗃️ SQLite graph storage for FlowRAG - knowledge graph with traversal and path finding",
   "keywords": [
+    "flowrag",
+    "rag",
+    "typescript",
     "storage",
     "graph",
-    "sqlite",
-    "entities",
-    "relations"
+    "sqlite"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {

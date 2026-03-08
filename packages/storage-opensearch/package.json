@@ -4,12 +4,13 @@
   "description": "🔎 OpenSearch storage for FlowRAG - vector search and knowledge graph on OpenSearch",
   "keywords": [
     "flowrag",
+    "rag",
+    "typescript",
     "storage",
     "opensearch",
     "vector",
     "graph",
-    "aws",
-    "cloud"
+    "aws"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/storage-opensearch",
   "bugs": "https://github.com/Zweer/FlowRAG/issues",

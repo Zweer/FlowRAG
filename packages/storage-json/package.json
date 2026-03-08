@@ -3,11 +3,12 @@
   "version": "1.1.4",
   "description": "📄 JSON file KV storage for FlowRAG - documents, chunks, and cache as Git-friendly files",
   "keywords": [
+    "flowrag",
+    "rag",
+    "typescript",
     "storage",
     "kv",
-    "json",
-    "files",
-    "cache"
+    "json"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {

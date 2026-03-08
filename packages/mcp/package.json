@@ -3,11 +3,13 @@
   "version": "0.4.1",
   "description": "🤖 MCP server for FlowRAG - expose your knowledge base to AI assistants",
   "keywords": [
+    "flowrag",
     "rag",
+    "typescript",
     "mcp",
-    "knowledge-graph",
+    "model-context-protocol",
     "ai-assistant",
-    "model-context-protocol"
+    "knowledge-graph"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {

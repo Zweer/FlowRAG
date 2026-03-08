@@ -4,12 +4,12 @@
   "description": "🎭 Anthropic provider for FlowRAG - entity extraction and reranking via Claude",
   "keywords": [
     "flowrag",
+    "rag",
+    "typescript",
     "provider",
     "anthropic",
     "claude",
-    "extractor",
-    "ai",
-    "rag"
+    "extraction"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/provider-anthropic",
   "bugs": "https://github.com/Zweer/FlowRAG/issues",

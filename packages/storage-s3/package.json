@@ -4,11 +4,12 @@
   "description": "☁️ S3 KV storage for FlowRAG - store documents, chunks, and cache on Amazon S3",
   "keywords": [
     "flowrag",
+    "rag",
+    "typescript",
     "storage",
     "kv",
     "s3",
-    "aws",
-    "cloud"
+    "aws"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/storage-s3",
   "bugs": "https://github.com/Zweer/FlowRAG/issues",

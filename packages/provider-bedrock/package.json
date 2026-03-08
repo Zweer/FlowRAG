@@ -4,13 +4,13 @@
   "description": "🪨 AWS Bedrock provider for FlowRAG - embeddings, entity extraction, and reranking",
   "keywords": [
     "flowrag",
+    "rag",
+    "typescript",
     "provider",
     "bedrock",
     "aws",
-    "embedder",
-    "extractor",
-    "ai",
-    "rag"
+    "embeddings",
+    "extraction"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/provider-bedrock",
   "bugs": "https://github.com/Zweer/FlowRAG/issues",

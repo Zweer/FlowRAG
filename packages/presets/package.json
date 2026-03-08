@@ -3,10 +3,11 @@
   "version": "1.4.2",
   "description": "📦 Opinionated presets for FlowRAG - local and AWS storage setups in one call",
   "keywords": [
+    "flowrag",
     "rag",
     "typescript",
-    "knowledge-graph",
-    "presets"
+    "presets",
+    "knowledge-graph"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {

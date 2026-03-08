@@ -4,11 +4,12 @@
   "description": "⚡ Redis storage for FlowRAG - KV and vector storage on Redis Stack",
   "keywords": [
     "flowrag",
+    "rag",
+    "typescript",
     "storage",
     "redis",
     "kv",
-    "vector",
-    "cloud"
+    "vector"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/storage-redis",
   "bugs": "https://github.com/Zweer/FlowRAG/issues",

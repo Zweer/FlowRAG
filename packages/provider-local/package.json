@@ -4,13 +4,12 @@
   "description": "🏠 Local AI provider for FlowRAG - ONNX embeddings and reranking, fully offline",
   "keywords": [
     "flowrag",
+    "rag",
+    "typescript",
     "provider",
     "local",
     "onnx",
-    "transformers",
-    "embedder",
-    "ai",
-    "rag"
+    "embeddings"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/provider-local",
   "bugs": "https://github.com/Zweer/FlowRAG/issues",

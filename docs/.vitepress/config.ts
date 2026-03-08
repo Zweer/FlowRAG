@@ -4,7 +4,30 @@ export default defineConfig({
   title: 'FlowRAG',
   description: 'TypeScript RAG library with knowledge graph support',
   base: '/FlowRAG/',
-  head: [['link', { rel: 'icon', href: '/FlowRAG/favicon.ico' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/FlowRAG/favicon.ico' }],
+    ['meta', { property: 'og:title', content: 'FlowRAG' }],
+    [
+      'meta',
+      {
+        property: 'og:description',
+        content:
+          'TypeScript RAG library with knowledge graph support. Batch indexing, semantic search, Lambda-friendly.',
+      },
+    ],
+    ['meta', { property: 'og:url', content: 'https://zweer.github.io/FlowRAG/' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: 'FlowRAG' }],
+    [
+      'meta',
+      {
+        name: 'twitter:description',
+        content: 'TypeScript RAG library with knowledge graph support',
+      },
+    ],
+  ],
+  sitemap: { hostname: 'https://zweer.github.io/FlowRAG/' },
 
   themeConfig: {
     logo: '/logo.svg',

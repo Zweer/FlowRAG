@@ -4,12 +4,12 @@
   "description": "🧠 OpenAI provider for FlowRAG - embeddings, entity extraction, and reranking",
   "keywords": [
     "flowrag",
+    "rag",
+    "typescript",
     "provider",
     "openai",
-    "embedder",
-    "extractor",
-    "ai",
-    "rag"
+    "embeddings",
+    "extraction"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG/tree/main/packages/provider-openai",
   "bugs": "https://github.com/Zweer/FlowRAG/issues",

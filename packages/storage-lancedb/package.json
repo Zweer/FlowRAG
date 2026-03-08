@@ -3,11 +3,13 @@
   "version": "1.1.4",
   "description": "🔍 LanceDB vector storage for FlowRAG - embedded semantic search, no server required",
   "keywords": [
+    "flowrag",
+    "rag",
+    "typescript",
     "storage",
     "vector",
     "lancedb",
-    "embeddings",
-    "search"
+    "embeddings"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {
