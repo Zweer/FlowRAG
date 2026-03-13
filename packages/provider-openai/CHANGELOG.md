@@ -10,6 +10,30 @@
 
 
 
+
+
+## [0.3.1] - 2026-03-13
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 3 updates (#44)
+
+### ### chore
+
+- chore(deps): bump the production-dependencies group with 4 updates (#40)
+- chore: :sparkles: add community health files, normalize npm keywords, improve docs SEO
+
+## [0.3.1] - 2026-03-13
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 3 updates (#44)
+
+### ### chore
+
+- chore(deps): bump the production-dependencies group with 4 updates (#40)
+- chore: :sparkles: add community health files, normalize npm keywords, improve docs SEO
+
 ## [0.3.0] - 2026-03-07
 
 ### ### chore

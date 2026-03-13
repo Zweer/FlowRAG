@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-s3",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "☁️ S3 KV storage for FlowRAG - store documents, chunks, and cache on Amazon S3",
   "keywords": [
     "flowrag",

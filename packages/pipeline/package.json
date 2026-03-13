@@ -41,7 +41,7 @@
     "tiktoken": "^1.0.22"
   },
   "devDependencies": {
-    "@flowrag/provider-gemini": "^1.5.1",
+    "@flowrag/provider-gemini": "^1.5.2",
     "@flowrag/provider-local": "^1.5.2",
     "@flowrag/storage-json": "^1.1.4",
     "@flowrag/storage-lancedb": "^1.1.4",
