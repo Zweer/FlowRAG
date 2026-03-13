@@ -12,9 +12,8 @@ updates:
     reviewers:
       - Zweer
     commit-message:
-      prefix: "chore"
+      prefix: "fix"
       prefix-development: "chore"
-      include: "scope"
     labels:
       - dependencies
       - automated
