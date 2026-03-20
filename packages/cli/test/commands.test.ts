@@ -51,6 +51,11 @@ vi.mock('../src/rag.js', () => ({
   getFlowRAG: vi.fn(() => ({ rag: mockRag, config: mockConfig })),
 }));
 
+vi.mock('node:fs/promises', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('node:fs/promises')>();
+  return { ...actual, mkdir: vi.fn() };
+});
+
 describe('index command', () => {
   let indexCommand: typeof import('../src/commands/index.js').indexCommand;
 
@@ -202,10 +207,6 @@ describe('init command', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     vi.spyOn(console, 'log').mockImplementation(() => {});
-    vi.mock('node:fs/promises', async (importOriginal) => {
-      const actual = await importOriginal<typeof import('node:fs/promises')>();
-      return { ...actual, mkdir: vi.fn() };
-    });
     ({ initCommand } = await import('../src/commands/init.js'));
   });
 
