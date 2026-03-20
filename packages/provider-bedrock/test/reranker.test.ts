@@ -96,4 +96,56 @@ describe('BedrockReranker', () => {
     const call = mockSend.mock.calls[0][0];
     expect(call.input.modelId).toBe(BedrockRerankerModels.RERANK_V1);
   });
+
+  describe('Cohere Rerank', () => {
+    let cohereReranker: BedrockReranker;
+
+    beforeEach(() => {
+      cohereReranker = new BedrockReranker({ model: BedrockRerankerModels.COHERE_RERANK_V3_5 });
+    });
+
+    it('should use Cohere body format', async () => {
+      mockSend.mockResolvedValue({
+        body: new TextEncoder().encode(
+          JSON.stringify({
+            results: [
+              { index: 1, relevance_score: 0.95 },
+              { index: 0, relevance_score: 0.7 },
+            ],
+          }),
+        ),
+      });
+
+      const docs = [
+        { id: 'd1', content: 'first', score: 0.5 },
+        { id: 'd2', content: 'second', score: 0.6 },
+      ];
+
+      const results = await cohereReranker.rerank('query', docs);
+
+      expect(results).toEqual([
+        { id: 'd2', score: 0.95, index: 1 },
+        { id: 'd1', score: 0.7, index: 0 },
+      ]);
+
+      const call = mockSend.mock.calls[0][0];
+      const body = JSON.parse(call.input.body);
+      expect(body.documents).toEqual(['first', 'second']);
+      expect(body.top_n).toBe(2);
+    });
+
+    it('should pass limit as top_n', async () => {
+      mockSend.mockResolvedValue({
+        body: new TextEncoder().encode(
+          JSON.stringify({ results: [{ index: 0, relevance_score: 0.9 }] }),
+        ),
+      });
+
+      await cohereReranker.rerank('q', [{ id: '1', content: 'c', score: 0 }], 1);
+
+      const call = mockSend.mock.calls[0][0];
+      const body = JSON.parse(call.input.body);
+      expect(body.top_n).toBe(1);
+    });
+  });
 });

@@ -15,6 +15,10 @@ export interface BedrockRerankerOptions {
   retry?: RetryOptions;
 }
 
+function isCohere(model: string): boolean {
+  return model.startsWith('cohere.');
+}
+
 export class BedrockReranker implements Reranker {
   private readonly client: BedrockRuntimeClient;
   private readonly model: string;
@@ -35,6 +39,17 @@ export class BedrockReranker implements Reranker {
   ): Promise<RerankResult[]> {
     if (documents.length === 0) return [];
 
+    if (isCohere(this.model)) {
+      return this.rerankCohere(query, documents, limit);
+    }
+    return this.rerankAmazon(query, documents, limit);
+  }
+
+  private async rerankAmazon(
+    query: string,
+    documents: RerankDocument[],
+    limit?: number,
+  ): Promise<RerankResult[]> {
     const body = JSON.stringify({
       query,
       documents: documents.map((d) => ({ textDocument: { text: d.content } })),
@@ -54,6 +69,34 @@ export class BedrockReranker implements Reranker {
     return (result.results as { index: number; relevanceScore: number }[]).map((r) => ({
       id: documents[r.index].id,
       score: r.relevanceScore,
+      index: r.index,
+    }));
+  }
+
+  private async rerankCohere(
+    query: string,
+    documents: RerankDocument[],
+    limit?: number,
+  ): Promise<RerankResult[]> {
+    const body = JSON.stringify({
+      query,
+      documents: documents.map((d) => d.content),
+      top_n: limit ?? documents.length,
+    });
+
+    const response = await withRetry(
+      () =>
+        this.client.send(
+          new InvokeModelCommand({ modelId: this.model, body, contentType: 'application/json' }),
+        ),
+      this.retry,
+    );
+
+    const result = JSON.parse(new TextDecoder().decode(response.body));
+
+    return (result.results as { index: number; relevance_score: number }[]).map((r) => ({
+      id: documents[r.index].id,
+      score: r.relevance_score,
       index: r.index,
     }));
   }

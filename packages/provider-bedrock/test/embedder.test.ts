@@ -70,4 +70,54 @@ describe('BedrockEmbedder', () => {
       expect(mockSend).not.toHaveBeenCalled();
     });
   });
+
+  describe('Cohere models', () => {
+    let cohereEmbedder: BedrockEmbedder;
+
+    beforeEach(() => {
+      cohereEmbedder = new BedrockEmbedder({ model: 'cohere.embed-v4:0' });
+    });
+
+    it('should use Cohere body format for embed', async () => {
+      mockSend.mockResolvedValue({
+        body: new TextEncoder().encode(JSON.stringify({ embeddings: [[0.1, 0.2]] })),
+      });
+
+      const result = await cohereEmbedder.embed('hello');
+      expect(result).toEqual([0.1, 0.2]);
+
+      const call = mockSend.mock.calls[0][0];
+      const body = JSON.parse(call.input.body);
+      expect(body.texts).toEqual(['hello']);
+      expect(body.input_type).toBe('search_document');
+      expect(body.truncate).toBe('END');
+    });
+
+    it('should use Cohere batch format for embedBatch', async () => {
+      mockSend.mockResolvedValue({
+        body: new TextEncoder().encode(JSON.stringify({ embeddings: [[0.1], [0.2]] })),
+      });
+
+      const result = await cohereEmbedder.embedBatch(['a', 'b']);
+      expect(result).toEqual([[0.1], [0.2]]);
+      expect(mockSend).toHaveBeenCalledTimes(1);
+    });
+
+    it('should respect custom inputType', async () => {
+      const queryEmbedder = new BedrockEmbedder({
+        model: 'cohere.embed-multilingual-v3',
+        inputType: 'search_query',
+      });
+
+      mockSend.mockResolvedValue({
+        body: new TextEncoder().encode(JSON.stringify({ embeddings: [[0.5]] })),
+      });
+
+      await queryEmbedder.embed('query');
+
+      const call = mockSend.mock.calls[0][0];
+      const body = JSON.parse(call.input.body);
+      expect(body.input_type).toBe('search_query');
+    });
+  });
 });
