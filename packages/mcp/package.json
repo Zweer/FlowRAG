@@ -41,11 +41,11 @@
     "@flowrag/core": "^1.8.1",
     "@flowrag/pipeline": "^1.9.1",
     "@flowrag/presets": "^1.4.2",
-    "@flowrag/provider-anthropic": "^0.2.2",
-    "@flowrag/provider-bedrock": "^0.5.0",
-    "@flowrag/provider-gemini": "^1.5.3",
+    "@flowrag/provider-anthropic": "^0.2.3",
+    "@flowrag/provider-bedrock": "^0.5.1",
+    "@flowrag/provider-gemini": "^1.5.4",
     "@flowrag/provider-local": "^1.5.3",
-    "@flowrag/provider-openai": "^0.3.3",
+    "@flowrag/provider-openai": "^0.3.4",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "dotenv": "^17.3.1"
   },
@@ -55,7 +55,7 @@
   "peerDependencies": {
     "@flowrag/storage-opensearch": "^0.3.1",
     "@flowrag/storage-redis": "^0.4.2",
-    "@flowrag/storage-s3": "^0.3.2",
+    "@flowrag/storage-s3": "^0.3.3",
     "@opensearch-project/opensearch": "^2.0.0 || ^3.0.0",
     "redis": "^5.0.0",
     "zod": "^3.25.0"

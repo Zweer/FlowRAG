@@ -17,6 +17,27 @@
 
 
 
+
+
+
+## [1.1.4] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#47)
+
+## [1.1.4] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#47)
+
+## [1.1.4] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#47)
+
 ## [1.1.3] - 2026-03-07
 
 ### ### chore

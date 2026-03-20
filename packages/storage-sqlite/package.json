@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-sqlite",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "🗃️ SQLite graph storage for FlowRAG - knowledge graph with traversal and path finding",
   "keywords": [
     "flowrag",
