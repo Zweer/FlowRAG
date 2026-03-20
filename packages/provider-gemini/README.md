@@ -1,6 +1,6 @@
 # @flowrag/provider-gemini
 
-Gemini AI provider for FlowRAG - embeddings and entity extraction.
+Gemini AI provider for FlowRAG — embeddings, entity extraction, and reranking.
 
 ## Installation
 
@@ -55,6 +55,14 @@ const result = await extractor.extractEntities(
 
 ```bash
 GEMINI_API_KEY=your-api-key
+```
+
+## Reranker
+
+```typescript
+import { GeminiReranker } from '@flowrag/provider-gemini';
+
+const reranker = new GeminiReranker();
 ```
 
 ## License

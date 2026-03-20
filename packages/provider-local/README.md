@@ -1,6 +1,6 @@
 # @flowrag/provider-local
 
-Local AI provider for FlowRAG - ONNX embeddings and future local extraction.
+Local AI provider for FlowRAG — ONNX embeddings and reranking, fully offline.
 
 ## Installation
 
