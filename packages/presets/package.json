@@ -34,9 +34,9 @@
   ],
   "dependencies": {
     "@flowrag/core": "^1.8.1",
-    "@flowrag/provider-bedrock": "^0.4.2",
-    "@flowrag/provider-gemini": "^1.5.2",
-    "@flowrag/provider-local": "^1.5.2",
+    "@flowrag/provider-bedrock": "^0.5.0",
+    "@flowrag/provider-gemini": "^1.5.3",
+    "@flowrag/provider-local": "^1.5.3",
     "@flowrag/storage-json": "^1.1.4",
     "@flowrag/storage-lancedb": "^1.1.4",
     "@flowrag/storage-opensearch": "^0.3.1",

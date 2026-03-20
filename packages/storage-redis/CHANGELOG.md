@@ -3,6 +3,13 @@
 
 
 
+
+## [0.4.1] - 2026-03-20
+
+### ⚡ Performance
+
+- perf: :memo: add missing READMEs and fix outdated provider descriptions
+
 ## [0.4.0] - 2026-03-07
 
 ### ### chore

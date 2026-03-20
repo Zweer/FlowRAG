@@ -28,6 +28,27 @@
 
 
 
+
+
+
+## [1.5.2] - 2026-03-20
+
+### ⚡ Performance
+
+- perf: :memo: add missing READMEs and fix outdated provider descriptions
+
+## [1.5.2] - 2026-03-20
+
+### ⚡ Performance
+
+- perf: :memo: add missing READMEs and fix outdated provider descriptions
+
+## [1.5.2] - 2026-03-20
+
+### ⚡ Performance
+
+- perf: :memo: add missing READMEs and fix outdated provider descriptions
+
 ## [1.5.1] - 2026-03-07
 
 ### ### chore

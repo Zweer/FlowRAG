@@ -40,6 +40,41 @@
 
 
 
+
+
+
+
+
+## [0.4.2] - 2026-03-20
+
+### ✨ Features
+
+- feat(provider-bedrock): :sparkles: add all new Bedrock models and multi-provider body formats
+
+## [0.4.2] - 2026-03-20
+
+### ✨ Features
+
+- feat(provider-bedrock): :sparkles: add all new Bedrock models and multi-provider body formats
+
+## [0.4.2] - 2026-03-20
+
+### ✨ Features
+
+- feat(provider-bedrock): :sparkles: add all new Bedrock models and multi-provider body formats
+
+## [0.4.2] - 2026-03-20
+
+### ✨ Features
+
+- feat(provider-bedrock): :sparkles: add all new Bedrock models and multi-provider body formats
+
+## [0.4.2] - 2026-03-20
+
+### ✨ Features
+
+- feat(provider-bedrock): :sparkles: add all new Bedrock models and multi-provider body formats
+
 ## [0.4.1] - 2026-03-13
 
 ### 🐛 Bug Fixes

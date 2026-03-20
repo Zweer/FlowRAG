@@ -62,6 +62,55 @@
 
 
 
+
+
+
+
+
+
+
+## [0.4.1] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: hoist vi.mock to top level in commands test
+
+## [0.4.1] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: hoist vi.mock to top level in commands test
+
+## [0.4.1] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: hoist vi.mock to top level in commands test
+
+## [0.4.1] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: hoist vi.mock to top level in commands test
+
+## [0.4.1] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: hoist vi.mock to top level in commands test
+
+## [0.4.1] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: hoist vi.mock to top level in commands test
+
+## [0.4.1] - 2026-03-20
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: hoist vi.mock to top level in commands test
+
 ## [0.4.0] - 2026-03-07
 
 ### ### chore
