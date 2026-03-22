@@ -6,6 +6,7 @@
     "file://README.md",
     "file://.kiro/specs/**/*.md",
     "file://.kiro/steering/**/*.md",
+    "skill://.kiro/skills/**/SKILL.md",
     "file://docs/**/*.md"
   ],
   "tools": [
