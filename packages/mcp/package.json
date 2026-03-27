@@ -53,14 +53,19 @@
     "@types/express": "^5.0.0"
   },
   "peerDependencies": {
+    "@flowrag/storage-lancedb": "^1.1.5",
     "@flowrag/storage-opensearch": "^0.3.1",
     "@flowrag/storage-redis": "^0.4.2",
     "@flowrag/storage-s3": "^0.3.3",
+    "@flowrag/storage-sqlite": "^1.4.3",
     "@opensearch-project/opensearch": "^2.0.0 || ^3.0.0",
     "redis": "^5.0.0",
     "zod": "^3.25.0"
   },
   "peerDependenciesMeta": {
+    "@flowrag/storage-lancedb": {
+      "optional": true
+    },
     "@flowrag/storage-opensearch": {
       "optional": true
     },
@@ -68,6 +73,9 @@
       "optional": true
     },
     "@flowrag/storage-s3": {
+      "optional": true
+    },
+    "@flowrag/storage-sqlite": {
       "optional": true
     },
     "@opensearch-project/opensearch": {
