@@ -1,6 +1,6 @@
 {
   "name": "flowrag",
-  "version": "1.5.0",
+  "version": "1.9.2",
   "private": true,
   "description": "🏠 Monorepo root containing npm workspace configuration, shared build/test/lint scripts, and all development tooling (Biome, Vitest, Lefthook). Not published to npm.",
   "keywords": [
