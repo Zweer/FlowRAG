@@ -40,6 +40,28 @@
 
 
 
+
+
+## [1.4.2] - 2026-03-27
+
+### ✨ Features
+
+- feat(presets): :sparkles: add createSQLiteStorage preset
+
+### 📚 Documentation
+
+- docs: :memo: document SQLiteVectorStorage and createSQLiteStorage
+
+## [1.4.2] - 2026-03-27
+
+### ✨ Features
+
+- feat(presets): :sparkles: add createSQLiteStorage preset
+
+### 📚 Documentation
+
+- docs: :memo: document SQLiteVectorStorage and createSQLiteStorage
+
 ## [1.4.1] - 2026-03-07
 
 ### ### chore

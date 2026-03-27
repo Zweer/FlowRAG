@@ -6,6 +6,17 @@
 
 
 
+
+## [1.4.3] - 2026-03-27
+
+### ✨ Features
+
+- feat(storage-sqlite): :sparkles: add SQLiteVectorStorage via sqlite-vec
+
+### 📚 Documentation
+
+- docs: :memo: document SQLiteVectorStorage and createSQLiteStorage
+
 ## [1.4.2] - 2026-03-20
 
 ### 🐛 Bug Fixes

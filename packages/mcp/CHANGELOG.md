@@ -27,6 +27,51 @@
 
 
 
+
+
+
+## [0.4.1] - 2026-03-27
+
+### ✨ Features
+
+- feat(mcp): :sparkles: support lancedb and sqlite vector/graph providers
+
+### 🐛 Bug Fixes
+
+- fix(mcp): :bug: add missing peer deps for storage-lancedb and storage-sqlite
+
+### ### test
+
+- test(mcp): :white_check_mark: cover new storage provider branches
+
+## [0.4.1] - 2026-03-27
+
+### ✨ Features
+
+- feat(mcp): :sparkles: support lancedb and sqlite vector/graph providers
+
+### 🐛 Bug Fixes
+
+- fix(mcp): :bug: add missing peer deps for storage-lancedb and storage-sqlite
+
+### ### test
+
+- test(mcp): :white_check_mark: cover new storage provider branches
+
+## [0.4.1] - 2026-03-27
+
+### ✨ Features
+
+- feat(mcp): :sparkles: support lancedb and sqlite vector/graph providers
+
+### 🐛 Bug Fixes
+
+- fix(mcp): :bug: add missing peer deps for storage-lancedb and storage-sqlite
+
+### ### test
+
+- test(mcp): :white_check_mark: cover new storage provider branches
+
 ## [0.4.0] - 2026-03-07
 
 ### ### chore

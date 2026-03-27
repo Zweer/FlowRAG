@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-sqlite",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "🗃️ SQLite graph and vector storage for FlowRAG - knowledge graph with traversal, path finding, and vector search via sqlite-vec",
   "keywords": [
     "flowrag",
