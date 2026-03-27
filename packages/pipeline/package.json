@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@flowrag/core": "^1.8.1",
-    "picomatch": "^4.0.3",
+    "picomatch": "^4.0.4",
     "tiktoken": "^1.0.22"
   },
   "devDependencies": {
