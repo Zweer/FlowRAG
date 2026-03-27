@@ -1,14 +1,16 @@
 {
   "name": "@flowrag/storage-sqlite",
   "version": "1.4.3",
-  "description": "🗃️ SQLite graph storage for FlowRAG - knowledge graph with traversal and path finding",
+  "description": "🗃️ SQLite graph and vector storage for FlowRAG - knowledge graph with traversal, path finding, and vector search via sqlite-vec",
   "keywords": [
     "flowrag",
     "rag",
     "typescript",
     "storage",
     "graph",
-    "sqlite"
+    "vector",
+    "sqlite",
+    "sqlite-vec"
   ],
   "homepage": "https://github.com/Zweer/FlowRAG#readme",
   "bugs": {
@@ -34,7 +36,8 @@
     "dist"
   ],
   "dependencies": {
-    "better-sqlite3": "^12.8.0"
+    "better-sqlite3": "^12.8.0",
+    "sqlite-vec": "^0.1.7"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13"
