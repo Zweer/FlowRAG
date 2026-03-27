@@ -123,6 +123,18 @@ vi.mock('@opensearch-project/opensearch', () => ({
   Client: MockOSClient,
 }));
 
+class MockLanceDBVectorStorage {}
+vi.mock('@flowrag/storage-lancedb', () => ({
+  LanceDBVectorStorage: MockLanceDBVectorStorage,
+}));
+
+class MockSQLiteVectorStorage {}
+class MockSQLiteGraphStorage {}
+vi.mock('@flowrag/storage-sqlite', () => ({
+  SQLiteVectorStorage: MockSQLiteVectorStorage,
+  SQLiteGraphStorage: MockSQLiteGraphStorage,
+}));
+
 const { createRagFromConfig } = await import('../src/factory.js');
 
 const baseConfig: FlowRAGMcpConfig = {
@@ -246,6 +258,47 @@ describe('createRagFromConfig', () => {
       ).rejects.toThrow('Unknown KV storage provider');
     });
 
+    it('creates LanceDB vector storage', async () => {
+      const { rag } = await createRagFromConfig({
+        ...baseConfig,
+        storage: { vector: { provider: 'lancedb', path: './data/vectors' } },
+      });
+      expect(rag).toBeDefined();
+    });
+
+    it('creates LanceDB vector storage with default path', async () => {
+      const { rag } = await createRagFromConfig({
+        ...baseConfig,
+        storage: { vector: { provider: 'lancedb' } },
+      });
+      expect(rag).toBeDefined();
+    });
+
+    it('creates SQLite vector storage', async () => {
+      const { rag } = await createRagFromConfig({
+        ...baseConfig,
+        storage: { vector: { provider: 'sqlite', path: './data/vectors.db', dimensions: 384 } },
+      });
+      expect(rag).toBeDefined();
+    });
+
+    it('creates SQLite vector storage with default path', async () => {
+      const { rag } = await createRagFromConfig({
+        ...baseConfig,
+        storage: { vector: { provider: 'sqlite', dimensions: 384 } },
+      });
+      expect(rag).toBeDefined();
+    });
+
+    it('throws when SQLite vector dimensions is missing', async () => {
+      await expect(
+        createRagFromConfig({
+          ...baseConfig,
+          storage: { vector: { provider: 'sqlite', path: './data/vectors.db' } },
+        }),
+      ).rejects.toThrow('SQLite vector storage requires "dimensions"');
+    });
+
     it('creates OpenSearch vector storage', async () => {
       const { rag } = await createRagFromConfig({
         ...baseConfig,
@@ -287,6 +340,22 @@ describe('createRagFromConfig', () => {
           storage: { vector: { provider: 'unknown' as never } },
         }),
       ).rejects.toThrow('Unknown vector storage provider');
+    });
+
+    it('creates SQLite graph storage', async () => {
+      const { rag } = await createRagFromConfig({
+        ...baseConfig,
+        storage: { graph: { provider: 'sqlite', path: './data/graph.db' } },
+      });
+      expect(rag).toBeDefined();
+    });
+
+    it('creates SQLite graph storage with default path', async () => {
+      const { rag } = await createRagFromConfig({
+        ...baseConfig,
+        storage: { graph: { provider: 'sqlite' } },
+      });
+      expect(rag).toBeDefined();
     });
 
     it('creates OpenSearch graph storage', async () => {
