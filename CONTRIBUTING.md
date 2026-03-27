@@ -32,7 +32,7 @@ packages/
 ├── pipeline/          # Indexing & querying pipelines
 ├── presets/           # Opinionated presets
 ├── storage-json/      # JSON file KV storage
-├── storage-sqlite/    # SQLite graph storage
+├── storage-sqlite/    # SQLite graph & vector storage
 ├── storage-lancedb/   # LanceDB vector storage
 ├── storage-s3/        # S3 KV storage
 ├── storage-opensearch/# OpenSearch vector & graph

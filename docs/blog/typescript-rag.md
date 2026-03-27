@@ -40,7 +40,7 @@ const schema = defineSchema({
 
 ### npm Ecosystem
 
-Need S3? `@aws-sdk/client-s3`. Need OpenSearch? `@opensearch-project/opensearch`. Need vector search? LanceDB has a Node.js client. The ecosystem is there.
+Need S3? `@aws-sdk/client-s3`. Need OpenSearch? `@opensearch-project/opensearch`. Need vector search? LanceDB and sqlite-vec both have Node.js clients. The ecosystem is there.
 
 ## What Python Does Better
 
@@ -59,7 +59,7 @@ FlowRAG uses TypeScript end-to-end:
 - **Local embeddings**: HuggingFace Transformers.js (ONNX Runtime for Node.js)
 - **Cloud embeddings**: Gemini API or AWS Bedrock (HTTP calls)
 - **Entity extraction**: LLM API calls with structured output
-- **Storage**: SQLite, LanceDB, JSON files, S3, OpenSearch
+- **Storage**: SQLite, LanceDB, sqlite-vec, JSON files, S3, OpenSearch
 
 No Python. No heavy dependencies. Just TypeScript doing what it does best: building reliable, typed, testable backend services.
 

@@ -28,7 +28,7 @@ We took the architecture and rebuilt it for our world:
 | Model | Server | Library |
 | Indexing | Continuous | Batch |
 | Deploy | Container | Lambda |
-| Storage | Neo4j, Postgres | SQLite, LanceDB, JSON files |
+| Storage | Neo4j, Postgres | SQLite, LanceDB/sqlite-vec, JSON files |
 
 ## The Result
 

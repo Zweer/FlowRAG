@@ -316,7 +316,8 @@ Interactive entity review during indexing with `--interactive`:
 │                      STORAGE LAYER                          │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
 │  │    KV    │  │  Vector  │  │  Graph   │                   │
-│  │ JSON/S3  │  │Lance/OS  │  │SQLite/OS │                   │
+│  │ JSON/S3  │  │SQLite/   │  │SQLite/OS │                   │
+│  │  Redis   │  │Lance/OS  │  │          │                   │
 │  └──────────┘  └──────────┘  └──────────┘                   │
 ├─────────────────────────────────────────────────────────────┤
 │                      PROVIDERS                              │
@@ -333,7 +334,7 @@ Interactive entity review during indexing with `--interactive`:
 | [`@flowrag/core`](./packages/core) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fcore.svg)](https://www.npmjs.com/package/@flowrag/core) | Interfaces, schema, types | ✅ Complete |
 | [`@flowrag/pipeline`](./packages/pipeline) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fpipeline.svg)](https://www.npmjs.com/package/@flowrag/pipeline) | Indexing & querying pipelines | ✅ Complete |
 | [`@flowrag/storage-json`](./packages/storage-json) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-json.svg)](https://www.npmjs.com/package/@flowrag/storage-json) | JSON file KV storage | ✅ Complete |
-| [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-sqlite.svg)](https://www.npmjs.com/package/@flowrag/storage-sqlite) | SQLite graph storage | ✅ Complete |
+| [`@flowrag/storage-sqlite`](./packages/storage-sqlite) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-sqlite.svg)](https://www.npmjs.com/package/@flowrag/storage-sqlite) | SQLite graph & vector storage | ✅ Complete |
 | [`@flowrag/storage-lancedb`](./packages/storage-lancedb) | [![npm version](https://badge.fury.io/js/%40flowrag%2Fstorage-lancedb.svg)](https://www.npmjs.com/package/@flowrag/storage-lancedb) | LanceDB vector storage | ✅ Complete |
 | [`@flowrag/storage-s3`](./packages/storage-s3) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | S3 KV storage | ✅ Complete |
 | [`@flowrag/storage-opensearch`](./packages/storage-opensearch) | ![npm](https://img.shields.io/badge/v0.0.0-gray) | OpenSearch vector & graph storage | ✅ Complete |

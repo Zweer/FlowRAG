@@ -22,7 +22,7 @@ features:
     details: Works as a library, not a server. Stateless queries with fast cold starts. Perfect for serverless architectures.
   - icon: 📁
     title: Git-Friendly Storage
-    details: File-based storage that you can commit to your repo. JSON, SQLite, and LanceDB — no external databases required.
+    details: File-based storage that you can commit to your repo. JSON, SQLite, and LanceDB or sqlite-vec — no external databases required.
   - icon: 🔌
     title: Pluggable Everything
     details: Swap storage backends, embedders, extractors, rerankers, parsers, and evaluators. Local ONNX, Gemini, OpenAI, or AWS Bedrock — your choice.

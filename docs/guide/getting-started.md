@@ -16,6 +16,10 @@ npm install @flowrag/core @flowrag/pipeline \
   @flowrag/provider-local @flowrag/provider-gemini
 ```
 
+::: tip Lightweight alternative
+If you want to avoid LanceDB's large native binaries (~50MB), use `@flowrag/storage-sqlite` for both graph and vector storage via sqlite-vec (~2MB). See [Local Development](/deployment/local#storage-presets) for details.
+:::
+
 For AWS cloud deployment:
 
 ```bash

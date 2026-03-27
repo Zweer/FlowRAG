@@ -32,14 +32,25 @@ npx tsx examples/local-docs/index.ts
 2. **Chunker** splits them into ~1200 token chunks
 3. **Extractor** (Gemini) identifies entities and relations
 4. **Embedder** (local ONNX) generates vector embeddings
-5. Everything is stored in `./data` (JSON + LanceDB + SQLite)
+5. Everything is stored in `./data` (JSON + LanceDB/sqlite-vec + SQLite)
 
 ## Storage Layout
+
+By default (with `createLocalStorage`):
 
 ```
 data/
 ├── kv/           # JSON files (documents, chunks, cache)
 ├── vectors/      # LanceDB (embeddings)
+└── graph.db      # SQLite (knowledge graph)
+```
+
+Or with `createSQLiteStorage` (lightweight alternative):
+
+```
+data/
+├── kv/           # JSON files (documents, chunks, cache)
+├── vectors.db    # SQLite + sqlite-vec (embeddings)
 └── graph.db      # SQLite (knowledge graph)
 ```
 

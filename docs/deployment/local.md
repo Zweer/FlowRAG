@@ -36,15 +36,43 @@ await rag.index('./content');
 const results = await rag.search('how does authentication work');
 ```
 
-## What `createLocalStorage()` Does
+## Storage Presets
 
-It creates all three storage backends with sensible defaults:
+FlowRAG offers two local presets:
+
+### `createLocalStorage()` (LanceDB)
+
+The default preset. Uses LanceDB for vector search — optimized for large datasets.
 
 | Storage | Implementation | Path |
 |---------|---------------|------|
 | KV | JSON files | `./data/kv/` |
 | Vector | LanceDB | `./data/vectors/` |
 | Graph | SQLite | `./data/graph.db` |
+
+### `createSQLiteStorage()` (Lightweight)
+
+Uses sqlite-vec for vector search — smaller native binaries (~2MB vs ~50MB).
+
+```typescript
+import { createSQLiteStorage } from '@flowrag/presets';
+
+const rag = createFlowRAG({
+  schema,
+  ...createSQLiteStorage('./data'),
+});
+```
+
+| Storage | Implementation | Path |
+|---------|---------------|------|
+| KV | JSON files | `./data/kv/` |
+| Vector | SQLite + sqlite-vec | `./data/vectors.db` |
+| Graph | SQLite | `./data/graph.db` |
+
+::: tip When to use which?
+- **`createLocalStorage`** — large datasets (100k+ vectors), best KNN performance
+- **`createSQLiteStorage`** — smaller projects, minimal dependencies, single-file vector storage
+:::
 
 ## CLI
 
@@ -74,12 +102,14 @@ flowrag graph stats
 
 The `./data` directory contains plain files:
 - JSON files for KV storage
-- A SQLite database for the knowledge graph
-- LanceDB files for vector embeddings
+- SQLite databases for the knowledge graph and (optionally) vector embeddings
+- LanceDB files for vector embeddings (if using `createLocalStorage`)
 
 You can commit these to your repo for a fully portable knowledge base.
 
 ## Storage Layout
+
+### With `createLocalStorage` (LanceDB)
 
 ```
 data/
@@ -90,5 +120,18 @@ data/
 │   └── docHash:doc:readme.json   # Incremental indexing
 ├── vectors/
 │   └── chunks.lance/             # LanceDB table
+└── graph.db                      # SQLite database
+```
+
+### With `createSQLiteStorage` (sqlite-vec)
+
+```
+data/
+├── kv/
+│   ├── doc:readme.json
+│   ├── chunk:readme:0.json
+│   ├── extraction:a1b2c3.json
+│   └── docHash:doc:readme.json
+├── vectors.db                    # SQLite + sqlite-vec
 └── graph.db                      # SQLite database
 ```

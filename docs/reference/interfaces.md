@@ -33,7 +33,7 @@ interface VectorStorage {
 }
 ```
 
-**Implementations**: `LanceDBVectorStorage`, `OpenSearchVectorStorage`, `RedisVectorStorage`
+**Implementations**: `LanceDBVectorStorage`, `SQLiteVectorStorage`, `OpenSearchVectorStorage`, `RedisVectorStorage`
 
 ### GraphStorage
 

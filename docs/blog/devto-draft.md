@@ -38,7 +38,7 @@ Inspired by [LightRAG](https://github.com/HKUDS/LightRAG), we separated storage 
 | Storage | Purpose | Local | Cloud |
 |---------|---------|-------|-------|
 | **KV** | Documents, chunks, cache | JSON files | S3 |
-| **Vector** | Embeddings for semantic search | LanceDB | OpenSearch |
+| **Vector** | Embeddings for semantic search | LanceDB or sqlite-vec | OpenSearch |
 | **Graph** | Entities and relations | SQLite | OpenSearch |
 
 | Aspect | LightRAG | FlowRAG |
@@ -47,7 +47,7 @@ Inspired by [LightRAG](https://github.com/HKUDS/LightRAG), we separated storage 
 | Model | Server (always running) | Library (import and use) |
 | Indexing | Continuous | Batch |
 | Deploy | Container/server | Lambda-friendly |
-| Storage | Neo4j, Postgres | SQLite, LanceDB, JSON files |
+| Storage | Neo4j, Postgres | SQLite, LanceDB/sqlite-vec, JSON files |
 
 ## Quick Start — 10 Lines
 
@@ -143,7 +143,7 @@ Try doing that with vector search alone.
 
 FlowRAG is a monorepo with 18 packages:
 
-- **5 storage backends**: JSON, SQLite, LanceDB, S3, OpenSearch, Redis
+- **6 storage backends**: JSON, SQLite (graph + vector), LanceDB, S3, OpenSearch, Redis
 - **5 AI providers**: Local ONNX, Gemini, OpenAI, Anthropic, AWS Bedrock
 - **Reranking**: Local cross-encoder, Gemini, OpenAI, Bedrock
 - **CLI**: `flowrag index ./content && flowrag search "query"`

@@ -10,7 +10,7 @@ npm install @flowrag/presets
 
 ## Usage
 
-### Local Development
+### Local Development (LanceDB)
 
 ```typescript
 import { createFlowRAG, defineSchema } from '@flowrag/core';
@@ -26,6 +26,19 @@ const rag = await createFlowRAG({
   ...createLocalStorage(), // Uses './data' by default
 });
 ```
+
+### Local Development (SQLite — lightweight)
+
+```typescript
+import { createSQLiteStorage } from '@flowrag/presets';
+
+const rag = await createFlowRAG({
+  schema,
+  ...createSQLiteStorage('./data'),
+});
+```
+
+Uses sqlite-vec for vector search instead of LanceDB — smaller native binaries (~2MB vs ~50MB).
 
 ### Custom Path
 
@@ -53,10 +66,18 @@ const rag = await createFlowRAG({
 
 ## What's Included
 
-`createLocalStorage()` provides:
+### `createLocalStorage()`
 
 - **KV Storage**: JSON files (`./data/kv/`)
 - **Vector Storage**: LanceDB (`./data/vectors/`)
+- **Graph Storage**: SQLite (`./data/graph.db`)
+- **Embedder**: Local ONNX (Xenova/e5-small-v2)
+- **Extractor**: Gemini (gemini-3-flash-preview)
+
+### `createSQLiteStorage()`
+
+- **KV Storage**: JSON files (`./data/kv/`)
+- **Vector Storage**: SQLite + sqlite-vec (`./data/vectors.db`)
 - **Graph Storage**: SQLite (`./data/graph.db`)
 - **Embedder**: Local ONNX (Xenova/e5-small-v2)
 - **Extractor**: Gemini (gemini-3-flash-preview)
@@ -65,13 +86,23 @@ const rag = await createFlowRAG({
 
 ### `createLocalStorage(options?)`
 
-Accepts a path string or an options object.
-
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `path` | `string` | `'./data'` | Base path for storage |
 | `kv` | `KVStorage` | `JsonKVStorage` | Override KV storage |
 | `vector` | `VectorStorage` | `LanceDBVectorStorage` | Override vector storage |
+| `graph` | `GraphStorage` | `SQLiteGraphStorage` | Override graph storage |
+| `embedder` | `Embedder` | `LocalEmbedder` | Override embedder |
+| `extractor` | `LLMExtractor` | `GeminiExtractor` | Override extractor |
+
+### `createSQLiteStorage(options?)`
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `path` | `string` | `'./data'` | Base path for storage |
+| `dimensions` | `number` | `384` | Vector dimensions (must match embedder) |
+| `kv` | `KVStorage` | `JsonKVStorage` | Override KV storage |
+| `vector` | `VectorStorage` | `SQLiteVectorStorage` | Override vector storage |
 | `graph` | `GraphStorage` | `SQLiteGraphStorage` | Override graph storage |
 | `embedder` | `Embedder` | `LocalEmbedder` | Override embedder |
 | `extractor` | `LLMExtractor` | `GeminiExtractor` | Override extractor |
