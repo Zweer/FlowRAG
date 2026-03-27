@@ -31,7 +31,8 @@ export interface KVStorageConfig {
 }
 
 export interface VectorStorageConfig {
-  provider: 'lancedb' | 'opensearch' | 'redis';
+  provider: 'lancedb' | 'sqlite' | 'opensearch' | 'redis';
+  path?: string;
   node?: string;
   dimensions?: number;
   url?: string;
@@ -39,6 +40,7 @@ export interface VectorStorageConfig {
 
 export interface GraphStorageConfig {
   provider: 'sqlite' | 'opensearch';
+  path?: string;
   node?: string;
 }
 

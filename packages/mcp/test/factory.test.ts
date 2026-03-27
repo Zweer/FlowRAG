@@ -284,7 +284,7 @@ describe('createRagFromConfig', () => {
       await expect(
         createRagFromConfig({
           ...baseConfig,
-          storage: { vector: { provider: 'lancedb' as never } },
+          storage: { vector: { provider: 'unknown' as never } },
         }),
       ).rejects.toThrow('Unknown vector storage provider');
     });
@@ -301,7 +301,7 @@ describe('createRagFromConfig', () => {
       await expect(
         createRagFromConfig({
           ...baseConfig,
-          storage: { graph: { provider: 'sqlite' as never } },
+          storage: { graph: { provider: 'unknown' as never } },
         }),
       ).rejects.toThrow('Unknown graph storage provider');
     });

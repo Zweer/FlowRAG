@@ -107,6 +107,8 @@ Each storage type can be configured independently. Omitted types fall back to lo
 
 | Provider | Config | Package |
 |----------|--------|---------|
+| `lancedb` | `{ "path": "./data/vectors" }` | `@flowrag/storage-lancedb` |
+| `sqlite` | `{ "path": "./data/vectors.db", "dimensions": 384 }` | `@flowrag/storage-sqlite` + `sqlite-vec` |
 | `opensearch` | `{ "node": "https://...", "dimensions": 1024 }` | `@flowrag/storage-opensearch` + `@opensearch-project/opensearch` |
 | `redis` | `{ "url": "redis://...", "dimensions": 384 }` | `@flowrag/storage-redis` + `redis` |
 
@@ -114,6 +116,7 @@ Each storage type can be configured independently. Omitted types fall back to lo
 
 | Provider | Config | Package |
 |----------|--------|---------|
+| `sqlite` | `{ "path": "./data/graph.db" }` | `@flowrag/storage-sqlite` |
 | `opensearch` | `{ "node": "https://..." }` | `@flowrag/storage-opensearch` + `@opensearch-project/opensearch` |
 
 ## Authentication

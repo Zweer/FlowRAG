@@ -81,6 +81,18 @@ async function createKVStorage(cfg: KVStorageConfig): Promise<KVStorage> {
 
 async function createVectorStorage(cfg: VectorStorageConfig): Promise<VectorStorage> {
   switch (cfg.provider) {
+    case 'lancedb': {
+      const { LanceDBVectorStorage } = await import('@flowrag/storage-lancedb');
+      return new LanceDBVectorStorage({ path: cfg.path ?? './data/vectors' });
+    }
+    case 'sqlite': {
+      if (!cfg.dimensions) throw new Error('SQLite vector storage requires "dimensions" in config');
+      const { SQLiteVectorStorage } = await import('@flowrag/storage-sqlite');
+      return new SQLiteVectorStorage({
+        path: cfg.path ?? './data/vectors.db',
+        dimensions: cfg.dimensions,
+      });
+    }
     case 'opensearch': {
       if (!cfg.dimensions)
         throw new Error('OpenSearch vector storage requires "dimensions" in config');
@@ -104,6 +116,10 @@ async function createVectorStorage(cfg: VectorStorageConfig): Promise<VectorStor
 
 async function createGraphStorage(cfg: GraphStorageConfig): Promise<GraphStorage> {
   switch (cfg.provider) {
+    case 'sqlite': {
+      const { SQLiteGraphStorage } = await import('@flowrag/storage-sqlite');
+      return new SQLiteGraphStorage({ path: cfg.path ?? './data/graph.db' });
+    }
     case 'opensearch': {
       const { Client } = await import('@opensearch-project/opensearch');
       const { OpenSearchGraphStorage } = await import('@flowrag/storage-opensearch');
