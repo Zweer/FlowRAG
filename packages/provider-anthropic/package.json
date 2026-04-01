@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.80.0",
+    "@anthropic-ai/sdk": "^0.81.0",
     "@flowrag/core": "^1.8.1"
   },
   "engines": {
