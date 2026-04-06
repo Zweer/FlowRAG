@@ -46,7 +46,7 @@
     "@flowrag/storage-json": "^1.1.4",
     "@flowrag/storage-lancedb": "^1.1.5",
     "@flowrag/storage-sqlite": "^1.5.0",
-    "@types/picomatch": "^4.0.2"
+    "@types/picomatch": "^4.0.3"
   },
   "engines": {
     "node": ">= 20.3"
