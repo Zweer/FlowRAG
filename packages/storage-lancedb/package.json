@@ -35,7 +35,7 @@
     "dist"
   ],
   "dependencies": {
-    "@lancedb/lancedb": "^0.27.1"
+    "@lancedb/lancedb": "^0.27.2"
   },
   "peerDependencies": {
     "@flowrag/core": "^1.8.1"
