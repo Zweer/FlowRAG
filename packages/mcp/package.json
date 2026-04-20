@@ -46,8 +46,8 @@
     "@flowrag/provider-gemini": "^1.5.4",
     "@flowrag/provider-local": "^1.5.3",
     "@flowrag/provider-openai": "^0.3.4",
-    "@modelcontextprotocol/sdk": "^1.27.1",
-    "dotenv": "^17.3.1"
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.0"
@@ -59,7 +59,7 @@
     "@flowrag/storage-s3": "^0.3.3",
     "@flowrag/storage-sqlite": "^1.5.0",
     "@opensearch-project/opensearch": "^2.0.0 || ^3.0.0",
-    "redis": "^5.0.0",
+    "redis": "^5.12.1",
     "zod": "^3.25.0"
   },
   "peerDependenciesMeta": {
