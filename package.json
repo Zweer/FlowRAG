@@ -62,7 +62,7 @@
   },
   "overrides": {
     "fast-xml-parser": ">=5.5.7",
-    "hono": "4.12.8"
+    "hono": "4.12.14"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
