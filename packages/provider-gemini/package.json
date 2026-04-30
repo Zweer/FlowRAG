@@ -37,7 +37,7 @@
     "@google/genai": "^1.50.1"
   },
   "engines": {
-    "node": ">=20.3"
+    "node": ">= 22.13"
   },
   "publishConfig": {
     "access": "public",

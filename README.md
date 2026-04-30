@@ -392,7 +392,7 @@ export const handler = async (event: { query: string }) => {
 
 | Purpose | Tool |
 |---------|------|
-| Runtime | Node.js >=20 |
+| Runtime | Node.js >=22 |
 | Language | TypeScript (strict, isolatedDeclarations) |
 | Build | tsdown (Rolldown-based) |
 | Test | Vitest |
@@ -423,7 +423,7 @@ AI-friendly `llms.txt` and `llms-full.txt` are auto-generated and served from th
 
 ### Release
 
-Releases are managed by [bonvoy](https://github.com/Zweer/bonvoy) with independent versioning per package. CI runs on every push to `main`: tests (Node 20/22/24), e2e, lint, then auto-release and docs deploy.
+Releases are managed by [bonvoy](https://github.com/Zweer/bonvoy) with independent versioning per package. CI runs on every push to `main`: tests (Node 22, 24), e2e, lint, then auto-release and docs deploy.
 
 ## Comparison
 

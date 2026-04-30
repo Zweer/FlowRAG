@@ -102,7 +102,7 @@ You: How do I set up my dev environment?
 
 Bot: Here's how to set up your development environment [1]:
 
-1. Install prerequisites: Node.js 20+, Docker Desktop, AWS CLI v2 [1]
+1. Install prerequisites: Node.js 22+, Docker Desktop, AWS CLI v2 [1]
 2. Get added to the `acme-corp` GitHub organization [1]
 3. Clone the service you'll work on [1]
 4. Copy `.env.example` to `.env` and fill in local values [1]

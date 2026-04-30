@@ -64,7 +64,7 @@ The Lambda execution role needs:
 Bundle with esbuild or your preferred bundler:
 
 ```bash
-esbuild handler.ts --bundle --platform=node --target=node20 --outfile=dist/handler.js
+esbuild handler.ts --bundle --platform=node --target=node22 --outfile=dist/handler.js
 ```
 
 ## Usage

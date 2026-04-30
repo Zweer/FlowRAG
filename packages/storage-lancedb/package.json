@@ -41,7 +41,7 @@
     "@flowrag/core": "^1.8.1"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">= 22.13"
   },
   "publishConfig": {
     "access": "public",

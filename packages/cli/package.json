@@ -45,7 +45,7 @@
     "commander": "^14.0.3"
   },
   "engines": {
-    "node": ">= 20.17"
+    "node": ">= 22.13"
   },
   "publishConfig": {
     "access": "public",

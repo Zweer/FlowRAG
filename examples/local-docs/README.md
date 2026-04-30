@@ -4,7 +4,7 @@ Index local documents and query them with FlowRAG. All data stays on disk — no
 
 ## Prerequisites
 
-- Node.js ≥ 20
+- Node.js ≥ 22
 - A `GEMINI_API_KEY` for entity extraction ([get one here](https://ai.google.dev/))
 
 ## Setup

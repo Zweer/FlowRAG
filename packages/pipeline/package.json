@@ -49,7 +49,7 @@
     "@types/picomatch": "^4.0.3"
   },
   "engines": {
-    "node": ">= 20.3"
+    "node": ">= 22.13"
   },
   "publishConfig": {
     "access": "public",

@@ -5,7 +5,7 @@ Welcome to Acme Corp! This guide will help you set up your development environme
 ## Day 1: Environment Setup
 
 ### Prerequisites
-- Node.js 20+
+- Node.js 22+
 - Docker Desktop
 - AWS CLI v2
 - GitHub account (added to `acme-corp` org)

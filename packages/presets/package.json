@@ -44,7 +44,7 @@
     "@flowrag/storage-sqlite": "^1.5.0"
   },
   "engines": {
-    "node": ">= 20.3"
+    "node": ">= 22.13"
   },
   "publishConfig": {
     "access": "public",
