@@ -46,11 +46,11 @@
     "@flowrag/provider-gemini": "^1.5.4",
     "@flowrag/provider-local": "^1.5.3",
     "@flowrag/provider-openai": "^0.3.4",
-    "@modelcontextprotocol/sdk": "^1.27.1",
-    "dotenv": "^17.3.1"
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.6"
   },
   "peerDependencies": {
     "@flowrag/storage-lancedb": "^1.1.5",

@@ -62,11 +62,17 @@ export class OpenSearchVectorStorage implements VectorStorage {
       },
     });
 
-    return (body.hits?.hits ?? []).map((hit) => ({
-      id: hit._id as string,
-      score: (hit._score as number) ?? 0,
-      metadata: (hit._source as { metadata?: Record<string, unknown> })?.metadata ?? {},
-    }));
+    return (body.hits?.hits ?? []).map(
+      (hit: {
+        _id?: string;
+        _score?: number;
+        _source?: { metadata?: Record<string, unknown> };
+      }) => ({
+        id: hit._id as string,
+        score: hit._score ?? 0,
+        metadata: hit._source?.metadata ?? {},
+      }),
+    );
   }
 
   async delete(ids: Id[]): Promise<void> {
