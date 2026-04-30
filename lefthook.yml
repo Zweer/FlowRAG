@@ -16,12 +16,13 @@ pre-commit:
       stage_fixed: true
       priority: 1
     lockfile-sync:
-      glob: "{package.json,packages/*/package.json}"
+      glob: "{package.json,packages/*/package.json,package-lock.json}"
       run: >
         bash -c '
         if [ -s "$NVM_DIR/nvm.sh" ]; then
           . "$NVM_DIR/nvm.sh"
           nvm exec 22 npm i --package-lock-only --ignore-scripts
+          git add package-lock.json
         else
           echo "⚠️  nvm not found — skipping lockfile sync (CI will catch incompatibilities)"
         fi
