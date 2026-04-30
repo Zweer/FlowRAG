@@ -9,6 +9,9 @@ Thanks for your interest in contributing to FlowRAG! 🌊
 git clone https://github.com/Zweer/FlowRAG.git
 cd FlowRAG
 
+# Use the correct Node version (recommended)
+nvm use
+
 # Install dependencies
 npm install
 
@@ -21,6 +24,12 @@ npm test
 # Run linting
 npm run lint
 ```
+
+### Node.js Version
+
+The repo includes an `.nvmrc` file pinned to **Node 22** (the minimum supported version). We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node versions.
+
+If you develop with a newer Node version (e.g., 24), a pre-commit hook automatically regenerates `package-lock.json` for Node 22 compatibility. This requires nvm to be installed. Without nvm, the hook is skipped — CI will catch any lockfile incompatibilities.
 
 ## Project Structure
 

@@ -6,10 +6,6 @@ pre-commit:
       run: npx biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
       priority: 1
-    lockfile:
-      glob: "package-lock.json"
-      run: npx lockfile-lint
-      priority: 1
     package-lint:
       glob: "package.json"
       run: npx npmPkgJsonLint .
@@ -19,18 +15,33 @@ pre-commit:
       run: npx sort-package-json "package.json" "packages/*/package.json"
       stage_fixed: true
       priority: 1
+    lockfile-sync:
+      glob: "{package.json,packages/*/package.json}"
+      run: |
+        if command -v nvm &>/dev/null || [ -s "$NVM_DIR/nvm.sh" ]; then
+          source "$NVM_DIR/nvm.sh" 2>/dev/null
+          nvm exec 22 npm i --package-lock-only --ignore-scripts 2>/dev/null
+        else
+          echo "⚠️  nvm not found — skipping lockfile sync (CI will catch incompatibilities)"
+        fi
+      stage_fixed: true
+      priority: 2
+    lockfile:
+      glob: "package-lock.json"
+      run: npx lockfile-lint
+      priority: 3
     build:
       glob: "*.ts"
       run: npm run build
-      priority: 2
+      priority: 3
     typecheck:
       glob: "*.ts"
       run: npm run lint:typecheck
-      priority: 3
+      priority: 4
     test:
       glob: "*.ts"
       run: npx vitest run --reporter=dot
-      priority: 3
+      priority: 4
 
 commit-msg:
   commands:
