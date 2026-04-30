@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/mcp",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "🤖 MCP server for FlowRAG - expose your knowledge base to AI assistants",
   "keywords": [
     "flowrag",
@@ -41,11 +41,11 @@
     "@flowrag/core": "^1.8.1",
     "@flowrag/pipeline": "^1.9.2",
     "@flowrag/presets": "^1.5.0",
-    "@flowrag/provider-anthropic": "^0.2.3",
-    "@flowrag/provider-bedrock": "^0.5.1",
-    "@flowrag/provider-gemini": "^1.5.4",
-    "@flowrag/provider-local": "^1.5.3",
-    "@flowrag/provider-openai": "^0.3.4",
+    "@flowrag/provider-anthropic": "^0.2.4",
+    "@flowrag/provider-bedrock": "^0.5.2",
+    "@flowrag/provider-gemini": "^1.5.5",
+    "@flowrag/provider-local": "^1.5.4",
+    "@flowrag/provider-openai": "^0.3.5",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "dotenv": "^17.4.2"
   },
@@ -53,11 +53,11 @@
     "@types/express": "^5.0.6"
   },
   "peerDependencies": {
-    "@flowrag/storage-lancedb": "^1.1.5",
-    "@flowrag/storage-opensearch": "^0.3.1",
-    "@flowrag/storage-redis": "^0.4.2",
-    "@flowrag/storage-s3": "^0.3.3",
-    "@flowrag/storage-sqlite": "^1.5.0",
+    "@flowrag/storage-lancedb": "^1.1.6",
+    "@flowrag/storage-opensearch": "^0.3.2",
+    "@flowrag/storage-redis": "^0.4.3",
+    "@flowrag/storage-s3": "^0.3.4",
+    "@flowrag/storage-sqlite": "^1.5.1",
     "@opensearch-project/opensearch": "^2.0.0 || ^3.0.0",
     "redis": "^5.0.0",
     "zod": "^3.25.0"

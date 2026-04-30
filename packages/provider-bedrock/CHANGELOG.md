@@ -51,6 +51,105 @@
 
 
 
+
+
+
+
+
+
+
+
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
+## [0.5.1] - 2026-04-30
+
+### ⚡ Performance
+
+- perf: :arrow_up: update dependencies
+
+### ### chore
+
+- chore: :arrow_up: drop Node.js 20 support (EOL 2026-04-30)
+
 ## [0.5.0] - 2026-03-20
 
 ### 🐛 Bug Fixes

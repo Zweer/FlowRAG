@@ -41,11 +41,11 @@
     "tiktoken": "^1.0.22"
   },
   "devDependencies": {
-    "@flowrag/provider-gemini": "^1.5.4",
-    "@flowrag/provider-local": "^1.5.3",
+    "@flowrag/provider-gemini": "^1.5.5",
+    "@flowrag/provider-local": "^1.5.4",
     "@flowrag/storage-json": "^1.1.4",
-    "@flowrag/storage-lancedb": "^1.1.5",
-    "@flowrag/storage-sqlite": "^1.5.0",
+    "@flowrag/storage-lancedb": "^1.1.6",
+    "@flowrag/storage-sqlite": "^1.5.1",
     "@types/picomatch": "^4.0.3"
   },
   "engines": {

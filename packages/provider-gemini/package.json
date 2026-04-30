@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-gemini",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "♊ Gemini provider for FlowRAG - embeddings, entity extraction, and reranking",
   "keywords": [
     "flowrag",
