@@ -5,7 +5,9 @@ export default defineConfig({
   entry: ['src/index.ts'],
   dts: true,
   sourcemap: true,
-  exports: true,
+  exports: {
+    bin: false,
+  },
   publint: 'ci-only',
   attw: {
     enabled: 'ci-only',
