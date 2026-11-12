@@ -46,7 +46,7 @@
     "@flowrag/provider-gemini": "^1.5.5",
     "@flowrag/provider-local": "^1.5.4",
     "@flowrag/provider-openai": "^0.3.5",
-    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
