@@ -58,9 +58,9 @@
     "@flowrag/storage-redis": "^0.4.3",
     "@flowrag/storage-s3": "^0.3.4",
     "@flowrag/storage-sqlite": "^1.5.1",
-    "@opensearch-project/opensearch": "^2.0.0 || ^3.0.0",
+    "@opensearch-project/opensearch": "^3.9.0",
     "redis": "^5.0.0",
-    "zod": "^4.6.6"
+    "zod": "^4.6.7"
   },
   "peerDependenciesMeta": {
     "@flowrag/storage-lancedb": {
