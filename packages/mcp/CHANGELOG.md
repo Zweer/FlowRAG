@@ -48,6 +48,97 @@
 
 
 
+
+
+
+
+
+
+
+## [0.5.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+- fix: bump @modelcontextprotocol/sdk from 1.29.0 to 1.32.2 (#133)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.5.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+- fix: bump @modelcontextprotocol/sdk from 1.29.0 to 1.32.2 (#133)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.5.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+- fix: bump @modelcontextprotocol/sdk from 1.29.0 to 1.32.2 (#133)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.5.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+- fix: bump @modelcontextprotocol/sdk from 1.29.0 to 1.32.2 (#133)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.5.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+- fix: bump @modelcontextprotocol/sdk from 1.29.0 to 1.32.2 (#133)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.5.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+- fix: bump @modelcontextprotocol/sdk from 1.29.0 to 1.32.2 (#133)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [0.5.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+- fix: bump @modelcontextprotocol/sdk from 1.29.0 to 1.32.2 (#133)
+
+### ### chore
+
+- chore: :bookmark: release
+
 ## [0.5.1] - 2026-11-12
 
 ### 🐛 Bug Fixes

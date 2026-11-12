@@ -28,6 +28,39 @@
 
 
 
+
+
+
+## [1.1.7] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.1.7] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.1.7] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+
+### ### chore
+
+- chore: :bookmark: release
+
 ## [1.1.6] - 2026-11-12
 
 ### 🐛 Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/provider-local",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "description": "🏠 Local AI provider for FlowRAG - ONNX embeddings and reranking, fully offline",
   "keywords": [
     "flowrag",
@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.8.2",
+    "@flowrag/core": "^1.8.3",
     "@huggingface/transformers": "4.3.2"
   },
   "engines": {

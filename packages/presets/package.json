@@ -33,14 +33,14 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.8.2",
-    "@flowrag/provider-bedrock": "^0.5.3",
+    "@flowrag/core": "^1.8.3",
+    "@flowrag/provider-bedrock": "^0.5.4",
     "@flowrag/provider-gemini": "^1.5.5",
-    "@flowrag/provider-local": "^1.5.5",
+    "@flowrag/provider-local": "^1.5.6",
     "@flowrag/storage-json": "^1.1.4",
-    "@flowrag/storage-lancedb": "^1.1.7",
-    "@flowrag/storage-opensearch": "^0.3.3",
-    "@flowrag/storage-s3": "^0.3.5",
+    "@flowrag/storage-lancedb": "^1.1.8",
+    "@flowrag/storage-opensearch": "^0.3.4",
+    "@flowrag/storage-s3": "^0.3.6",
     "@flowrag/storage-sqlite": "^1.5.1"
   },
   "engines": {

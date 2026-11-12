@@ -76,6 +76,102 @@
 
 
 
+
+
+
+
+
+
+
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
+## [1.8.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+- fix: bump zod from 4.3.6 to 4.6.6 (#131)
+
+### ### chore
+
+- chore: :bookmark: release
+
 ## [1.8.1] - 2026-11-12
 
 ### 🐛 Bug Fixes
