@@ -16,6 +16,20 @@
 
 
 
+
+
+## [0.3.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+
+## [0.3.2] - 2026-11-12
+
+### 🐛 Bug Fixes
+
+- fix: bump the production-dependencies group across 1 directory with 8 updates (#146)
+
 ## [0.3.1] - 2026-04-30
 
 ### ⚡ Performance

@@ -1,6 +1,6 @@
 {
   "name": "@flowrag/storage-opensearch",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "🔎 OpenSearch storage for FlowRAG - vector search and knowledge graph on OpenSearch",
   "keywords": [
     "flowrag",
@@ -34,7 +34,7 @@
     "dist"
   ],
   "dependencies": {
-    "@flowrag/core": "^1.8.1",
+    "@flowrag/core": "^1.8.2",
     "@opensearch-project/opensearch": "^3.9.0"
   },
   "engines": {
