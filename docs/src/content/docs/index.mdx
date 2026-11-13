@@ -1,0 +1,80 @@
+---
+title: FlowRAG
+description: TypeScript RAG with Knowledge Graphs. Batch indexing, stateless queries, Lambda-friendly.
+template: splash
+hero:
+  tagline: Batch indexing, stateless queries, Lambda-friendly. No servers, no Python, no complexity.
+  image:
+    file: ../../../public/logo.svg
+    alt: FlowRAG
+  actions:
+    - text: Get Started
+      link: /FlowRAG/guide/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/Zweer/FlowRAG
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <Card title="Knowledge Graph First" icon="random">
+    Combines vector search with entity relationships for richer, more connected
+    results. Trace data flows across your entire system.
+  </Card>
+  <Card title="Lambda-Friendly" icon="rocket">
+    Works as a library, not a server. Stateless queries with fast cold starts.
+    Perfect for serverless architectures.
+  </Card>
+  <Card title="Git-Friendly Storage" icon="seti:folder">
+    File-based storage you can commit to your repo. JSON, SQLite, and LanceDB or
+    sqlite-vec — no external databases required.
+  </Card>
+  <Card title="Pluggable Everything" icon="puzzle">
+    Swap storage backends, embedders, extractors, rerankers, parsers, and
+    evaluators. Local ONNX, Gemini, OpenAI, or AWS Bedrock — your choice.
+  </Card>
+  <Card title="Incremental Indexing" icon="approve-check">
+    Only re-process changed documents. SHA-256 content hashing skips unchanged
+    files automatically. Delete documents with automatic KG cleanup.
+  </Card>
+  <Card title="Observable & Evaluable" icon="bars">
+    Built-in hooks for LLM calls, embeddings, and search. Plug in evaluators for
+    precision, recall, and faithfulness metrics.
+  </Card>
+</CardGrid>
+
+## Get started in 10 lines
+
+<CardGrid>
+  <Card title="Install" icon="seti:npm">
+    One command for a complete local setup with presets:
+
+    ```bash
+    npm install @flowrag/pipeline @flowrag/presets
+    ```
+  </Card>
+  <Card title="Index and search" icon="pencil">
+    Define a schema, index your files, and query:
+
+    ```typescript
+    import { defineSchema } from '@flowrag/core';
+    import { createFlowRAG } from '@flowrag/pipeline';
+    import { createLocalStorage } from '@flowrag/presets';
+
+    const rag = createFlowRAG({
+      schema: defineSchema({
+        entityTypes: ['SERVICE', 'DATABASE', 'PROTOCOL'],
+        relationTypes: ['USES', 'PRODUCES', 'CONSUMES'],
+      }),
+      ...createLocalStorage('./data'),
+    });
+
+    await rag.index('./content');
+    const results = await rag.search('how does authentication work');
+    ```
+  </Card>
+</CardGrid>
