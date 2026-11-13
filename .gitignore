@@ -107,6 +107,10 @@ dist
 # vitepress cache directory
 **/.vitepress/cache
 
+# Astro build output and cache
+docs/dist/
+.astro/
+
 # llms.txt generated files
 docs/public/llms.txt
 docs/public/llms-full.txt
