@@ -61,6 +61,7 @@
     ]
   },
   "overrides": {
+    "@huggingface/transformers": "4.3.2",
     "fast-xml-parser": ">=5.5.7"
   },
   "devDependencies": {
