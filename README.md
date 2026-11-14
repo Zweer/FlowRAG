@@ -8,11 +8,13 @@
   <strong>TypeScript RAG library with knowledge graph support.</strong>
 </p>
 
-<p align="center">
-  <a href="https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml"><img src="https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml/badge.svg" alt="CI" /></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
-  <img src="https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat" alt="Coverage Badge" />
-</p>
+<div align="center">
+
+<a href="https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml"><img src="https://github.com/Zweer/FlowRAG/actions/workflows/npm.yml/badge.svg" alt="CI" /></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+![Coverage Badge](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat)
+
+</div>
 
 ## Table of Contents
 
