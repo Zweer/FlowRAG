@@ -75,7 +75,7 @@
     "@vitest/coverage-v8": "^5.1.0",
     "@zweer/coverage-badge-readme": "^1.4.0",
     "@zweer/publish-dummy-package": "^0.2.1",
-    "astro": "7.4.1",
+    "astro": "7.4.12",
     "bonvoy": "^0.13.1",
     "concurrently": "^9.2.1",
     "cookie": "^2.0.2",
