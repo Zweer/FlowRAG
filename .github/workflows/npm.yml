@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       bump:
@@ -25,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22, 24]
+        node-version: [22, 24, 26]
     steps:
       - name: Git Checkout
         uses: actions/checkout@v7
@@ -43,7 +46,8 @@ jobs:
         run: npm test
 
   e2e:
-    if: "!startsWith(github.event.head_commit.message || '', 'chore: release packages')"
+    # Model downloads are heavy: e2e runs on main/dispatch only, not on pull requests
+    if: "github.event_name != 'pull_request' && !startsWith(github.event.head_commit.message || '', 'chore: release packages')"
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -104,6 +108,7 @@ jobs:
       - test
       - e2e
       - lint
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -140,6 +145,7 @@ jobs:
 
   docs:
     needs: release
+    if: github.event_name != 'pull_request'
     uses: ./.github/workflows/docs.yml
     permissions:
       pages: write
