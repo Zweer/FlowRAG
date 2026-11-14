@@ -6,6 +6,6 @@
     "isolatedDeclarations": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["packages/*/src", "packages/*/test"],
+  "include": ["packages/*/src", "packages/*/test", "scripts/coverage-badge.ts"],
   "exclude": ["**/dist", "**/node_modules", "packages/cli", "packages/mcp"]
 }
